@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'house2.dart';
 
 void main() {
@@ -16,59 +17,59 @@ class App extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.white,
-        body: Column(
-          children: [
-            const SizedBox(
-              height: 25,
-              width: 100,
-            ),
-            Transform.translate(
-              offset: const Offset(0, 40),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 236, 226, 226),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                height: 70,
-                margin: const EdgeInsets.symmetric(horizontal: 40),
-                // Searching Bar
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        SizedBox(width: 15),
-                        Icon(Icons.arrow_back_ios),
-                        Text(
-                          "Old Airport Rd.",
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.black,
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 25,
+                width: 100,
+              ),
+              Transform.translate(
+                offset: const Offset(0, 40),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 236, 226, 226),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  height: 70,
+                  margin: const EdgeInsets.symmetric(horizontal: 40),
+                  // Searching Bar
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          SizedBox(width: 15),
+                          Icon(Icons.arrow_back_ios),
+                          Text(
+                            "Old Airport Rd.",
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          "Jun 24 - July 25",
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.black,
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            "Jun 24 - July 25",
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
+                            ),
                           ),
-                        ),
-                        SizedBox(width: 15),
-                      ],
-                    ),
-                  ],
+                          SizedBox(width: 15),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Flexible(
-              //flex: 9,
-              child: Container(
+              Container(
+                //here!!!!!
                 padding: const EdgeInsets.symmetric(vertical: 60),
                 decoration: BoxDecoration(
                   color: const Color.fromARGB(77, 209, 196, 196),
@@ -96,7 +97,7 @@ class App extends StatelessWidget {
                           children: [
                             Icon(Icons.tune),
                             Text(
-                              "Sort",
+                              "Filter",
                               style: TextStyle(
                                 fontSize: 22,
                                 fontWeight: FontWeight.w500,
@@ -108,7 +109,7 @@ class App extends StatelessWidget {
                           children: [
                             Icon(Icons.map),
                             Text(
-                              "Sort",
+                              "Map",
                               style: TextStyle(
                                 fontSize: 22,
                                 fontWeight: FontWeight.w500,
@@ -119,36 +120,66 @@ class App extends StatelessWidget {
                         ),
                       ],
                     ),
-                    // House2(
-                    //   houseName: 'Strawberry House',
-                    //   numRating: 9.9,
-                    //   rating: 'Excellent',
-                    //   numReviews: 1203,
-                    //   numKm: 10,
-                    //   numBeds: 2,
-                    //   numBath: 1,
-                    //   rent: 1025290,
-                    //   isFreeElec: true
-                    // ),
-                    // SizedBox(
-                    //   height: 10,
-                    // ),
-                    // House2(
-                    //   houseName: 'Strawberry House',
-                    //   numRating: 9.9,
-                    //   rating: 'Excellent',
-                    //   numReviews: 1203,
-                    //   numKm: 10,
-                    //   numBeds: 2,
-                    //   numBath: 1,
-                    //   rent: 1025290,
-                    //   isFreeElec: true
-                    // )
+                    SizedBox(
+                      height: 25,
+                    ),
+                    House2(
+                        houseName: "Strawberry House",
+                        numRating: 9.9,
+                        rating: 'Excellent',
+                        numReviews: 1203,
+                        numKm: 10,
+                        numBeds: 2,
+                        numBath: 1,
+                        rent: 1025290,
+                        isFreeElec: true),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    House2(
+                      houseName: 'Strawberry House',
+                      numRating: 9.9,
+                      rating: 'Excellent',
+                      numReviews: 1203,
+                      numKm: 10,
+                      numBeds: 2,
+                      numBath: 1,
+                      rent: 1025290,
+                      isFreeElec: true,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    House2(
+                      houseName: 'Strawberry House',
+                      numRating: 9.9,
+                      rating: 'Excellent',
+                      numReviews: 1203,
+                      numKm: 10,
+                      numBeds: 2,
+                      numBath: 1,
+                      rent: 1025290,
+                      isFreeElec: true,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    House2(
+                      houseName: 'Strawberry House',
+                      numRating: 9.9,
+                      rating: 'Excellent',
+                      numReviews: 1203,
+                      numKm: 10,
+                      numBeds: 2,
+                      numBath: 1,
+                      rent: 1025290,
+                      isFreeElec: true,
+                    ),
                   ],
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
