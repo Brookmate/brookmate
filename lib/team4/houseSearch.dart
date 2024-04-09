@@ -1,14 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 import 'house2.dart';
 
 void main() {
-  runApp(const App());
+  runApp(App());
 }
 
 class App extends StatelessWidget {
-  const App({super.key});
+  final houseList = [
+    "Kiwi",
+    "StrawBerry",
+    "Lemon",
+    "Apple",
+    "Watermelon",
+    "Mango",
+  ];
 
+  App({super.key});
   void onPressed() {}
 
   @override
@@ -66,17 +76,16 @@ class App extends StatelessWidget {
                 ),
               ),
             ),
-            Flexible(
-              //flex: 9,
+            Expanded(
               child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 60),
+                padding: const EdgeInsets.symmetric(vertical: 55),
                 decoration: BoxDecoration(
                   color: const Color.fromARGB(77, 209, 196, 196),
                   borderRadius: BorderRadius.circular(45),
                 ),
-                child: const Column(
+                child: Column(
                   children: [
-                    Row(
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Row(
@@ -96,7 +105,7 @@ class App extends StatelessWidget {
                           children: [
                             Icon(Icons.tune),
                             Text(
-                              "Sort",
+                              "Filter",
                               style: TextStyle(
                                 fontSize: 22,
                                 fontWeight: FontWeight.w500,
@@ -108,7 +117,7 @@ class App extends StatelessWidget {
                           children: [
                             Icon(Icons.map),
                             Text(
-                              "Sort",
+                              "Map",
                               style: TextStyle(
                                 fontSize: 22,
                                 fontWeight: FontWeight.w500,
@@ -119,31 +128,31 @@ class App extends StatelessWidget {
                         ),
                       ],
                     ),
-                    House2(
-                      houseName: 'Strawberry House',
-                      numRating: 9.9,
-                      rating: 'Excellent',
-                      numReviews: 1203,
-                      numKm: 10,
-                      numBeds: 2,
-                      numBath: 1,
-                      rent: 1025290,
-                      isFreeElec: true
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    House2(
-                      houseName: 'Strawberry House',
-                      numRating: 9.9,
-                      rating: 'Excellent',
-                      numReviews: 1203,
-                      numKm: 10,
-                      numBeds: 2,
-                      numBath: 1,
-                      rent: 1025290,
-                      isFreeElec: true
-                    )
+                    // House2(
+                    //   houseName: 'Strawberry House',
+                    //   numRating: 9.9,
+                    //   rating: 'Excellent',
+                    //   numReviews: 1203,
+                    //   numKm: 10,
+                    //   numBeds: 2,
+                    //   numBath: 1,
+                    //   rent: 1025290,
+                    //   isFreeElec: true
+                    // ),
+                    // SizedBox(
+                    //   height: 10,
+                    // ),
+                    // House2(
+                    //   houseName: 'Strawberry House',
+                    //   numRating: 9.9,
+                    //   rating: 'Excellent',
+                    //   numReviews: 1203,
+                    //   numKm: 10,
+                    //   numBeds: 2,
+                    //   numBath: 1,
+                    //   rent: 1025290,
+                    //   isFreeElec: true
+                    // )
                   ],
                 ),
               ),
