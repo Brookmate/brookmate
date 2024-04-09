@@ -119,31 +119,31 @@ class App extends StatelessWidget {
                         ),
                       ],
                     ),
-                    // House2(
-                    //   houseName: 'Strawberry House',
-                    //   numRating: 9.9,
-                    //   rating: 'Excellent',
-                    //   numReviews: 1203,
-                    //   numKm: 10,
-                    //   numBeds: 2,
-                    //   numBath: 1,
-                    //   rent: 1025290,
-                    //   isFreeElec: true
-                    // ),
-                    // SizedBox(
-                    //   height: 10,
-                    // ),
-                    // House2(
-                    //   houseName: 'Strawberry House',
-                    //   numRating: 9.9,
-                    //   rating: 'Excellent',
-                    //   numReviews: 1203,
-                    //   numKm: 10,
-                    //   numBeds: 2,
-                    //   numBath: 1,
-                    //   rent: 1025290,
-                    //   isFreeElec: true
-                    // )
+                    House2(
+                      houseName: 'Strawberry House',
+                      numRating: 9.9,
+                      rating: 'Excellent',
+                      numReviews: 1203,
+                      numKm: 10,
+                      numBeds: 2,
+                      numBath: 1,
+                      rent: 1025290,
+                      isFreeElec: true
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    House2(
+                      houseName: 'Strawberry House',
+                      numRating: 9.9,
+                      rating: 'Excellent',
+                      numReviews: 1203,
+                      numKm: 10,
+                      numBeds: 2,
+                      numBath: 1,
+                      rent: 1025290,
+                      isFreeElec: true
+                    )
                   ],
                 ),
               ),
