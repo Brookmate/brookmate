@@ -33,7 +33,7 @@ class House2 extends StatelessWidget {
             //color: Colors.grey,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16.0),
-              color: Colors.green,
+              color: Colors.grey[350],
             ),
           ),
         ),
