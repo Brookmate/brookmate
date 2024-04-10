@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'house2.dart';
+import '../widgets/houseInfo1.dart';
 
 void main() {
   runApp(App());
@@ -136,7 +136,7 @@ class App extends StatelessWidget {
                         shrinkWrap: true,
                         itemCount: houseList.length,
                         itemBuilder: (BuildContext context, int index) {
-                          return House2(
+                          return HouseInfo1(
                             houseName: houseList[index],
                             numRating: 9.9,
                             rating: 'Excellent',
