@@ -1,22 +1,30 @@
 import 'package:flutter/material.dart';
 
-class HouseInfo1 extends StatelessWidget {
+class HouseInfo1 extends StatefulWidget {
   final String houseName, rating;
   final double numRating;
   final int numReviews, numBeds, numBath, rent, numKm;
   final bool isFreeElec;
 
-  const HouseInfo1(
-      {super.key,
-      required this.houseName,
-      required this.numRating,
-      required this.rating,
-      required this.numReviews,
-      required this.numKm,
-      required this.numBeds,
-      required this.numBath,
-      required this.rent,
-      required this.isFreeElec});
+  const HouseInfo1({
+    Key? key,
+    required this.houseName,
+    required this.numRating,
+    required this.rating,
+    required this.numReviews,
+    required this.numKm,
+    required this.numBeds,
+    required this.numBath,
+    required this.rent,
+    required this.isFreeElec,
+  }) : super(key: key);
+
+  @override
+  _HouseInfo1State createState() => _HouseInfo1State();
+}
+
+class _HouseInfo1State extends State<HouseInfo1> {
+  bool isFavorite = false;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +57,7 @@ class HouseInfo1 extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(houseName,
+                        Text(widget.houseName,
                             style: const TextStyle(fontSize: 25, height: 1.1)),
                         const Row(
                           children: [
@@ -79,7 +87,7 @@ class HouseInfo1 extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(3)),
                               padding: const EdgeInsets.all(2),
                               child: Text(
-                                '$numRating',
+                                '${widget.numRating}',
                                 style: const TextStyle(
                                   fontSize: 10,
                                   color: Colors.white,
@@ -89,20 +97,25 @@ class HouseInfo1 extends StatelessWidget {
                             const SizedBox(
                               width: 3,
                             ),
-                            Text(rating,
-                                style:
-                                    const TextStyle(fontSize: 10, height: 0.8)),
-                            Text(' - $numReviews reviews',
-                                style:
-                                    const TextStyle(fontSize: 10, height: 0.8))
+                            Text(widget.rating,
+                                style: const TextStyle(fontSize: 10, height: 0.8)),
+                            Text(' - ${widget.numReviews} reviews',
+                                style: const TextStyle(fontSize: 10, height: 0.8))
                           ],
                         ),
                       ],
                     ),
-                    const Icon(
-                      Icons.favorite_border_rounded,
-                      color: Colors.black,
-                      size: 40,
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          isFavorite = !isFavorite;
+                        });
+                      },
+                      child: Icon(
+                        isFavorite ? Icons.favorite : Icons.favorite_border_rounded,
+                        color: isFavorite ? Colors.pink : Colors.black,
+                        size: 40,
+                      ),
                     ),
                   ],
                 ),
@@ -121,7 +134,7 @@ class HouseInfo1 extends StatelessWidget {
                       ),
                     ]),
                     Text(
-                      '$numKm km from School',
+                      '${widget.numKm} km from School',
                       style: const TextStyle(fontSize: 13),
                     ),
                   ],
@@ -130,7 +143,7 @@ class HouseInfo1 extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Text(
-                      '$numBeds beds - $numBath bathrooms',
+                      '${widget.numBeds} beds - ${widget.numBath} bathrooms',
                       style: const TextStyle(fontSize: 13, height: 1.4),
                       softWrap: true,
                     ),
@@ -150,7 +163,7 @@ class HouseInfo1 extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Text(
-                      '1 month: KRW $rent',
+                      '1 month: KRW ${widget.rent}',
                       textAlign: TextAlign.end,
                     ),
                   ],
