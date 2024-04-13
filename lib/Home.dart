@@ -2,21 +2,23 @@ import 'package:flutter/material.dart';
 import 'Login.dart';
 
 class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         backgroundColor: const Color.fromARGB(255, 120, 0, 0),
         body: Padding(
-          padding: EdgeInsets.symmetric(
+          padding: const EdgeInsets.symmetric(
             horizontal: 40,
           ),
           child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 100,
               ),
-              Row(
+              const Row(
                 children: [
                   Column(
                     children: [
@@ -32,7 +34,7 @@ class HomePage extends StatelessWidget {
                   )
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 250,
               ),
               Container(
@@ -42,13 +44,13 @@ class HomePage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(25),
                 ),
                 child: ElevatedButton(
-                  child: Row(
+                  child: const Row(
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text('\n', style: TextStyle(fontSize: 10)),
-                          const Text(
+                          Text('\n', style: TextStyle(fontSize: 10)),
+                          Text(
                             'Login',
                             style: TextStyle(
                               fontSize: 32,
@@ -57,7 +59,7 @@ class HomePage extends StatelessWidget {
                             ),
                             textAlign: TextAlign.center,
                           ),
-                          const Text('\n', style: TextStyle(fontSize: 10)),
+                          Text('\n', style: TextStyle(fontSize: 10)),
                         ],
                       ),
                     ],
@@ -65,12 +67,12 @@ class HomePage extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => LoginPage())
+                      MaterialPageRoute(builder: (context) => const LoginPage())
                     );
                   },
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 25,
               ),
               Container(
@@ -79,14 +81,14 @@ class HomePage extends StatelessWidget {
                   color: Colors.black,
                   borderRadius: BorderRadius.circular(25),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(30),
+                child: const Padding(
+                  padding: EdgeInsets.all(30),
                   child: Row(
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          const Text(
+                          Text(
                             'Sign-Up',
                             style: TextStyle(
                               color: Colors.white,
