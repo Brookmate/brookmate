@@ -1,3 +1,6 @@
+import 'package:brookmate/Home.dart';
+import 'package:brookmate/Widget/inputBox.dart';
+import 'package:brookmate/Widget/logInSignUpButton.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
@@ -33,47 +36,41 @@ class LoginPage extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 50),
+            const SizedBox(
+              height: 50,
+            ),
             SizedBox(
               width: double.infinity,
               child: Container(
-                  padding: const EdgeInsets.all(30),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Column(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: const BoxDecoration(
-                            border:
-                                Border(bottom: BorderSide(color: Colors.grey))),
-                        child: const TextField(
-                            decoration: InputDecoration(
-                                hintText: "SBU Email",
-                                hintStyle: TextStyle(color: Colors.grey),
-                                border: InputBorder.none)),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: const BoxDecoration(
-                            border:
-                                Border(bottom: BorderSide(color: Colors.grey))),
-                        child: const TextField(
-                            decoration: InputDecoration(
-                                hintText: "SBU Password",
-                                hintStyle: TextStyle(color: Colors.grey),
-                                border: InputBorder.none)),
-                      ),
-                      const SizedBox(
-                        height: 40,
-                      )
-                    ],
-                  )),
+                padding: const EdgeInsets.all(30),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const SizedBox(
+                      height: 60,
+                    ),
+                    inputBox(labelText: 'SBU Email'),
+                    const SizedBox(
+                      height: 60,
+                    ),
+                    inputBox(labelText: 'SBU Password'),
+                    const SizedBox(
+                      height: 80,
+                    ),
+                    const logInSignUpButton(
+                      isLogIn: true,
+                      connectedPage: HomePage(),
+                    ),
+                    const SizedBox(
+                      height: 40,
+                    ),
+                  ],
+                ),
+              ),
             ),
           ],
         ),

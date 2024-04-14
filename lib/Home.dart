@@ -1,3 +1,8 @@
+import 'package:brookmate/Widget/logInSignUpButton.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
+
+import 'signUp.dart';
 import 'package:flutter/material.dart';
 import 'Login.dart';
 
@@ -9,18 +14,18 @@ class HomePage extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         backgroundColor: const Color.fromARGB(255, 120, 0, 0),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 40,
-          ),
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 100,
-              ),
-              const Row(
-                children: [
-                  Column(
+        body: Column(
+          children: [
+            const SizedBox(
+              height: 170,
+            ),
+            const Row(
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 30,
+                  ),
+                  child: Column(
                     children: [
                       Text(
                         'Welcome to \nBrookmate',
@@ -31,80 +36,48 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                     ],
-                  )
-                ],
-              ),
-              const SizedBox(
-                height: 250,
-              ),
-              Container(
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(25),
-                ),
-                child: ElevatedButton(
-                  child: const Row(
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('\n', style: TextStyle(fontSize: 10)),
-                          Text(
-                            'Login',
-                            style: TextStyle(
-                              fontSize: 32,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                          Text('\n', style: TextStyle(fontSize: 10)),
-                        ],
-                      ),
-                    ],
                   ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const LoginPage())
-                    );
-                  },
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 180,
+            ),
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 30,
+                  vertical: 50,
                 ),
-              ),
-              const SizedBox(
-                height: 25,
-              ),
-              Container(
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.circular(25),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  ),
                 ),
                 child: const Padding(
-                  padding: EdgeInsets.all(30),
-                  child: Row(
+                  padding: EdgeInsets.symmetric(vertical: 20),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Sign-Up',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 32,
-                              fontWeight: FontWeight.bold
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
+                      logInSignUpButton(
+                        isLogIn: true,
+                        connectedPage: LoginPage(),
+                      ),
+                      SizedBox(
+                        height: 25,
+                      ),
+                      logInSignUpButton(
+                        isLogIn: false,
+                        connectedPage: signUpPage(),
                       ),
                     ],
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
