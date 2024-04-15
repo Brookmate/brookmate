@@ -30,10 +30,9 @@ class App extends StatelessWidget {
           children: [
             const SizedBox(
               height: 25,
-              width: 100,
             ),
             Transform.translate(
-              offset: const Offset(0, 40),
+              offset: const Offset(0, 35),
               child: Container(
                 decoration: BoxDecoration(
                   color: const Color.fromARGB(255, 236, 226, 226),
@@ -78,10 +77,13 @@ class App extends StatelessWidget {
             ),
             Expanded(
               child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 55),
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(77, 209, 196, 196),
-                  borderRadius: BorderRadius.circular(45),
+                padding: const EdgeInsets.only(top: 40.0),
+                decoration: const BoxDecoration(
+                  color: Color.fromARGB(77, 209, 196, 196),
+                  // borderRadius: BorderRadius.circular(45),
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(45),
+                      topRight: Radius.circular(45)),
                 ),
                 child: Column(
                   children: [
@@ -129,10 +131,11 @@ class App extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(
-                      height: 20,
+                      height: 12,
                     ),
                     Expanded(
                       child: ListView.builder(
+                        padding: EdgeInsets.zero,
                         shrinkWrap: true,
                         itemCount: houseList.length,
                         itemBuilder: (BuildContext context, int index) {
