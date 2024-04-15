@@ -12,6 +12,7 @@ class HouseMap extends StatelessWidget {
   ];
 
   HouseMap({super.key});
+  void onPressed() {}
 
   @override
   Widget build(BuildContext context) {

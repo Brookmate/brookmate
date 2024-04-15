@@ -19,7 +19,7 @@ class App extends StatelessWidget {
   ];
 
   App({super.key});
-  void onPressed() {}
+  void onTap() {}
 
   @override
   Widget build(BuildContext context) {
@@ -87,45 +87,66 @@ class App extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Row(
                           children: [
-                            SizedBox(width: 15),
-                            Icon(Icons.swap_vert),
-                            Text(
-                              "Sort",
-                              style: TextStyle(
-                                fontSize: 22,
-                                fontWeight: FontWeight.w500,
+                            const SizedBox(width: 15),
+                            GestureDetector(
+                              onTap: onTap,
+                              child: const ButtonBar(
+                                children: [
+                                  Icon(Icons.swap_vert),
+                                  Text(
+                                    "Sort",
+                                    style: TextStyle(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ],
                         ),
                         Row(
                           children: [
-                            Icon(Icons.tune),
-                            Text(
-                              "Filter",
-                              style: TextStyle(
-                                fontSize: 22,
-                                fontWeight: FontWeight.w500,
+                            GestureDetector(
+                              onTap: onTap,
+                              child: const ButtonBar(
+                                children: [
+                                  Icon(Icons.tune),
+                                  Text(
+                                    "Filter",
+                                    style: TextStyle(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ],
                         ),
                         Row(
                           children: [
-                            Icon(Icons.map),
-                            Text(
-                              "Map",
-                              style: TextStyle(
-                                fontSize: 22,
-                                fontWeight: FontWeight.w500,
+                            GestureDetector(
+                              onTap: onTap,
+                              child: const ButtonBar(
+                                children: [
+                                  Icon(Icons.map),
+                                  Text(
+                                    "Map",
+                                    style: TextStyle(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                            SizedBox(width: 15),
+                            const SizedBox(width: 15),
                           ],
                         ),
                       ],
