@@ -5,10 +5,10 @@ import 'package:flutter/widgets.dart';
 import '../widgets/house_search_info_1.dart';
 
 void main() {
-  runApp(App());
+  runApp(HouseSearch());
 }
 
-class App extends StatelessWidget {
+class HouseSearch extends StatelessWidget {
   final houseList = [
     "Kiwi",
     "StrawBerry",
@@ -18,7 +18,7 @@ class App extends StatelessWidget {
     "Mango",
   ];
 
-  App({super.key});
+  HouseSearch({super.key});
   void onTap() {}
 
   @override

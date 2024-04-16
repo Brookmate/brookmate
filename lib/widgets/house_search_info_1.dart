@@ -7,7 +7,7 @@ class HouseInfo1 extends StatefulWidget {
   final bool isFreeElec;
 
   const HouseInfo1({
-    Key? key,
+    super.key,
     required this.houseName,
     required this.numRating,
     required this.rating,
@@ -17,7 +17,7 @@ class HouseInfo1 extends StatefulWidget {
     required this.numBath,
     required this.rent,
     required this.isFreeElec,
-  }) : super(key: key);
+  });
 
   @override
   _HouseInfo1State createState() => _HouseInfo1State();
@@ -34,12 +34,22 @@ class _HouseInfo1State extends State<HouseInfo1> {
         children: [
           Flexible(
             flex: 3,
-            child: Container(
-              height: 200,
-              decoration: BoxDecoration(
-                color: Colors.grey[350],
-                borderRadius: BorderRadius.circular(15),
-              ),
+            child: Stack(
+              children: [
+                Container(
+                  height: 200,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[350],
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                ),
+                Positioned.fill(
+                  child: Image.asset(
+                    'assets/images/houseImgg.jpeg',
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ],
             ),
           ),
           const SizedBox(
@@ -57,8 +67,10 @@ class _HouseInfo1State extends State<HouseInfo1> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(widget.houseName,
-                            style: const TextStyle(fontSize: 25, height: 1.1)),
+                        Text(
+                          widget.houseName,
+                          style: const TextStyle(fontSize: 25, height: 1.1),
+                        ),
                         const Row(
                           children: [
                             Icon(
@@ -83,8 +95,9 @@ class _HouseInfo1State extends State<HouseInfo1> {
                           children: [
                             Container(
                               decoration: BoxDecoration(
-                                  color: Colors.red.shade900,
-                                  borderRadius: BorderRadius.circular(3)),
+                                color: Colors.red.shade900,
+                                borderRadius: BorderRadius.circular(3),
+                              ),
                               padding: const EdgeInsets.all(2),
                               child: Text(
                                 '${widget.numRating}',
@@ -97,10 +110,14 @@ class _HouseInfo1State extends State<HouseInfo1> {
                             const SizedBox(
                               width: 3,
                             ),
-                            Text(widget.rating,
-                                style: const TextStyle(fontSize: 10, height: 0.8)),
-                            Text(' - ${widget.numReviews} reviews',
-                                style: const TextStyle(fontSize: 10, height: 0.8))
+                            Text(
+                              widget.rating,
+                              style: const TextStyle(fontSize: 10, height: 0.8),
+                            ),
+                            Text(
+                              ' - ${widget.numReviews} reviews',
+                              style: const TextStyle(fontSize: 10, height: 0.8),
+                            )
                           ],
                         ),
                       ],
@@ -112,7 +129,9 @@ class _HouseInfo1State extends State<HouseInfo1> {
                         });
                       },
                       child: Icon(
-                        isFavorite ? Icons.favorite : Icons.favorite_border_rounded,
+                        isFavorite
+                            ? Icons.favorite
+                            : Icons.favorite_border_rounded,
                         color: isFavorite ? Colors.pink : Colors.black,
                         size: 40,
                       ),
