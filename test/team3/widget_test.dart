@@ -8,11 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-<<<<<<< HEAD
-import 'package:brookmate/main.dart';
-=======
-import 'package:real_app/main.dart';
->>>>>>> 737fc718be5f942a7567112354a23860fd5f96e3
+import 'package:brookmate/pages/housemate_main.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
