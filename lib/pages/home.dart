@@ -1,10 +1,10 @@
-import 'package:brookmate/Widget/logInSignUpButton.dart';
+import '../widgets/log_in_sign_up_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 
-import 'signUp.dart';
+import 'sign_up.dart';
 import 'package:flutter/material.dart';
-import 'Login.dart';
+import 'log_in.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

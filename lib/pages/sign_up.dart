@@ -1,6 +1,6 @@
-import 'package:brookmate/Home.dart';
-import 'package:brookmate/Widget/inputBox.dart';
-import 'package:brookmate/Widget/logInSignUpButton.dart';
+import 'home.dart';
+import '../widgets/input_box.dart';
+import '../widgets/log_in_sign_up_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
