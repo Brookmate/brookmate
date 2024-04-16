@@ -1,8 +1,5 @@
-import '../widgets/log_in_sign_up_button.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/widgets.dart';
-
-import 'sign_up.dart';
+import 'package:brookmate/widgets/log_in_sign_up_button.dart';
+import 'package:brookmate/pages/sign_up.dart';
 import 'package:flutter/material.dart';
 import 'log_in.dart';
 
@@ -61,16 +58,16 @@ class HomePage extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      logInSignUpButton(
+                      LogInSignUpButton(
                         isLogIn: true,
                         connectedPage: LoginPage(),
                       ),
                       SizedBox(
                         height: 25,
                       ),
-                      logInSignUpButton(
+                      LogInSignUpButton(
                         isLogIn: false,
-                        connectedPage: signUpPage(),
+                        connectedPage: SignUpPage(),
                       ),
                     ],
                   ),

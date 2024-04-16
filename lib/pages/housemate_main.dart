@@ -1,5 +1,3 @@
-import 'dart:ui_web';
-
 import 'package:brookmate/widgets/housemate_profile.dart';
 import 'package:brookmate/widgets/housemate_topbar.dart';
 import 'package:flutter/cupertino.dart';

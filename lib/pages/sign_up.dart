@@ -1,9 +1,7 @@
-import 'home.dart';
-import '../widgets/input_box.dart';
-import '../widgets/log_in_sign_up_button.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:brookmate/pages/home.dart';
+import 'package:brookmate/widgets/input_box.dart';
+import 'package:brookmate/widgets/log_in_sign_up_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class SignUpPage extends StatelessWidget {
   const SignUpPage({super.key});
@@ -52,35 +50,35 @@ class SignUpPage extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      inputBox(
+                      InputBox(
                         labelText: 'Name',
                         exampleText: 'John Doe',
                       ),
                       const SizedBox(
                         height: 20,
                       ),
-                      inputBox(
+                      InputBox(
                         labelText: 'Email',
                         exampleText: 'john.doe@stonybrook.edu',
                       ),
                       const SizedBox(
                         height: 20,
                       ),
-                      inputBox(
+                      InputBox(
                         labelText: 'Password',
                         exampleText: '************',
                       ),
                       const SizedBox(
                         height: 20,
                       ),
-                      inputBox(
+                      InputBox(
                         labelText: 'Confirm Password',
                         exampleText: '************',
                       ),
                       const SizedBox(
                         height: 40,
                       ),
-                      const logInSignUpButton(
+                      const LogInSignUpButton(
                         isLogIn: false,
                         connectedPage: HomePage(),
                       ),

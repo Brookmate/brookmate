@@ -1,6 +1,6 @@
 import 'home.dart';
-import '../widgets/input_box.dart';
-import '../widgets/log_in_sign_up_button.dart';
+import 'package:brookmate/widgets/input_box.dart';
+import 'package:brookmate/widgets/log_in_sign_up_button.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
@@ -53,15 +53,15 @@ class LoginPage extends StatelessWidget {
                     const SizedBox(
                       height: 60,
                     ),
-                    inputBox(labelText: 'SBU Email'),
+                    InputBox(labelText: 'SBU Email'),
                     const SizedBox(
                       height: 60,
                     ),
-                    inputBox(labelText: 'SBU Password'),
+                    InputBox(labelText: 'SBU Password'),
                     const SizedBox(
                       height: 80,
                     ),
-                    const logInSignUpButton(
+                    const LogInSignUpButton(
                       isLogIn: true,
                       connectedPage: HomePage(),
                     ),
