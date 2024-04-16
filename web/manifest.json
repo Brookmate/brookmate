@@ -1,6 +1,11 @@
 {
+<<<<<<< HEAD
     "name": "brookmate",
     "short_name": "brookmate",
+=======
+    "name": "real_app",
+    "short_name": "real_app",
+>>>>>>> 737fc718be5f942a7567112354a23860fd5f96e3
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
