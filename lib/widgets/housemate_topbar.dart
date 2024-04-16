@@ -1,17 +1,16 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class topbar extends StatefulWidget {
+class Topbar extends StatefulWidget {
   String? inputText;
-  topbar({
+  Topbar({
     super.key,
   });
 
   @override
-  State<topbar> createState() => _topbarState();
+  State<Topbar> createState() => _TopbarState();
 }
 
-class _topbarState extends State<topbar> {
+class _TopbarState extends State<Topbar> {
   @override
   Widget build(BuildContext context) {
     return Row(
