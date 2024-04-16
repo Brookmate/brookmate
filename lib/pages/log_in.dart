@@ -11,7 +11,7 @@ class LoginPage extends StatelessWidget {
     return MaterialApp(
         home: Scaffold(
       backgroundColor: const Color.fromARGB(255, 120, 0, 0),
-      body: Container(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(
           horizontal: 40,
         ),
