@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class inputBox extends StatelessWidget {
+class InputBox extends StatelessWidget {
   final String labelText;
   String? exampleText;
 
-  inputBox({
+  InputBox({
     super.key,
     required this.labelText,
     this.exampleText,

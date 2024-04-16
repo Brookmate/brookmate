@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class logInSignUpButton extends StatelessWidget {
+class LogInSignUpButton extends StatelessWidget {
   final bool isLogIn;
   final String buttonText;
   final Widget connectedPage;
 
-  const logInSignUpButton({
+  const LogInSignUpButton({
     super.key,
     required this.isLogIn,
     required this.connectedPage,
