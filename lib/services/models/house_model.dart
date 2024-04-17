@@ -15,7 +15,7 @@ class House implements Model {
   final int heatingType; // 012 scale (none, radiator, basebord)
   final bool acInstalled;
   final String extraInfo;
-  final int status; // 012 scale (not for rent, on rent, ongoing)
+  final int status; // 012 scale (off market, on rent, ongoing)
 
   House({
     this.id,
@@ -31,7 +31,7 @@ class House implements Model {
     required this.heatingType, // 012 scale (none, radiator, basebord)
     required this.acInstalled,
     required this.extraInfo,
-    required this.status, // 012 scale (not for rent, on rent, ongoing)
+    required this.status, // 012 scale (off market, on market, ongoing)
   });
 
   House.fromDocumentSnapshot(DocumentSnapshot<Map<String, dynamic>> doc)
