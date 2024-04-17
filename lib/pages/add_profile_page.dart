@@ -4,19 +4,6 @@ import 'package:brookmate/widgets/custom_switch_tile_food.dart';
 import 'package:brookmate/widgets/custom_switch_tile_sex.dart';
 import 'package:brookmate/pages/next_page.dart';
 
-void main() => runApp(const MyApp());
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: AddProfilePage(),
-    );
-  }
-}
-
 class AddProfilePage extends StatefulWidget {
   const AddProfilePage({super.key});
 

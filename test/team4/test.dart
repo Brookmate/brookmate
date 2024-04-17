@@ -1,15 +1,22 @@
 import 'package:brookmate/pages/house_map.dart';
 import 'package:flutter/material.dart';
+import 'package:brookmate/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
-  runApp(const MyWidget());
+Future<void> main() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(const MainApp());
 }
 
-class MyWidget extends StatelessWidget {
-  const MyWidget({super.key});
+class MainApp extends StatelessWidget {
+  const MainApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return HouseMap();
+    return MaterialApp(
+      home: HouseMap(),
+    );
   }
 }

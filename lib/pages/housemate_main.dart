@@ -1,8 +1,6 @@
 import 'package:brookmate/widgets/housemate_profile.dart';
 import 'package:brookmate/widgets/housemate_topbar.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 void main() {
   runApp(const MyApp());
@@ -111,7 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
             const SizedBox(
               height: 10,
             ),
-            topbar(),
+            Topbar(),
             const SizedBox(
               height: 20,
             ),
