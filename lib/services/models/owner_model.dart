@@ -1,4 +1,4 @@
-import 'package:brookmate/services/model_interface.dart';
+import 'package:brookmate/services/models/model_interface.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Owner implements Model {
@@ -14,7 +14,7 @@ class Owner implements Model {
     required this.houses,
   });
 
-  Owner.fromDocumentSnaphsot(DocumentSnapshot<Map<String, dynamic>> doc)
+  Owner.fromDocumentSnapshot(DocumentSnapshot<Map<String, dynamic>> doc)
       : id = doc.id,
         email = doc.data()!["email"],
         name = doc.data()!["name"],

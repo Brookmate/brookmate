@@ -1,4 +1,4 @@
-import 'package:brookmate/services/model_interface.dart';
+import 'package:brookmate/services/models/model_interface.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class House implements Model {
@@ -34,7 +34,7 @@ class House implements Model {
     required this.status, // 012 scale (not for rent, on rent, ongoing)
   });
 
-  House.fromDocumentShapshot(DocumentSnapshot<Map<String, dynamic>> doc)
+  House.fromDocumentSnapshot(DocumentSnapshot<Map<String, dynamic>> doc)
       : id = doc.id,
         owner = doc.data()!["owner"],
         rentPrice = doc.data()!["rent_price"],
