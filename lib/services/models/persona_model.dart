@@ -50,7 +50,7 @@ class Persona implements Model {
   @override
   Map<String, dynamic> toMap() {
     return {
-      "id": id,
+      "id": id ?? "None",
       "user": user,
       "cleaness": cleaness,
       "sleepingTime": sleepingTime,

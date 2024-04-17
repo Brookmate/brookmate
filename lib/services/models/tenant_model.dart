@@ -41,7 +41,7 @@ class Tenant implements Model {
   @override
   Map<String, dynamic> toMap() {
     return {
-      "id": id,
+      "id": id ?? "None",
       "email": email,
       "name": name,
       "likedHouses": likedHouses,
