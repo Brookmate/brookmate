@@ -1,8 +1,5 @@
 plugins {
     id "com.android.application"
-    // START: FlutterFire Configuration
-    id 'com.google.gms.google-services'
-    // END: FlutterFire Configuration
     id "kotlin-android"
     id "dev.flutter.flutter-gradle-plugin"
 }
@@ -26,11 +23,7 @@ if (flutterVersionName == null) {
 }
 
 android {
-<<<<<<< HEAD
     namespace "com.decompiler.brookmate"
-=======
-    namespace "com.example.real_app"
->>>>>>> 737fc718be5f942a7567112354a23860fd5f96e3
     compileSdk flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
@@ -49,11 +42,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-<<<<<<< HEAD
         applicationId "com.decompiler.brookmate"
-=======
-        applicationId "com.example.real_app"
->>>>>>> 737fc718be5f942a7567112354a23860fd5f96e3
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
         minSdkVersion flutter.minSdkVersion
