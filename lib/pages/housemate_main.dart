@@ -14,6 +14,14 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  List<String> friendsList = [];
+
+  void addFriend(String friendName) {
+    setState(() {
+      friendsList.add(friendName);
+    });
+  }
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -109,7 +117,9 @@ class _MyHomePageState extends State<MyHomePage> {
             const SizedBox(
               height: 10,
             ),
-            Topbar(),
+            Topbar(
+              friendsList: const [],
+            ),
             const SizedBox(
               height: 20,
             ),
