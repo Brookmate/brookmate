@@ -3,13 +3,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Tenant implements Model {
   final String? id;
-  final String email;
-  final String name;
+  String email;
+  String name;
   final List<DocumentReference> likedHouses;
   final List<DocumentReference> likedTenants;
+  final List<DocumentReference> myReviews;
   final DocumentReference? persona;
-  final List<String>? personaPriorities;
-  Map<String, String>? sns;
+  final Map<String, String>? sns;
   bool allowSearch;
   final List<DocumentReference> brookmates;
 
@@ -19,8 +19,8 @@ class Tenant implements Model {
     required this.name,
     required this.likedHouses,
     required this.likedTenants,
+    required this.myReviews,
     this.persona,
-    this.personaPriorities,
     this.sns,
     required this.allowSearch,
     required this.brookmates,
@@ -32,8 +32,8 @@ class Tenant implements Model {
         name = doc.data()!["name"],
         likedHouses = doc.data()!["liked_houses"],
         likedTenants = doc.data()!["liked_tenants"],
+        myReviews = doc.data()!["my_reviews"],
         persona = doc.data()!["persona"],
-        personaPriorities = doc.data()!["priorities"],
         sns = doc.data()!["sns"],
         allowSearch = doc.data()!["allow_search"],
         brookmates = doc.data()!["brookmates"];
@@ -46,8 +46,8 @@ class Tenant implements Model {
       "name": name,
       "likedHouses": likedHouses,
       "likedTenants": likedTenants,
+      "myReviews": myReviews,
       "persona": persona,
-      "personaPriorities": personaPriorities,
       "sns": sns,
       "allowSearch": allowSearch,
       "brookmates": brookmates,

@@ -1,8 +1,12 @@
 import 'package:brookmate/services/models/house_model.dart';
+import 'package:brookmate/services/models/model_interface.dart';
 import 'package:brookmate/services/models/owner_model.dart';
 import 'package:brookmate/services/models/persona_model.dart';
+import 'package:brookmate/services/models/review_model.dart';
 import 'package:brookmate/services/models/tenant_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+enum Models { tenants, owners, persona, houses, reviews }
 
 class DatabaseService {
   static late final FirebaseFirestore _db;
@@ -13,6 +17,14 @@ class DatabaseService {
     _init = true;
     return _db;
   }
+
+  static final List<String> _models = [
+    "Owners",
+    "Tenants",
+    "Persona",
+    "Houses",
+    "Reviews"
+  ];
 
   // Create
   static void addHouse(House houseData) async {
@@ -28,65 +40,46 @@ class DatabaseService {
   }
 
   static void addPersona(Persona personaData) async {
-    await _db.collection("Employees").add(personaData.toMap());
+    await _db.collection("Persona").add(personaData.toMap());
+  }
+
+  static void addReview(Review reviewData) async {
+    await _db.collection("Reviews").add(reviewData.toMap());
   }
 
   // Read (Single)
-  static Future<House> getHouse(DocumentReference ref) async {
+  static Future<Model> getDocument(Models model, DocumentReference ref) async {
     DocumentSnapshot<Map<String, dynamic>> snapshot =
-        await _db.collection("Houses").doc(ref.id).get();
-    return House.fromDocumentSnapshot(snapshot);
+        await _db.collection(_models[model.index]).doc(ref.id).get();
+    switch (model) {
+      case Models.houses:
+        return House.fromDocumentSnapshot(snapshot);
+      case Models.owners:
+        return Owner.fromDocumentSnapshot(snapshot);
+      case Models.tenants:
+        return Tenant.fromDocumentSnapshot(snapshot);
+      case Models.persona:
+        return Persona.fromDocumentSnapshot(snapshot);
+      case Models.reviews:
+        return Review.fromDocumentSnapshot(snapshot);
+      default:
+        throw Exception("Invalid type entered");
+    }
   }
 
-  static Future<Owner> getOwner(DocumentReference ref) async {
-    DocumentSnapshot<Map<String, dynamic>> snapshot =
-        await _db.collection("Owners").doc(ref.id).get();
-    return Owner.fromDocumentSnapshot(snapshot);
-  }
-
-  static Future<Tenant> getTenant(DocumentReference ref) async {
-    DocumentSnapshot<Map<String, dynamic>> snapshot =
-        await _db.collection("Tenants").doc(ref.id).get();
-    return Tenant.fromDocumentSnapshot(snapshot);
-  }
-
-  static Future<Persona> getPersona(DocumentReference ref) async {
-    DocumentSnapshot<Map<String, dynamic>> snapshot =
-        await _db.collection("Persona").doc(ref.id).get();
-    return Persona.fromDocumentSnapshot(snapshot);
+  static Stream<DocumentSnapshot<Map<String, dynamic>>> getDocumentSnapshot(
+      Models model, DocumentReference ref) {
+    Stream<DocumentSnapshot<Map<String, dynamic>>> snapshot =
+        _db.collection(_models[model.index]).doc(ref.id).snapshots();
+    return snapshot;
   }
 
   // Read (Multiple)
-  static Future<List<House>> getHousesSnapshot() async {
-    QuerySnapshot<Map<String, dynamic>> snapshot =
-        await _db.collection("Houses").get();
-    return snapshot.docs
-        .map((docSnapshot) => House.fromDocumentSnapshot(docSnapshot))
-        .toList();
-  }
-
-  static Future<List<Owner>> getOwnersSnapshot() async {
-    QuerySnapshot<Map<String, dynamic>> snapshot =
-        await _db.collection("Owners").get();
-    return snapshot.docs
-        .map((docSnapshot) => Owner.fromDocumentSnapshot(docSnapshot))
-        .toList();
-  }
-
-  static Future<List<Tenant>> getTenantsSnapshot() async {
-    QuerySnapshot<Map<String, dynamic>> snapshot =
-        await _db.collection("Tenants").get();
-    return snapshot.docs
-        .map((docSnapshot) => Tenant.fromDocumentSnapshot(docSnapshot))
-        .toList();
-  }
-
-  static Future<List<Tenant>> getPersonaSnapshot() async {
-    QuerySnapshot<Map<String, dynamic>> snapshot =
-        await _db.collection("Persona").get();
-    return snapshot.docs
-        .map((docSnapshot) => Tenant.fromDocumentSnapshot(docSnapshot))
-        .toList();
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getCollectionSnapshot(
+      Models model) {
+    Stream<QuerySnapshot<Map<String, dynamic>>> snapshot =
+        _db.collection(_models[model.index]).snapshots();
+    return snapshot;
   }
 
   // Update
@@ -107,9 +100,16 @@ class DatabaseService {
 
   static void updatePersona(Persona personaData) async {
     await _db
-        .collection("Employees")
+        .collection("Persona")
         .doc(personaData.id)
         .update(personaData.toMap());
+  }
+
+  static void updateReview(Review reviewData) async {
+    await _db
+        .collection("Reviews")
+        .doc(reviewData.id)
+        .update(reviewData.toMap());
   }
 
   // Delete
@@ -126,6 +126,10 @@ class DatabaseService {
   }
 
   static void deletePersona(String personaId) async {
-    await _db.collection("Employees").doc(personaId).delete();
+    await _db.collection("Persona").doc(personaId).delete();
+  }
+
+  static void deleteReview(String reviewId) async {
+    await _db.collection("Persona").doc(reviewId).delete();
   }
 }

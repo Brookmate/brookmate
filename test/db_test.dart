@@ -23,7 +23,12 @@ class _DBTestState extends State<DBTest> {
   @override
   Widget build(BuildContext context) {
     late final houses = DatabaseService.getHousesSnapshot();
-    houses.then((value) => {for (int i = 0; i < 1; i++) print(value[i])});
+    houses.then((value) {
+      for (int i = 0; i < 1; i++) {
+        print(i);
+        print(value[i]);
+      }
+    });
     return const MaterialApp(
         home: Scaffold(
       body: Column(),
