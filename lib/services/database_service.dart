@@ -67,7 +67,7 @@ class DatabaseService {
     }
   }
 
-  static Stream<DocumentSnapshot<Map<String, dynamic>>> getDocumentSnapshot(
+  static Stream<DocumentSnapshot<Map<String, dynamic>>> getDocumentStream(
       Models model, DocumentReference ref) {
     Stream<DocumentSnapshot<Map<String, dynamic>>> snapshot =
         _db.collection(_models[model.index]).doc(ref.id).snapshots();
@@ -75,7 +75,7 @@ class DatabaseService {
   }
 
   // Read (Multiple)
-  static Stream<QuerySnapshot<Map<String, dynamic>>> getCollectionSnapshot(
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getCollectionStream(
       Models model) {
     Stream<QuerySnapshot<Map<String, dynamic>>> snapshot =
         _db.collection(_models[model.index]).snapshots();
