@@ -28,9 +28,12 @@ require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelpe
 flutter_ios_podfile_setup
 
 target 'Runner' do
+<<<<<<< HEAD
   use_frameworks!
   use_modular_headers!
 
+=======
+>>>>>>> f8febc44742c2793874291335b1f1e6bca8ee75a
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
   target 'RunnerTests' do
     inherit! :search_paths
