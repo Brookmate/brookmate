@@ -1,12 +1,20 @@
+import 'dart:async';
+
 import 'package:brookmate/widgets/housemate_profile.dart';
 import 'package:brookmate/widgets/housemate_topbar.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:brookmate/firebase_options.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:brookmate/services/database_service.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  await DatabaseService.init();
   runApp(const MyApp());
-  Firebase.initializeApp();
 }
 
 class MyApp extends StatefulWidget {
@@ -69,14 +77,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   String? searchValue;
 
-  var nameList = [
-    "Sid",
-    "Heejoon",
-    "GeonO",
-    "Minhyeok",
-    "Jinsung",
-    "blah",
-  ];
+  late List tenantList = [];
 
   var imageList = [
     'assets/images/1.png',
@@ -87,17 +88,15 @@ class _MyHomePageState extends State<MyHomePage> {
     'assets/images/1.png'
   ];
 
-  var description = [
-    ['male', '21', 'blah'],
-    ['female', '20', 'blah'],
-    ['male', '25', 'blah'],
-    ['female', '135', 'blah'],
-    ['male', '125', 'blah'],
-    ['undefined', '123', 'blah']
-  ];
-
   @override
   Widget build(BuildContext context) {
+    late final tenants = DatabaseService.getTenantsSnapshot();
+    tenants.then((value) {
+      for (var i in value) {
+        tenantList.add(i);
+      }
+    });
+
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -118,7 +117,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             ListView.builder(
                 physics: const BouncingScrollPhysics(),
-                itemCount: nameList.length,
+                itemCount: tenantList.length,
                 shrinkWrap: true,
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
@@ -178,7 +177,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                               padding: const EdgeInsets.only(
                                                   left: 15.0),
                                               child: Text(
-                                                "${nameList[index]}\n${description[index][0]}\n${description[index][1]}",
+                                                "${tenantList[index].name}\n${tenantList[index].name}\n${tenantList[index].email}",
                                                 textAlign: TextAlign.left,
                                               ),
                                             ),
@@ -217,11 +216,9 @@ class _MyHomePageState extends State<MyHomePage> {
                           });
                     },
                     child: Profile(
-                      image: imageList[index],
-                      gender: description[index][0],
-                      age: description[index][1],
-                      Name: nameList[index],
-                    ),
+                        image: imageList[index],
+                        Name: tenantList[index].name,
+                        email: tenantList[index].email),
                   );
                 }),
           ]),
