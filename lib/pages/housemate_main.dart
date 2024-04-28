@@ -1,9 +1,12 @@
 import 'package:brookmate/widgets/housemate_profile.dart';
 import 'package:brookmate/widgets/housemate_topbar.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:brookmate/firebase_options.dart';
 
 void main() {
   runApp(const MyApp());
+  Firebase.initializeApp();
 }
 
 class MyApp extends StatefulWidget {
