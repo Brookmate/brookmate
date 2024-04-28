@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import '../widgets/house_search_info_1.dart';
+import 'package:brookmate/widgets/house_search_info_1.dart';
+import 'package:brookmate/services/models/house_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/widgets.dart';
 
-void main() {
-  runApp(App());
-}
-
-class App extends StatelessWidget {
+class HouseSearch extends StatelessWidget {
   final houseList = [
     "Kiwi",
     "StrawBerry",
@@ -15,7 +14,7 @@ class App extends StatelessWidget {
     "Mango",
   ];
 
-  App({super.key});
+  HouseSearch({super.key});
   void onTap() {}
 
   @override
@@ -152,22 +151,39 @@ class App extends StatelessWidget {
                       height: 12,
                     ),
                     Expanded(
-                      child: ListView.builder(
-                        padding: EdgeInsets.zero,
-                        shrinkWrap: true,
-                        itemCount: houseList.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return HouseInfo1(
-                            houseName: houseList[index],
-                            numRating: 9.9,
-                            rating: 'Excellent',
-                            numReviews: 1203,
-                            numKm: 10,
-                            numBeds: 2,
-                            numBath: 1,
-                            rent: 1025290,
-                            isFreeElec: true,
-                          );
+                      child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                        stream: FirebaseFirestore.instance
+                            .collection('house')
+                            .snapshots(),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                                snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          } else {
+                            //final docs = snapshot.data!.docs;
+                            return ListView.builder(
+                              padding: EdgeInsets.zero,
+                              shrinkWrap: true,
+                              itemCount: houseList.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return HouseInfo1(
+                                  houseName: houseList[index],
+                                  numRating: 9.9,
+                                  rating: 'Excellent',
+                                  numReviews: 1203,
+                                  numKm: 10,
+                                  numBeds: 2,
+                                  numBath: 1,
+                                  rent: 1025290,
+                                  isFreeElec: true,
+                                );
+                              },
+                            );
+                          }
                         },
                       ),
                     ),

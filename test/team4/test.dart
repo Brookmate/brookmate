@@ -1,4 +1,5 @@
 import 'package:brookmate/pages/house_map.dart';
+import 'package:brookmate/pages/house_search.dart';
 import 'package:flutter/material.dart';
 import 'package:brookmate/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -16,7 +17,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HouseMap(),
+      home: HouseSearch(),
     );
   }
 }

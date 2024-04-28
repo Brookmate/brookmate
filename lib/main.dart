@@ -16,7 +16,7 @@ class MainApp extends StatelessWidget {
   const MainApp({super.key});
   @override
   Widget build(BuildContext context) {
-    late final houses = DatabaseService.getCollectionSnapshot(Models.houses);
+    // late final houses = DatabaseService.getCollectionSnapshot(Models.houses);
     return const MaterialApp(
       home: Placeholder(),
     );

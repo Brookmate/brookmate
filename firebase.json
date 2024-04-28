@@ -1,1 +1,27 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"brookmate-app-sbu","appId":"1:519570864839:android:b51ee7f881019c5c975ce2","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"brookmate-app-sbu","configurations":{"android":"1:519570864839:android:b51ee7f881019c5c975ce2","ios":"1:519570864839:ios:b90a0e80fdfc5bef975ce2","web":"1:519570864839:web:db66dfd278599c83975ce2"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "brookmate-app-sbu",
+          "appId": "1:519570864839:android:b51ee7f881019c5c975ce2",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "brookmate-app-sbu",
+          "configurations": {
+            "android": "1:519570864839:android:b51ee7f881019c5c975ce2",
+            "ios": "1:519570864839:ios:b90a0e80fdfc5bef975ce2",
+            "web": "1:519570864839:web:db66dfd278599c83975ce2"
+          }
+        }
+      }
+    }
+  },
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  }
+}

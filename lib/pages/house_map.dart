@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../widgets/house_search_info_2.dart';
+import 'package:brookmate/widgets/house_search_info_2.dart';
 
 class HouseMap extends StatelessWidget {
   final houseList = [
