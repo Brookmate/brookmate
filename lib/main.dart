@@ -14,9 +14,11 @@ Future<void> main() async {
 
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    late final houses = DatabaseService.getCollectionSnapshot(Models.houses);
+    late final houses = DatabaseService.getCollectionStream(Models.houses);
+    houses.first.then((value) => print(value.docs.first.data()));
     return const MaterialApp(
       home: Placeholder(),
     );
