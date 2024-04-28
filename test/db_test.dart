@@ -22,8 +22,8 @@ class DBTest extends StatefulWidget {
 class _DBTestState extends State<DBTest> {
   @override
   Widget build(BuildContext context) {
-    late final houses = DatabaseService.getHousesSnapshot();
-    houses.then((value) => {for (int i = 0; i < 1; i++) print(value[i])});
+    late final houses = DatabaseService.getCollectionStream(Models.houses);
+
     return const MaterialApp(
         home: Scaffold(
       body: Column(),

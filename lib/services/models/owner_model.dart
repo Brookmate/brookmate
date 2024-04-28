@@ -3,8 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Owner implements Model {
   final String? id;
-  final String email;
-  final String name;
+  String email;
+  String name;
   final List<DocumentReference> houses;
 
   Owner({

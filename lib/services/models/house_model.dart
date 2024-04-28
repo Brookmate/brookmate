@@ -4,10 +4,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class House implements Model {
   final String? id;
   final DocumentReference owner;
-  final String rentPrice;
+  String houseName;
+  double ratingAvg;
+  final List<DocumentReference> houseReviews;
+  String rentPrice;
   final String location;
   final int deposit;
-  final int houseSize; //square feet
+  final int houseSize; // square feet
   final Map<String, int> transportation;
   final int roomsCount;
   final int bathroomsCount;
@@ -20,10 +23,13 @@ class House implements Model {
   House({
     this.id,
     required this.owner,
+    required this.houseName,
+    required this.ratingAvg,
+    required this.houseReviews,
     required this.rentPrice,
     required this.location,
     required this.deposit,
-    required this.houseSize, //square feet
+    required this.houseSize, // square feet
     required this.transportation,
     required this.roomsCount,
     required this.bathroomsCount,
@@ -37,6 +43,9 @@ class House implements Model {
   House.fromDocumentSnapshot(DocumentSnapshot<Map<String, dynamic>> doc)
       : id = doc.id,
         owner = doc.data()!["owner"],
+        houseName = doc.data()!["house_nmae"],
+        ratingAvg = doc.data()!["rating_avg"],
+        houseReviews = doc.data()!["house_reviews"],
         rentPrice = doc.data()!["rent_price"],
         location = doc.data()!["location"],
         deposit = doc.data()!["deposit"],
@@ -55,10 +64,13 @@ class House implements Model {
     return {
       "id": id ?? "None",
       "owner": owner,
+      "houseName": houseName,
+      "ratingAvg": ratingAvg,
+      "houseReviews": houseReviews,
       "rentPrice": rentPrice,
       "location": location,
       "deposit": deposit,
-      "houseSize": houseSize, //square feet
+      "houseSize": houseSize, // square feet
       "transportation": transportation,
       "roomsCount": roomsCount,
       "bathroomsCount": bathroomsCount,

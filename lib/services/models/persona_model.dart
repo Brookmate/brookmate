@@ -4,17 +4,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Persona implements Model {
   final String? id;
   final DocumentSnapshot user;
-  final int cleaness; // 5 scale
+  int cleaness; // 5 scale
   final Map<String, String> sleepingTime;
-  final bool isSmoker;
-  final int drinkingRate; // 5 scale
-  final int inviteGuests; // 5 scale
-  final int sociability; // 5 scale
-  final bool canDrive;
+  bool isSmoker;
+  int drinkingRate; // 5 scale
+  int inviteGuests; // 5 scale
+  int sociability; // 5 scale
+  bool canDrive;
   final Map<String, String> stayingSchedule;
-  final String sex;
+  String sex;
   final Map<String, String> budget;
-  final String nationality;
+  String nationality;
 
   Persona({
     this.id,
