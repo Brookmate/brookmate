@@ -12,15 +12,27 @@ Future<void> main() async {
   runApp(const MainApp());
 }
 
-class MainApp extends StatelessWidget {
+class MainApp extends StatefulWidget {
   const MainApp({super.key});
 
   @override
+  State<MainApp> createState() => _MainAppState();
+}
+
+class _MainAppState extends State<MainApp> {
+  @override
   Widget build(BuildContext context) {
-    late final houses = DatabaseService.getCollectionStream(Models.houses);
-    houses.first.then((value) => print(value.docs.first.data()));
-    return const MaterialApp(
-      home: Placeholder(),
+    return MaterialApp(
+      home: StreamBuilder(
+          stream: DatabaseService.getCollectionStream(Models.tenants),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              print(snapshot.data!.docs[0]["name"]);
+              return const Text("data");
+            } else {
+              return const Placeholder();
+            }
+          }),
     );
   }
 }

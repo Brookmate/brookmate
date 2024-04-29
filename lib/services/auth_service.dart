@@ -1,9 +1,18 @@
 import "package:firebase_auth/firebase_auth.dart";
 
 class AuthService {
-  final _auth = FirebaseAuth.instance;
+  static late final FirebaseAuth _auth;
+  static bool _init = false;
+  static Future init() async {
+    if (_init) return;
+    _auth = FirebaseAuth.instance;
+    _init = true;
+    return _auth;
+  }
 
-  // Stream<User> get onAuthStateChanged {
-  //   return;
-  // }
+  // TODO: Build Sign Up method
+
+  // TODO: Build Log In method
+
+  // TODO: Build
 }

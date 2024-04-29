@@ -2,7 +2,7 @@ import 'package:brookmate/services/models/model_interface.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Owner implements Model {
-  final String? id;
+  String? id;
   String email;
   String name;
   final List<DocumentReference> houses;
