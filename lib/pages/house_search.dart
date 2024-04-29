@@ -153,7 +153,7 @@ class HouseSearch extends StatelessWidget {
                     Expanded(
                       child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
                         stream: FirebaseFirestore.instance
-                            .collection('house')
+                            .collection('houses')
                             .snapshots(),
                         builder: (BuildContext context,
                             AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
@@ -164,22 +164,23 @@ class HouseSearch extends StatelessWidget {
                               child: CircularProgressIndicator(),
                             );
                           } else {
-                            //final docs = snapshot.data!.docs;
+                            final docs = snapshot.data!.docs;
+                            if (docs.isEmpty) return const Text('no data');
                             return ListView.builder(
                               padding: EdgeInsets.zero,
                               shrinkWrap: true,
-                              itemCount: houseList.length,
+                              itemCount: docs.length,
                               itemBuilder: (BuildContext context, int index) {
                                 return HouseInfo1(
-                                  houseName: houseList[index],
-                                  numRating: 9.9,
-                                  rating: 'Excellent',
-                                  numReviews: 1203,
-                                  numKm: 10,
-                                  numBeds: 2,
-                                  numBath: 1,
-                                  rent: 1025290,
-                                  isFreeElec: true,
+                                  houseName: "${docs[index]['location']}\n",
+                                  numRating: 0, //docs[index]['rating_avg']
+                                  rating: ' ',
+                                  numReviews: 0,
+                                  numKm: 0,
+                                  numBeds: 0,
+                                  numBath: 0, //docs[index]['bathrooms_counter']
+                                  rent: docs[index]['rent_price'],
+                                  isFreeElec: false,
                                 );
                               },
                             );
