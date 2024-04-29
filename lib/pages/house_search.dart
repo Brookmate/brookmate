@@ -5,15 +5,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
 
 class HouseSearch extends StatelessWidget {
-  final houseList = [
-    "Kiwi",
-    "StrawBerry",
-    "Lemon",
-    "Apple",
-    "Watermelon",
-    "Mango",
-  ];
-
   HouseSearch({super.key});
   void onTap() {}
 
@@ -172,13 +163,13 @@ class HouseSearch extends StatelessWidget {
                               itemCount: docs.length,
                               itemBuilder: (BuildContext context, int index) {
                                 return HouseInfo1(
-                                  houseName: "${docs[index]['location']}\n",
-                                  numRating: 0, //docs[index]['rating_avg']
-                                  rating: ' ',
+                                  houseName: "${docs[index]['house_name']}\n",
+                                  numRating: docs[index]['rating_avg'],
+                                  rating: 0,
                                   numReviews: 0,
                                   numKm: 0,
-                                  numBeds: 0,
-                                  numBath: 0, //docs[index]['bathrooms_counter']
+                                  numBeds: docs[index]['rooms_count'],
+                                  numBath: docs[index]['bathrooms_count'],
                                   rent: docs[index]['rent_price'],
                                   isFreeElec: false,
                                 );

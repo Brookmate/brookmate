@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class HouseInfo1 extends StatefulWidget {
-  final String houseName, rating;
-  final double numRating;
+  final String houseName;
+  final double numRating, rating;
   final int numReviews, numBeds, numBath, rent, numKm;
   final bool isFreeElec;
 
@@ -97,7 +97,7 @@ class _HouseInfo1State extends State<HouseInfo1> {
                             const SizedBox(
                               width: 3,
                             ),
-                            Text(widget.rating,
+                            Text("$widget.rating",
                                 style:
                                     const TextStyle(fontSize: 10, height: 0.8)),
                             Text(' - ${widget.numReviews} reviews',
