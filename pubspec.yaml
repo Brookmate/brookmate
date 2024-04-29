@@ -39,6 +39,7 @@ dependencies:
   cloud_firestore: ^4.17.0
   firebase_auth: ^4.19.2
   shared_preferences: ^2.2.3
+  toggle_switch: ^2.3.0
 
 
 dev_dependencies:
