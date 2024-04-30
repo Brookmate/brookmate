@@ -58,7 +58,7 @@ class AuthService {
 
   // TODO: Build remove user method
 
-  // TODO: Build  Add Social Account method
+  // TODO: Build Add Social Account method
 
-  // TODO:
+  // TODO: Build something
 }
