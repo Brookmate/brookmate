@@ -1,4 +1,21 @@
+import 'package:brookmate/services/database_service.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+
+String searchValue = "";
+List<QueryDocumentSnapshot<Map<String, dynamic>>> searchedList(
+    List<QueryDocumentSnapshot<Map<String, dynamic>>> docs) {
+  List<QueryDocumentSnapshot<Map<String, dynamic>>> results = [];
+  if (docs.isEmpty) {
+    return results;
+  } else {
+    results = docs
+        .where((element) =>
+            element['name'].toLowerCase().contains(searchValue.toLowerCase()))
+        .toList();
+  }
+  return results;
+}
 
 // ignore: must_be_immutable
 class Topbar extends StatefulWidget {
@@ -14,10 +31,13 @@ class Topbar extends StatefulWidget {
 
 class _TopbarState extends State<Topbar> {
   final List<String> friendsNames = [];
-  String searchValue = "";
 
   List<String> filteredList() {
     return friendsNames.where((name) => name.contains(searchValue)).toList();
+  }
+
+  String SearchValue() {
+    return searchValue;
   }
 
   @override

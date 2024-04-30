@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:brookmate/widgets/housemate_profile.dart';
 import 'package:brookmate/widgets/housemate_topbar.dart';
 import 'package:flutter/material.dart';
@@ -59,7 +58,8 @@ class _HousemateState extends State<housemate> {
                       child: CircularProgressIndicator(),
                     );
                   }
-                  final docs = snapshot.data!.docs;
+                  var docs = snapshot.data!.docs;
+
                   if (docs.isEmpty) return const Text('no data');
                   return ListView.builder(
                       physics: const BouncingScrollPhysics(),
@@ -176,7 +176,6 @@ class _HousemateState extends State<housemate> {
           ]),
         ),
       ),
-
       // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
