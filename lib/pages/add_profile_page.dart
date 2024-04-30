@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:brookmate/widgets/custom_switch_tile.dart';
-import 'package:brookmate/widgets/custom_switch_tile_food.dart';
 import 'package:brookmate/widgets/custom_switch_tile_sex.dart';
 import 'package:brookmate/pages/next_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:brookmate/services/database_service.dart';
+import 'package:brookmate/services/models/persona_model.dart';
+import 'package:brookmate/services/models/tenant_model.dart';
 
 class AddProfilePage extends StatefulWidget {
   const AddProfilePage({super.key});
@@ -13,19 +16,44 @@ class AddProfilePage extends StatefulWidget {
 
 class _AddProfilePageState extends State<AddProfilePage> {
   // 상태 관리 변수들
-  bool _drinksAlcohol = false;
+  late DocumentReference _user;
+  // email을 기준으로 사용자를 검색하여 _user에 할당하는 함수
+  Future<void> getUserByEmail(String email) async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> querySnapshot =
+          await FirebaseFirestore.instance
+              .collection('tenants')
+              .where('email', isEqualTo: email)
+              .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        Tenant tenant = Tenant.fromDocumentSnapshot(querySnapshot.docs.first);
+
+        _user = FirebaseFirestore.instance.collection('users').doc(tenant.id);
+      } else {}
+    } catch (error) {
+      print('Error getting user by email: $error');
+    }
+  }
+
+  
+  int _cleaness = 0;
+  RangeValues _sleepTime = const RangeValues(8, 24);
+  final Map<String, String> _sleepTimeMap = {};
+  bool _smokes = false;
+  int _drinksAlcohol = 0;
+  int _guest = 0;
+  int _sociability = 0;
   bool _drivesCar = false;
-  double _sociability = 0;
-  bool _food = false;
-  bool _foodSharing = false;
-  double _cleaness = 0;
-  double _noiseLevel = 0;
-  bool _petOwnership = false;
   DateTime? _fromDate;
   DateTime? _toDate;
-  bool _smokes = false;
-  RangeValues _sleepTime = const RangeValues(8, 24);
-  bool _guest = false;
+  bool _fromDateIsSelected = false;
+  bool _toDateIsSelected = false;
+  final Map<String, String> _scheduleMap = {};
+  bool _sex = false;
+  String _selectedSex = 'unselected';
+  RangeValues _budget = const RangeValues(0, 10000);
+  final Map<String, String> _budgetMap = {};
   final _nationality = [
     'Afghanistan',
     'Albania',
@@ -224,17 +252,14 @@ class _AddProfilePageState extends State<AddProfilePage> {
     'Zambia',
     'Zimbabwe'
   ];
-  String? _selectedNationality;
-  RangeValues _budget = const RangeValues(0, 10000);
-  bool _sex = false;
+  String _selectedNationality = 'unselected';
+  bool _nationalityIsSelected = false;
+  // final DatabaseService _dbService = DatabaseService();
 
   // Next Page
   // Function to check if all criteria are met
   bool isAllCriteriaMet() {
-    if ((_fromDate != null) &&
-        (_toDate != null) &&
-        (_selectedNationality != null)) return true;
-    return false;
+    return (_fromDateIsSelected && _toDateIsSelected && _nationalityIsSelected);
   }
 
   @override
@@ -242,7 +267,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Enter your profile',
+          'Enter your persona',
           style: TextStyle(
               color: Colors.white, fontSize: 40, fontWeight: FontWeight.bold),
         ),
@@ -251,12 +276,24 @@ class _AddProfilePageState extends State<AddProfilePage> {
       body: ListView(
         children: [
           // Drink Alcohol
-          CustomSwitchTile(
-            title: 'Drink Alcohol',
-            value: _drinksAlcohol,
-            onChanged: (bool value) {
+          const Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Text('Drink Alcohol', style: TextStyle(fontSize: 21)),
+              ),
+            ],
+          ),
+          Slider(
+            min: 0,
+            max: 100,
+            divisions: 20, // 10점 단위로 조절
+            activeColor: Colors.red,
+            value: _drinksAlcohol.toDouble(),
+            onChanged: (double value) {
               setState(() {
-                _drinksAlcohol = value;
+                _drinksAlcohol = value.toInt();
               });
             },
           ),
@@ -287,32 +324,10 @@ class _AddProfilePageState extends State<AddProfilePage> {
             max: 100,
             divisions: 10, // 10점 단위로 조절
             activeColor: Colors.red,
-            value: _sociability,
+            value: _sociability.toDouble(),
             onChanged: (double value) {
               setState(() {
-                _sociability = value;
-              });
-            },
-          ),
-
-          // Food
-          CustomSwitchTileFood(
-            title: 'Food',
-            value: _food,
-            onChanged: (bool value) {
-              setState(() {
-                _food = value;
-              });
-            },
-          ),
-
-          // Food Sharing
-          CustomSwitchTile(
-            title: 'Food Sharing',
-            value: _foodSharing,
-            onChanged: (bool value) {
-              setState(() {
-                _foodSharing = value;
+                _sociability = value.toInt();
               });
             },
           ),
@@ -332,44 +347,10 @@ class _AddProfilePageState extends State<AddProfilePage> {
             max: 100,
             divisions: 10,
             activeColor: Colors.red,
-            value: _cleaness,
+            value: _cleaness.toDouble(),
             onChanged: (double value) {
               setState(() {
-                _cleaness = value;
-              });
-            },
-          ),
-
-          // Noise Level
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Text('Noise Level', style: TextStyle(fontSize: 21)),
-              ),
-            ],
-          ),
-          Slider(
-            min: 0,
-            max: 100,
-            divisions: 10, // 10점 단위로 조절
-            activeColor: Colors.red,
-            value: _noiseLevel,
-            onChanged: (double value) {
-              setState(() {
-                _noiseLevel = value;
-              });
-            },
-          ),
-
-          // Pet Ownership
-          CustomSwitchTile(
-            title: 'Pet Ownership',
-            value: _petOwnership,
-            onChanged: (bool value) {
-              setState(() {
-                _petOwnership = value;
+                _cleaness = value.toInt();
               });
             },
           ),
@@ -404,6 +385,8 @@ class _AddProfilePageState extends State<AddProfilePage> {
                             ).then((selectedDate) {
                               setState(() {
                                 _fromDate = selectedDate;
+                                _fromDateIsSelected = true;
+                                _scheduleMap["from"] = _fromDate.toString();
                               });
                             });
                           },
@@ -434,6 +417,8 @@ class _AddProfilePageState extends State<AddProfilePage> {
                             ).then((selectedDate) {
                               setState(() {
                                 _toDate = selectedDate;
+                                _toDateIsSelected = true;
+                                _scheduleMap["to"] = _toDate.toString();
                               });
                             });
                           },
@@ -498,17 +483,31 @@ class _AddProfilePageState extends State<AddProfilePage> {
             onChanged: (RangeValues values) {
               setState(() {
                 _sleepTime = values;
+                _sleepTimeMap["from"] = _sleepTime.start.toString();
+                _sleepTimeMap["to"] = _sleepTime.end.toString();
               });
             },
           ),
 
           // Guest
-          CustomSwitchTile(
-            title: 'Guest',
-            value: _guest,
-            onChanged: (bool value) {
+          const Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Text('Guest', style: TextStyle(fontSize: 21)),
+              ),
+            ],
+          ),
+          Slider(
+            min: 0,
+            max: 100,
+            divisions: 20, // 10점 단위로 조절
+            activeColor: Colors.red,
+            value: _guest.toDouble(),
+            onChanged: (double value) {
               setState(() {
-                _guest = value;
+                _guest = value.toInt();
               });
             },
           ),
@@ -536,9 +535,12 @@ class _AddProfilePageState extends State<AddProfilePage> {
                         ))
                     .toList(),
                 onChanged: (value) {
-                  setState(() {
-                    _selectedNationality = value!;
-                  });
+                  if (value != null) {
+                    setState(() {
+                      _selectedNationality = value;
+                      _nationalityIsSelected = true;
+                    });
+                  }
                 },
               ),
             ],
@@ -567,17 +569,19 @@ class _AddProfilePageState extends State<AddProfilePage> {
             onChanged: (RangeValues values) {
               setState(() {
                 _budget = values;
+                _budgetMap["from"] = _budget.start.toString();
+                _budgetMap["to"] = _budget.end.toString();
               });
             },
           ),
 
-          // Sex
           CustomSwitchTileSex(
             title: 'Sex',
             value: _sex,
             onChanged: (bool value) {
               setState(() {
                 _sex = value;
+                _selectedSex = _sex ? 'Female' : 'Male';
               });
             },
           ),
@@ -600,6 +604,23 @@ class _AddProfilePageState extends State<AddProfilePage> {
                 onPressed: () {
                   // Navigate to the next page if all criteria are met
                   if (isAllCriteriaMet()) {
+                    // DocumentSnapshot userSnapshot = Tenant.fromDocumentSnapshot(FirebaseFirestore.instance.collection(Models.tenants).doc("email").get());
+                    // if (userSnapshot.exists) {
+                    // }
+                    Persona newPersona = Persona(
+                        user: _user,
+                        cleaness: _cleaness,
+                        sleepingTime: _sleepTimeMap,
+                        isSmoker: _smokes,
+                        drinkingRate: _drinksAlcohol,
+                        inviteGuests: _guest,
+                        sociability: _sociability,
+                        canDrive: _drivesCar,
+                        stayingSchedule: _scheduleMap,
+                        sex: _selectedSex,
+                        budget: _budgetMap,
+                        nationality: _selectedNationality);
+                    DatabaseService.addPersona(newPersona);
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => const NextPage()),

@@ -2,13 +2,13 @@ import 'package:brookmate/services/models/model_interface.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Tenant implements Model {
-  final String? id;
+  String? id;
   String email;
   String name;
   final List<DocumentReference> likedHouses;
   final List<DocumentReference> likedTenants;
   final List<DocumentReference> myReviews;
-  final DocumentReference? persona;
+  DocumentReference? persona;
   final Map<String, String>? sns;
   bool allowSearch;
   final List<DocumentReference> brookmates;

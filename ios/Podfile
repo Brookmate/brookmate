@@ -29,11 +29,17 @@ flutter_ios_podfile_setup
 
 target 'Runner' do
 <<<<<<< HEAD
+<<<<<<< HEAD
   use_frameworks!
   use_modular_headers!
 
 =======
 >>>>>>> f8febc44742c2793874291335b1f1e6bca8ee75a
+=======
+  use_frameworks!
+  use_modular_headers!
+
+>>>>>>> f5caf6d4f1eb1663a89b5a2a867e1a1a71bf4a2d
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
   target 'RunnerTests' do
     inherit! :search_paths
