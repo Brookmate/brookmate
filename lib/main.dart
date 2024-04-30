@@ -8,7 +8,7 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  DatabaseService.init();
+  await DatabaseService.init();
   runApp(const MainApp());
 }
 
@@ -24,10 +24,10 @@ class _MainAppState extends State<MainApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: StreamBuilder(
-          stream: DatabaseService.getCollectionStream(Models.tenants),
+          stream: DatabaseService.getCollectionStream(Models.houses),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              print(snapshot.data!.docs[0]["name"]);
+              print(snapshot.data!.docs);
               return const Text("data");
             } else {
               return const Placeholder();
