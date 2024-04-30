@@ -10,7 +10,7 @@ import 'package:brookmate/utils/prefs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:brookmate/pages/housemate_main.dart';
+
 import 'package:brookmate/firebase_options.dart';
 
 Future<void> main() async {
@@ -28,8 +28,6 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: MyApp(),
-    );
+    return const MaterialApp();
   }
 }

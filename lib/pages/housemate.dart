@@ -168,7 +168,7 @@ class _HousemateState extends State<housemate> {
                           },
                           child: Profile(
                               image: imageList[index],
-                              Name: docs[index]['title'],
+                              Name: docs[index]['name'],
                               email: docs[index]['email']),
                         );
                       });
