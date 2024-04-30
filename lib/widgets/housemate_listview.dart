@@ -7,11 +7,13 @@ class housemate_listview extends StatelessWidget {
     required this.nameList,
     required this.imageList,
     required this.emailList,
+    required this.friendsList,
   });
 
   final List<String> nameList;
   final List<String> imageList;
   final List<String> emailList;
+  final List<String> friendsList;
 
   @override
   Widget build(BuildContext context) {
@@ -96,6 +98,7 @@ class housemate_listview extends StatelessWidget {
                                   ),
                                   onPressed: null,
                                   child: Text(
+                                    // add driend 누르면 frindsList append돼야함 'friendsList'
                                     'Add friend',
                                     style: TextStyle(color: Colors.white),
                                   ),

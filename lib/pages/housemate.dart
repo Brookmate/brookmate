@@ -43,7 +43,9 @@ class _HousemateState extends State<housemate> {
             const SizedBox(
               height: 10,
             ),
-            Topbar(),
+            Topbar(
+              friendsList: const [],
+            ),
             const SizedBox(
               height: 20,
             ),
