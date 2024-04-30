@@ -302,7 +302,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
             min: 0,
             max: 100,
             divisions: 10, // 10점 단위로 조절
-            activeColor: Colors.red,
+            activeColor: Color.fromARGB(255, 120, 0, 0),
             value: _sociability,
             onChanged: (double value) {
               setState(() {
@@ -347,7 +347,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
             min: 0,
             max: 100,
             divisions: 10,
-            activeColor: Colors.red,
+            activeColor: Color.fromARGB(255, 120, 0, 0),
             value: _cleaness,
             onChanged: (double value) {
               setState(() {
@@ -370,7 +370,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
             min: 0,
             max: 100,
             divisions: 10, // 10점 단위로 조절
-            activeColor: Colors.red,
+            activeColor: Color.fromARGB(255, 120, 0, 0),
             value: _noiseLevel,
             onChanged: (double value) {
               setState(() {
@@ -516,7 +516,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
                           ? "${_sleepTime.end.round() - 12} PM"
                           : "${_sleepTime.end.round() - 12} AM"),
             ),
-            activeColor: Colors.red,
+            activeColor: Color.fromARGB(255, 120, 0, 0),
             onChanged: (RangeValues values) {
               setState(() {
                 _sleepTime = values;
