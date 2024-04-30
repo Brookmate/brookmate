@@ -2,8 +2,8 @@ import 'package:brookmate/services/models/model_interface.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Persona implements Model {
-  final String? id;
-  final DocumentSnapshot user;
+  String? id;
+  final DocumentReference user;
   int cleaness; // 5 scale
   final Map<String, String> sleepingTime;
   bool isSmoker;
