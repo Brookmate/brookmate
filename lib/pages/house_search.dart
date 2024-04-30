@@ -1,3 +1,4 @@
+import 'package:brookmate/services/database_service.dart';
 import 'package:flutter/material.dart';
 import 'package:brookmate/widgets/house_search_info_1.dart';
 import 'package:brookmate/services/models/house_model.dart';
@@ -5,7 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
 
 class HouseSearch extends StatelessWidget {
-  HouseSearch({super.key});
+  const HouseSearch({super.key});
   void onTap() {}
 
   @override
@@ -143,9 +144,8 @@ class HouseSearch extends StatelessWidget {
                     ),
                     Expanded(
                       child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                        stream: FirebaseFirestore.instance
-                            .collection('houses')
-                            .snapshots(),
+                        stream:
+                            DatabaseService.getCollectionStream(Models.houses),
                         builder: (BuildContext context,
                             AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
                                 snapshot) {
