@@ -8,17 +8,31 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  DatabaseService.init();
+  await DatabaseService.init();
   runApp(const MainApp());
 }
 
-class MainApp extends StatelessWidget {
+class MainApp extends StatefulWidget {
   const MainApp({super.key});
+
+  @override
+  State<MainApp> createState() => _MainAppState();
+}
+
+class _MainAppState extends State<MainApp> {
   @override
   Widget build(BuildContext context) {
-    //late final houses = DatabaseService.getCollectionSnapshot(Models.houses);
-    return const MaterialApp(
-      home: Placeholder(),
+    return MaterialApp(
+      home: StreamBuilder(
+          stream: DatabaseService.getCollectionStream(Models.houses),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              print(snapshot.data!.docs);
+              return const Text("data");
+            } else {
+              return const Placeholder();
+            }
+          }),
     );
   }
 }

@@ -2,10 +2,10 @@ import 'package:brookmate/services/models/model_interface.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Review implements Model {
-  final String? id;
+  String? id;
   final DocumentReference author;
   final DocumentReference house;
-  final double rating;
+  double rating;
   String title;
   String content;
 

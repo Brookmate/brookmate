@@ -6,7 +6,7 @@ import 'package:brookmate/services/models/review_model.dart';
 import 'package:brookmate/services/models/tenant_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-enum Models { tenants, owners, persona, houses, reviews }
+enum Models { owners, tenants, persona, houses, reviews }
 
 class DatabaseService {
   static late final FirebaseFirestore _db;
@@ -19,38 +19,38 @@ class DatabaseService {
   }
 
   static final List<String> _models = [
-    "Owners",
-    "Tenants",
-    "Persona",
-    "Houses",
-    "Reviews"
+    "owners",
+    "tenants",
+    "persona",
+    "houses",
+    "reviews"
   ];
 
   // Create
-  static void addHouse(House houseData) async {
-    await _db.collection("Houses").add(houseData.toMap());
+  static Future<DocumentReference> addHouse(House houseData) async {
+    return await _db.collection("houses").add(houseData.toMap());
   }
 
-  static void addOwner(Owner ownerData) async {
-    await _db.collection("Owners").add(ownerData.toMap());
+  static Future<DocumentReference> addOwner(Owner ownerData) async {
+    return await _db.collection("owners").add(ownerData.toMap());
   }
 
-  static void addTenant(Tenant tenantData) async {
-    await _db.collection("Tenants").add(tenantData.toMap());
+  static Future<DocumentReference> addTenant(Tenant tenantData) async {
+    return await _db.collection("tenants").add(tenantData.toMap());
   }
 
-  static void addPersona(Persona personaData) async {
-    await _db.collection("Persona").add(personaData.toMap());
+  static Future<DocumentReference> addPersona(Persona personaData) async {
+    return await _db.collection("persona").add(personaData.toMap());
   }
 
-  static void addReview(Review reviewData) async {
-    await _db.collection("Reviews").add(reviewData.toMap());
+  static Future<DocumentReference> addReview(Review reviewData) async {
+    return await _db.collection("reviews").add(reviewData.toMap());
   }
 
   // Read (Single)
-  static Future<Model> getDocument(Models model, DocumentReference ref) async {
+  static Future<Model> getDocument(Models model, String documentId) async {
     DocumentSnapshot<Map<String, dynamic>> snapshot =
-        await _db.collection(_models[model.index]).doc(ref.id).get();
+        await _db.collection(_models[model.index]).doc(documentId).get();
     switch (model) {
       case Models.houses:
         return House.fromDocumentSnapshot(snapshot);
@@ -68,9 +68,9 @@ class DatabaseService {
   }
 
   static Stream<DocumentSnapshot<Map<String, dynamic>>> getDocumentStream(
-      Models model, DocumentReference ref) {
+      Models model, String documentId) {
     Stream<DocumentSnapshot<Map<String, dynamic>>> snapshot =
-        _db.collection(_models[model.index]).doc(ref.id).snapshots();
+        _db.collection(_models[model.index]).doc(documentId).snapshots();
     return snapshot;
   }
 
@@ -84,52 +84,52 @@ class DatabaseService {
 
   // Update
   static void updateHouse(House houseData) async {
-    await _db.collection("Houses").doc(houseData.id).update(houseData.toMap());
+    await _db.collection("houses").doc(houseData.id).update(houseData.toMap());
   }
 
   static void updateOwner(Owner ownerData) async {
-    await _db.collection("Owners").doc(ownerData.id).update(ownerData.toMap());
+    await _db.collection("owners").doc(ownerData.id).update(ownerData.toMap());
   }
 
   static void updateTenant(Tenant tenantData) async {
     await _db
-        .collection("Tenants")
+        .collection("tenants")
         .doc(tenantData.id)
         .update(tenantData.toMap());
   }
 
   static void updatePersona(Persona personaData) async {
     await _db
-        .collection("Persona")
+        .collection("persona")
         .doc(personaData.id)
         .update(personaData.toMap());
   }
 
   static void updateReview(Review reviewData) async {
     await _db
-        .collection("Reviews")
+        .collection("reviews")
         .doc(reviewData.id)
         .update(reviewData.toMap());
   }
 
   // Delete
   static void deleteHouse(String houseId) async {
-    await _db.collection("Houses").doc(houseId).delete();
+    await _db.collection("houses").doc(houseId).delete();
   }
 
   static void deleteOwner(String ownerId) async {
-    await _db.collection("Owners").doc(ownerId).delete();
+    await _db.collection("owners").doc(ownerId).delete();
   }
 
   static void deleteTenant(String tenantId) async {
-    await _db.collection("Tenants").doc(tenantId).delete();
+    await _db.collection("tenants").doc(tenantId).delete();
   }
 
   static void deletePersona(String personaId) async {
-    await _db.collection("Persona").doc(personaId).delete();
+    await _db.collection("persona").doc(personaId).delete();
   }
 
   static void deleteReview(String reviewId) async {
-    await _db.collection("Persona").doc(reviewId).delete();
+    await _db.collection("reviews").doc(reviewId).delete();
   }
 }
