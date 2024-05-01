@@ -23,7 +23,7 @@ class CustomSwitchTileSex extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(value ? 'Female' : 'Male'),
-          SizedBox(width: 10), // Add some space between text and switch
+          const SizedBox(width: 10), // Add some space between text and switch
           isSexSwitch
               ? ToggleSwitch(
                   minWidth: 90.0,
@@ -33,7 +33,7 @@ class CustomSwitchTileSex extends StatelessWidget {
                   inactiveBgColor: Colors.grey,
                   inactiveFgColor: Colors.white,
                   totalSwitches: 2,
-                  labels: ['Male', 'Female'],
+                  labels: const ['Male', 'Female'],
                   activeBgColors: const [
                     [Color(0xff9C0000)],
                     [Color(0xff9C0000)]
