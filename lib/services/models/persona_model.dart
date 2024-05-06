@@ -3,7 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Persona implements Model {
   String? id;
-  final DocumentReference user;
+  // final DocumentReference user;
+  DocumentReference? user;
   int cleaness; // 5 scale
   final Map<String, String> sleepingTime;
   bool isSmoker;
@@ -18,7 +19,7 @@ class Persona implements Model {
 
   Persona({
     this.id,
-    required this.user,
+    this.user,
     required this.cleaness,
     required this.sleepingTime,
     required this.isSmoker,
