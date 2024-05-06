@@ -28,6 +28,7 @@ class _MainAppState extends State<MainApp> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               print(snapshot.data!.docs);
+              print("team 2 test");
               return const Text("data");
             } else {
               return const Placeholder();
