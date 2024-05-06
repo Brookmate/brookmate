@@ -75,69 +75,161 @@ class HouseSearch extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    Row(
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
-                          children: [
-                            const SizedBox(width: 15),
-                            GestureDetector(
-                              onTap: onTap,
-                              child: const ButtonBar(
-                                children: [
-                                  Icon(Icons.swap_vert),
-                                  Text(
-                                    "Sort",
-                                    style: TextStyle(
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            GestureDetector(
-                              onTap: onTap,
-                              child: const ButtonBar(
-                                children: [
-                                  Icon(Icons.tune),
-                                  Text(
-                                    "Filter",
-                                    style: TextStyle(
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            GestureDetector(
-                              onTap: onTap,
-                              child: const ButtonBar(
-                                children: [
-                                  Icon(Icons.map),
-                                  Text(
-                                    "Map",
-                                    style: TextStyle(
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(width: 15),
-                          ],
-                        ),
+                        // Row(
+                        //   children: [
+                        //     const SizedBox(width: 15),
+                        //     GestureDetector(
+                        //       onTap: onTap,
+                        //       child: const ButtonBar(
+                        //         children: [
+                        //           Icon(Icons.swap_vert),
+                        //           Text(
+                        //             "Sort",
+                        //             style: TextStyle(
+                        //               fontSize: 22,
+                        //               fontWeight: FontWeight.w500,
+                        //             ),
+                        //           ),
+                        //         ],
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
+                        // Row(
+                        //   children: [
+                        //     GestureDetector(
+                        //       onTap: onTap,
+                        //       child: const ButtonBar(
+                        //         children: [
+                        //           Icon(Icons.tune),
+                        //           Text(
+                        //             "Filter",
+                        //             style: TextStyle(
+                        //               fontSize: 22,
+                        //               fontWeight: FontWeight.w500,
+                        //             ),
+                        //           ),
+                        //         ],
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
+                        // Row(
+                        //   children: [
+                        //     GestureDetector(
+                        //       onTap: onTap,
+                        //       child: const ButtonBar(
+                        //         children: [
+                        //           Icon(Icons.map),
+                        //           Text(
+                        //             "Map",
+                        //             style: TextStyle(
+                        //               fontSize: 22,
+                        //               fontWeight: FontWeight.w500,
+                        //             ),
+                        //           ),
+                        //         ],
+                        //       ),
+                        //     ),
+                        //     const SizedBox(width: 15),
+                        //   ],
+                        // ),
                       ],
+                    ),
+                    // Sorting, Filtering, and Map buttons
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          ElevatedButton.icon(
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: const Text('Sort By'),
+                                    content: SingleChildScrollView(
+                                      child: ListBody(
+                                        children: [
+                                          GestureDetector(
+                                            onTap: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: const Text('Option 1'),
+                                          ),
+                                          const Divider(),
+                                          GestureDetector(
+                                            onTap: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: const Text('Option 2'),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                            icon: const Icon(
+                              Icons.swap_vert,
+                              color: Colors.black,
+                            ),
+                            label: const Text(
+                              "Sort",
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black,
+                              ),
+                            ),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white,
+                            ),
+                          ),
+                          ElevatedButton.icon(
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.tune,
+                              color: Colors.black,
+                            ),
+                            label: const Text(
+                              "Filter",
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black,
+                              ),
+                            ),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white,
+                            ),
+                          ),
+                          ElevatedButton.icon(
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.map,
+                              color: Colors.black,
+                            ),
+                            label: const Text(
+                              "Map",
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black,
+                              ),
+                            ),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     const SizedBox(
                       height: 12,
