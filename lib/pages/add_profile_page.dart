@@ -112,36 +112,36 @@ class _AddProfilePageState extends State<AddProfilePage> {
               ),
             ],
           ),
-          // RangeSlider(
-          //   values: _sleepTime,
-          //   min: 0,
-          //   max: 24,
-          //   divisions: 24, // 슬라이더 간격
-          //   labels: RangeLabels(
-          //     (_sleepTime.start < 12
-          //         ? "${_sleepTime.start.round().toString()} PM"
-          //         : _sleepTime.start == 12
-          //             ? "${_sleepTime.start.round().toString()} AM"
-          //             : _sleepTime.start == 24
-          //                 ? "${_sleepTime.start.round() - 12} PM"
-          //                 : "${_sleepTime.start.round() - 12} AM"),
-          //     (_sleepTime.end < 12
-          //         ? "${_sleepTime.end.round().toString()} PM"
-          //         : _sleepTime.end == 12
-          //             ? "${_sleepTime.end.round().toString()} AM"
-          //             : _sleepTime.end == 24
-          //                 ? "${_sleepTime.end.round() - 12} PM"
-          //                 : "${_sleepTime.end.round() - 12} AM"),
-          //   ),
-          //   activeColor: Colors.red,
-          //   onChanged: (RangeValues values) {
-          //     setState(() {
-          //       _sleepTime = values;
-          //       _sleepTimeMap["from"] = _sleepTime.start.toString();
-          //       _sleepTimeMap["to"] = _sleepTime.end.toString();
-          //     });
-          //   },
-          // ),
+          RangeSlider(
+            values: _sleepTime,
+            min: 0,
+            max: 24,
+            divisions: 24, // 슬라이더 간격
+            labels: RangeLabels(
+              (_sleepTime.start < 12
+                  ? "${_sleepTime.start.round().toString()} PM"
+                  : _sleepTime.start == 12
+                      ? "${_sleepTime.start.round().toString()} AM"
+                      : _sleepTime.start == 24
+                          ? "${_sleepTime.start.round() - 12} PM"
+                          : "${_sleepTime.start.round() - 12} AM"),
+              (_sleepTime.end < 12
+                  ? "${_sleepTime.end.round().toString()} PM"
+                  : _sleepTime.end == 12
+                      ? "${_sleepTime.end.round().toString()} AM"
+                      : _sleepTime.end == 24
+                          ? "${_sleepTime.end.round() - 12} PM"
+                          : "${_sleepTime.end.round() - 12} AM"),
+            ),
+            activeColor: Colors.red,
+            onChanged: (RangeValues values) {
+              setState(() {
+                _sleepTime = values;
+                _sleepTimeMap["from"] = _sleepTime.start.toString();
+                _sleepTimeMap["to"] = _sleepTime.end.toString();
+              });
+            },
+          ),
           
 
 
