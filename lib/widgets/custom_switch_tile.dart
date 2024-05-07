@@ -31,9 +31,9 @@ class CustomSwitchTile extends StatelessWidget {
                   activeBgColors: [
                     [Color(0xff9C0000)!]
                   ],
-                  activeFgColor: Colors.white,
-                  inactiveBgColor: Colors.grey,
-                  inactiveFgColor: Colors.white,
+                  activeFgColor: Color(0xff9C0000),
+                  inactiveBgColor: Color.fromARGB(255, 246, 246, 246),
+                  inactiveFgColor: Color.fromARGB(255, 246, 246, 246),
                   initialLabelIndex: value ? 0 : 1,
                   totalSwitches: 2,
                   labels: ['Yes', 'No'],
