@@ -60,5 +60,5 @@ class AuthService {
 
   // TODO: Build Add Social Account method
 
-  // TODO: Build something
+  // TODO: Build enable auto login method
 }

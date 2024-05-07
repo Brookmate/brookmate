@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class House implements Model {
   String? id;
-  final DocumentReference owner;
+  final DocumentReference? owner;
   String houseName;
   double ratingAvg;
   final List<DocumentReference> houseReviews;
