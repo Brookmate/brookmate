@@ -87,8 +87,7 @@ class DatabaseService {
     Query<Map<String, dynamic>> collection =
         _db.collection(_models[model.index]);
     if (keyword.isNotEmpty) {
-      collection =
-          collection.where('searchField', arrayContains: keyword.toLowerCase());
+      collection = collection(_db, 'name').startAt(keyword);
     }
     return collection.snapshots();
   }

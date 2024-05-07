@@ -2,29 +2,15 @@ import 'package:brookmate/services/database_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-String searchValue = "";
-
-List<QueryDocumentSnapshot<Map<String, dynamic>>> searchedList(
-    List<QueryDocumentSnapshot<Map<String, dynamic>>> docs) {
-  List<QueryDocumentSnapshot<Map<String, dynamic>>> results = [];
-  if (docs.isEmpty) {
-    return results;
-  } else {
-    results = docs
-        .where((element) =>
-            element['name'].toLowerCase().contains(searchValue.toLowerCase()))
-        .toList();
-  }
-  return results;
-}
-
 // ignore: must_be_immutable
 class Topbar extends StatefulWidget {
   List<String> friendsList;
   Topbar({
     super.key,
+    required this.updatesearchValue,
     required this.friendsList,
   });
+  final Function(String) updatesearchValue;
 
   @override
   State<Topbar> createState() => _TopbarState();
@@ -38,9 +24,7 @@ class _TopbarState extends State<Topbar> {
     return friendsNames.where((name) => name.contains(searchValue)).toList();
   }
 
-  String SearchValue() {
-    return searchValue;
-  }
+  String searchValue = "";
 
   @override
   Widget build(BuildContext context) {
@@ -60,10 +44,16 @@ class _TopbarState extends State<Topbar> {
             child: TextField(
               controller: textController,
               onSubmitted: (value) {
-                setState(() => searchValue = textController.text);
+                setState(() {
+                  searchValue = textController.text;
+                  widget.updatesearchValue(value);
+                });
               },
               onChanged: (value) {
-                setState(() => searchValue = textController.text);
+                setState(() {
+                  searchValue = textController.text;
+                  widget.updatesearchValue(value);
+                });
               },
               decoration: const InputDecoration(
                 prefixIcon: Icon(Icons.search),

@@ -15,6 +15,13 @@ class housemate extends StatefulWidget {
 }
 
 class _HousemateState extends State<housemate> {
+  String searchValue = "";
+  void updatesearchvalue(String s) {
+    setState(() {
+      searchValue = s;
+    });
+  }
+
   var imageList = [
     'assets/images/1.png',
     'assets/images/2.DNG',
@@ -23,12 +30,6 @@ class _HousemateState extends State<housemate> {
     'assets/images/1.png',
     'assets/images/1.png'
   ];
-
-  changeSearchValue(value) {
-    setState(() {
-      searchValue = value;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +50,7 @@ class _HousemateState extends State<housemate> {
               height: 10,
             ),
             Topbar(
+              updatesearchValue: updatesearchvalue,
               friendsList: const [],
             ),
             const SizedBox(
