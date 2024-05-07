@@ -1,3 +1,4 @@
+import 'package:brookmate/pages/add_profile_page.dart';
 import 'package:brookmate/services/auth_service.dart';
 import 'package:brookmate/widgets/common/custom_button.dart';
 import 'package:brookmate/widgets/common/custom_input.dart';
@@ -41,6 +42,12 @@ class _LogInPageState extends State<LogInPage> {
                     String password = passwordController.text;
                     if (filter.hasMatch(email)) {
                       await AuthService.logInByEmail(email, password);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const AddProfilePage(),
+                        ),
+                      );
                     } else {
                       print("Invalid email address");
                     }
