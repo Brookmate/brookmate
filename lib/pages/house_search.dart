@@ -1,6 +1,6 @@
 import 'package:brookmate/services/database_service.dart';
 import 'package:flutter/material.dart';
-import 'package:brookmate/widgets/house_search_info_1.dart';
+import 'package:brookmate/widgets/house_search_info_listview.dart';
 import 'package:brookmate/services/models/house_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
@@ -238,9 +238,7 @@ class HouseSearch extends StatelessWidget {
                             ),
                           ),
                           ElevatedButton.icon(
-                            onPressed: () {
-                              
-                            },
+                            onPressed: () {},
                             icon: const Icon(
                               Icons.map,
                               color: Colors.black,
@@ -283,7 +281,7 @@ class HouseSearch extends StatelessWidget {
                               shrinkWrap: true,
                               itemCount: docs.length,
                               itemBuilder: (BuildContext context, int index) {
-                                return HouseInfo1(
+                                return HouseInfoListView(
                                   houseName: "${docs[index]['house_name']}\n",
                                   numRating: docs[index]['rating_avg'],
                                   rating: 0,
