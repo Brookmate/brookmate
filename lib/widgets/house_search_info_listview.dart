@@ -33,6 +33,10 @@ class _HouseInfoListViewState extends State<HouseInfoListView> {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         children: [
+          const SizedBox(
+            height: 20,
+            width: 20,
+          ),
           Flexible(
             flex: 3,
             child: Container(

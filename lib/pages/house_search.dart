@@ -19,7 +19,7 @@ class HouseSearch extends StatelessWidget {
         body: Column(
           children: [
             const SizedBox(
-              height: 25,
+              height: 15,
             ),
             Transform.translate(
               offset: const Offset(0, 35),
@@ -162,14 +162,14 @@ class HouseSearch extends StatelessWidget {
                                             onTap: () {
                                               Navigator.pop(context);
                                             },
-                                            child: const Text('Option 1'),
+                                            child: const Text('Lowest'),
                                           ),
                                           const Divider(),
                                           GestureDetector(
                                             onTap: () {
                                               Navigator.pop(context);
                                             },
-                                            child: const Text('Option 2'),
+                                            child: const Text('Highest'),
                                           ),
                                         ],
                                       ),
@@ -244,7 +244,8 @@ class HouseSearch extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const HouseMap()), //navigate to houseMap page
+                                    builder: (context) =>
+                                        const HouseMap()), //navigate to houseMap page
                               );
                             },
                             icon: const Icon(
@@ -267,7 +268,7 @@ class HouseSearch extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(
-                      height: 12,
+                      height: 15,
                     ),
                     Expanded(
                       child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
@@ -289,16 +290,24 @@ class HouseSearch extends StatelessWidget {
                               shrinkWrap: true,
                               itemCount: docs.length,
                               itemBuilder: (BuildContext context, int index) {
-                                return HouseInfoListView(
-                                  houseName: "${docs[index]['house_name']}\n",
-                                  numRating: docs[index]['rating_avg'],
-                                  rating: 0,
-                                  numReviews: 0,
-                                  numKm: 0,
-                                  numBeds: docs[index]['rooms_count'],
-                                  numBath: docs[index]['bathrooms_count'],
-                                  rent: docs[index]['rent_price'],
-                                  isFreeElec: false,
+                                return Column(
+                                  children: [
+                                    HouseInfoListView(
+                                      houseName:
+                                          "${docs[index]['house_name']}\n",
+                                      numRating: docs[index]['rating_avg'],
+                                      rating: 0,
+                                      numReviews: 0,
+                                      numKm: 0,
+                                      numBeds: docs[index]['rooms_count'],
+                                      numBath: docs[index]['bathrooms_count'],
+                                      rent: docs[index]['rent_price'],
+                                      isFreeElec: false,
+                                    ),
+                                    const SizedBox(
+                                        height:
+                                            20), // Add space between HouseInfoListView widgets
+                                  ],
                                 );
                               },
                             );
