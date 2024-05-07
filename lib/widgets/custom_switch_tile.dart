@@ -22,7 +22,7 @@ class CustomSwitchTile extends StatelessWidget {
           Text(value ? 'Yes' : 'No'),
           Switch.adaptive(
             value: value,
-            activeColor: Colors.red,
+            activeColor: Color(0xff9C0000),
             onChanged: onChanged,
           ),
         ],
