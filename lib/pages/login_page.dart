@@ -1,3 +1,4 @@
+import 'package:brookmate/services/auth_service.dart';
 import 'package:brookmate/widgets/common/custom_button.dart';
 import 'package:brookmate/widgets/common/custom_input.dart';
 import 'package:flutter/material.dart';
@@ -33,20 +34,21 @@ class _LogInPageState extends State<LogInPage> {
                   controller: passwordController,
                 ),
                 CustomButton(
-                    onPressed: () {
-                      RegExp filter =
-                          RegExp(r"^[a-z]+\.[a-z]+[1-9]*\@(stonybrook\.edu)");
-                      String email = emailController.text.toLowerCase();
-                      String password = passwordController.text;
-                      if (filter.hasMatch(email)) {
-                        print("$email $password");
-                      } else {
-                        print("Invalid email address");
-                      }
-                      // AuthService.logInByEmail(email, password);
-                    },
-                    size: 300,
-                    text: "Submit")
+                  onPressed: () async {
+                    RegExp filter =
+                        RegExp(r"^[a-z]+\.[a-z]+[1-9]*\@(stonybrook\.edu)");
+                    String email = emailController.text.toLowerCase();
+                    String password = passwordController.text;
+                    if (filter.hasMatch(email)) {
+                      await AuthService.logInByEmail(email, password);
+                    } else {
+                      print("Invalid email address");
+                    }
+                    // AuthService.logInByEmail(email, password);
+                  },
+                  size: 300,
+                  text: "Submit",
+                ),
               ],
             ),
           )
