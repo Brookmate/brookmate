@@ -6,6 +6,7 @@ class HouseInfoListView extends StatefulWidget {
   final int numReviews, numBeds, numBath, rent, numKm;
   final bool isFreeElec;
 
+  //houseInfo1
   const HouseInfoListView({
     super.key,
     required this.houseName,

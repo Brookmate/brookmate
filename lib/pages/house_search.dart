@@ -244,7 +244,7 @@ class HouseSearch extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const HouseMap()),
+                                    builder: (context) => const HouseMap()), //navigate to houseMap page
                               );
                             },
                             icon: const Icon(
