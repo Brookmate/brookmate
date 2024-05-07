@@ -1,4 +1,7 @@
+import 'dart:js_util';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LogInSignUpButton extends StatelessWidget {
   final bool isLogIn;
@@ -13,6 +16,8 @@ class LogInSignUpButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _authentication = FirebaseAuth.instance;
+
     return Container(
       alignment: Alignment.center,
       decoration: BoxDecoration(
@@ -42,9 +47,21 @@ class LogInSignUpButton extends StatelessWidget {
             ],
           ),
         ),
-        onPressed: () {
+        onPressed: () async {
+          var userName = '';
+          var userEmail = '';
+          var userPassword = '';
+
+          if (isLogIn == true) {
+            
+          } else {
+            _authentication.createUserWithEmailAndPassword(
+              email: userEmail, password: userPassword
+            );
+          }
+
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => connectedPage));
+            context, MaterialPageRoute(builder: (context) => connectedPage));
         },
       ),
     );
