@@ -1,8 +1,8 @@
 import 'package:brookmate/pages/house_search.dart';
 import 'package:flutter/material.dart';
 import 'package:brookmate/services/database_service.dart';
-import 'package:brookmate/widgets/house_search_info_2.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:brookmate/widgets/house_search_info_listview.dart';
 
 class HouseMap extends StatelessWidget {
   const HouseMap({super.key});
@@ -69,7 +69,7 @@ class HouseMap extends StatelessWidget {
                             shrinkWrap: true,
                             itemCount: docs.length,
                             itemBuilder: (BuildContext context, int index) {
-                              return HouseInfo2(
+                              return HouseInfoListView(
                                 houseName: "${docs[index]['house_name']}\n",
                                 numRating: docs[index]['rating_avg'],
                                 rating: 0,
