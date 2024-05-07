@@ -1,10 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-<<<<<<< HEAD
         android:label="brookmate"
-=======
-        android:label="real_app"
->>>>>>> 737fc718be5f942a7567112354a23860fd5f96e3
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

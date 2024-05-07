@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class Profile extends StatelessWidget {
   final String Name;
-  final String gender;
-  final String age;
+  final String email;
   final String image;
   final String? blah;
 
   const Profile(
       {super.key,
-      required this.gender,
-      required this.age,
+      required this.email,
       required this.Name,
       required this.image,
       this.blah});
@@ -50,7 +47,7 @@ class Profile extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 15.0),
                   child: Text(
-                    "$Name\n$gender\n$age",
+                    "$Name\n$email\n",
                     textAlign: TextAlign.left,
                   ),
                 ),
