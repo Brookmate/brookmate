@@ -6,12 +6,14 @@ class housemate_listview extends StatelessWidget {
     super.key,
     required this.nameList,
     required this.imageList,
-    required this.description,
+    required this.emailList,
+    required this.friendsList,
   });
 
   final List<String> nameList;
   final List<String> imageList;
-  final List<List<String>> description;
+  final List<String> emailList;
+  final List<String> friendsList;
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +76,7 @@ class housemate_listview extends StatelessWidget {
                                       padding:
                                           const EdgeInsets.only(left: 15.0),
                                       child: Text(
-                                        "${nameList[index]}\n${description[index][0]}\n${description[index][1]}",
+                                        "${nameList[index]}\n${emailList[index][1]}",
                                         textAlign: TextAlign.left,
                                       ),
                                     ),
@@ -96,6 +98,7 @@ class housemate_listview extends StatelessWidget {
                                   ),
                                   onPressed: null,
                                   child: Text(
+                                    // add driend 누르면 frindsList append돼야함 'friendsList'
                                     'Add friend',
                                     style: TextStyle(color: Colors.white),
                                   ),
@@ -110,8 +113,7 @@ class housemate_listview extends StatelessWidget {
             },
             child: Profile(
               image: imageList[index],
-              gender: description[index][0],
-              age: description[index][1],
+              email: emailList[index],
               Name: nameList[index],
             ),
           );
