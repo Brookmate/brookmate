@@ -22,31 +22,23 @@ class CustomSwitchTileSex extends StatelessWidget {
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(value ? 'Female' : 'Male'),
           SizedBox(width: 10), // Add some space between text and switch
-          toggleSwitch
-              ? ToggleSwitch(
-                  minWidth: 90.0,
-                  initialLabelIndex: value ? 1 : 0,
-                  cornerRadius: 20.0,
-                  activeFgColor: Color(0xff9C0000),
-                  inactiveBgColor: Color.fromARGB(255, 246, 246, 246),
-                  inactiveFgColor: Color.fromARGB(255, 246, 246, 246),
-                  totalSwitches: 2,
-                  labels: ['Male', 'Female'],
-                  activeBgColors: const [
-                    [Color(0xff9C0000)],
-                    [Color(0xff9C0000)]
-                  ],
-                  onToggle: (index) {
-                    onChanged(index == 1 ? true : false);
-                  },
-                )
-              : Switch.adaptive(
-                  value: value,
-                  activeColor: const Color(0xff9C0000),
-                  onChanged: onChanged,
-                ),
+          ToggleSwitch(
+            minWidth: 100.0,
+            minHeight: 50.0,
+            fontSize: 16.0,
+            cornerRadius: 20.0,
+            initialLabelIndex: 1,
+            activeBgColor: [Color(0xff9C0000)],
+            activeFgColor: Colors.white,
+            inactiveBgColor: Color.fromARGB(255, 246, 246, 246),
+            inactiveFgColor: Colors.black,
+            totalSwitches: 2,
+            labels: ['Female', 'Male'],
+            onToggle: (index) {
+              print('switched to: $index');
+            },
+          )
         ],
       ),
       onTap: () => onChanged(!value),

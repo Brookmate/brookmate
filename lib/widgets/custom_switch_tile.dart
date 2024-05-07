@@ -22,31 +22,23 @@ class CustomSwitchTile extends StatelessWidget {
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(value ? 'Yes' : 'No'),
           SizedBox(width: 10), // Add some space between text and switch
-          toggleSwitch
-              ? ToggleSwitch(
-                  minWidth: 90.0,
-                  cornerRadius: 20.0,
-                  activeBgColors: [
-                    [Color(0xff9C0000)!]
-                  ],
-                  activeFgColor: Color(0xff9C0000),
-                  inactiveBgColor: Color.fromARGB(255, 246, 246, 246),
-                  inactiveFgColor: Color.fromARGB(255, 246, 246, 246),
-                  initialLabelIndex: value ? 0 : 1,
-                  totalSwitches: 2,
-                  labels: ['Yes', 'No'],
-                  radiusStyle: true,
-                  onToggle: (index) {
-                    onChanged(index == 0 ? true : false);
-                  },
-                )
-              : Switch.adaptive(
-                  value: value,
-                  activeColor: const Color(0xff9C0000),
-                  onChanged: onChanged,
-                ),
+          ToggleSwitch(
+            minWidth: 100.0,
+            minHeight: 50.0,
+            fontSize: 16.0,
+            cornerRadius: 20.0,
+            initialLabelIndex: 1,
+            activeBgColor: [Color(0xff9C0000)],
+            activeFgColor: Colors.white,
+            inactiveBgColor: Color.fromARGB(255, 246, 246, 246),
+            inactiveFgColor: Colors.black,
+            totalSwitches: 2,
+            labels: ['Yes', 'No'],
+            onToggle: (index) {
+              print('switched to: $index');
+            },
+          ),
         ],
       ),
       onTap: () => onChanged(!value),
