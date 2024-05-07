@@ -34,11 +34,11 @@ class CustomSwitchTileSex extends StatelessWidget {
             inactiveBgColor: Color.fromARGB(255, 246, 246, 246),
             inactiveFgColor: Colors.black,
             totalSwitches: 2,
-            labels: ['Female', 'Male'],
+            labels: ['Yes', 'No'],
             onToggle: (index) {
               print('switched to: $index');
             },
-          )
+          ),
         ],
       ),
       onTap: () => onChanged(!value),

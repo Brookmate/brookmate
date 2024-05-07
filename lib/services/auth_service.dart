@@ -2,6 +2,7 @@ import "package:brookmate/services/database_service.dart";
 import "package:brookmate/services/models/owner_model.dart";
 import "package:brookmate/services/models/tenant_model.dart";
 import "package:firebase_auth/firebase_auth.dart";
+import "package:flutter/material.dart";
 
 enum Users { tenant, owner }
 
@@ -21,7 +22,7 @@ class AuthService {
     return user;
   }
 
-  static void signUpByEmail(
+  static Future<bool> signUpByEmail(
       Users user, String name, String email, String password) async {
     await _auth.createUserWithEmailAndPassword(
         email: email, password: password);
@@ -42,10 +43,13 @@ class AuthService {
         DatabaseService.addTenant(tenant);
         break;
     }
+    return Future.value(true);
   }
 
-  static void logInByEmail(String email, String password) async {
-    await _auth.signInWithEmailAndPassword(email: email, password: password);
+  static Future<UserCredential> logInByEmail(
+      String email, String password) async {
+    return await _auth.signInWithEmailAndPassword(
+        email: email, password: password);
   }
 
   // TODO: Build Change Password method
