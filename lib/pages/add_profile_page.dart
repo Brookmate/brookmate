@@ -142,8 +142,6 @@ class _AddProfilePageState extends State<AddProfilePage> {
               });
             },
           ),
-          
-
 
           // Smoke
           CustomSwitchTile(
