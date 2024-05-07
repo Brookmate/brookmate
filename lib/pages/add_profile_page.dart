@@ -89,7 +89,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(0x8f1b11),
+        backgroundColor: const Color.fromARGB(255, 120, 0, 0),
         body: CustomScrollView(slivers: <Widget>[
           SliverList(
               delegate: SliverChildListDelegate([
@@ -131,7 +131,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
                     min: 0,
                     max: 5,
                     divisions: 5,
-                    activeColor: Color(0x8f1b11),
+                    activeColor: const Color.fromARGB(255, 120, 0, 0),
                     value: _cleaness.toDouble(),
                     onChanged: (double value) {
                       setState(() {
@@ -208,7 +208,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
                     min: 0,
                     max: 5,
                     divisions: 5,
-                    activeColor: Color(0x8f1b11),
+                    activeColor: const Color.fromARGB(255, 120, 0, 0),
                     value: _drinksAlcohol.toDouble(),
                     onChanged: (double value) {
                       setState(() {
@@ -231,7 +231,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
                     min: 0,
                     max: 5,
                     divisions: 5,
-                    activeColor: Color(0x8f1b11),
+                    activeColor: const Color.fromARGB(255, 120, 0, 0),
                     value: _guest.toDouble(),
                     onChanged: (double value) {
                       setState(() {
@@ -255,7 +255,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
                     min: 0,
                     max: 5,
                     divisions: 5,
-                    activeColor: Color(0x8f1b11),
+                    activeColor: const Color.fromARGB(255, 120, 0, 0),
                     value: _sociability.toDouble(),
                     onChanged: (double value) {
                       setState(() {
@@ -475,7 +475,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
                                   (states) {
                             // Change button color to red if all criteria are met, otherwise keep it grey
                             return isAllCriteriaMet()
-                                ? Color(0x8f1b11)
+                                ? const Color.fromARGB(255, 120, 0, 0)
                                 : Colors.grey;
                           }),
                         ),
