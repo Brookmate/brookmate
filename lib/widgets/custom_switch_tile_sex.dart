@@ -33,7 +33,7 @@ class CustomSwitchTileSex extends StatelessWidget {
                   inactiveBgColor: Colors.grey,
                   inactiveFgColor: Colors.white,
                   totalSwitches: 2,
-                  labels: ['Male', 'Female'],
+                  labels: ['Female', 'Male'],
                   activeBgColors: const [
                     [Color(0xff9C0000)],
                     [Color(0xff9C0000)]
