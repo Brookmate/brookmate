@@ -89,7 +89,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.red,
+        backgroundColor: Color(0x8f1b11),
         body: CustomScrollView(slivers: <Widget>[
           SliverList(
               delegate: SliverChildListDelegate([
@@ -131,7 +131,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
                     min: 0,
                     max: 5,
                     divisions: 5,
-                    activeColor: Colors.red,
+                    activeColor: Color(0x8f1b11),
                     value: _cleaness.toDouble(),
                     onChanged: (double value) {
                       setState(() {
@@ -172,7 +172,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
                                   ? "${_sleepTime.end.round() - 12} PM"
                                   : "${_sleepTime.end.round() - 12} AM"),
                     ),
-                    activeColor: Colors.red,
+                    activeColor: Color(0x8f1b11),
                     onChanged: (RangeValues values) {
                       setState(() {
                         _sleepTime = values;
@@ -208,7 +208,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
                     min: 0,
                     max: 5,
                     divisions: 5,
-                    activeColor: Colors.red,
+                    activeColor: Color(0x8f1b11),
                     value: _drinksAlcohol.toDouble(),
                     onChanged: (double value) {
                       setState(() {
@@ -231,7 +231,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
                     min: 0,
                     max: 5,
                     divisions: 5,
-                    activeColor: Colors.red,
+                    activeColor: Color(0x8f1b11),
                     value: _guest.toDouble(),
                     onChanged: (double value) {
                       setState(() {
@@ -255,7 +255,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
                     min: 0,
                     max: 5,
                     divisions: 5,
-                    activeColor: Colors.red,
+                    activeColor: Color(0x8f1b11),
                     value: _sociability.toDouble(),
                     onChanged: (double value) {
                       setState(() {
@@ -392,7 +392,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
                       "\$ ${_budget.start.round()}",
                       "\$ ${_budget.end.round()}",
                     ),
-                    activeColor: Colors.red,
+                    activeColor: Color(0x8f1b11),
                     onChanged: (RangeValues values) {
                       setState(() {
                         _budget = values;
@@ -475,7 +475,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
                                   (states) {
                             // Change button color to red if all criteria are met, otherwise keep it grey
                             return isAllCriteriaMet()
-                                ? Colors.red
+                                ? Color(0x8f1b11)
                                 : Colors.grey;
                           }),
                         ),
