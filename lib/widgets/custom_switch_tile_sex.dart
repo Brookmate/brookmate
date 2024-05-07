@@ -5,13 +5,13 @@ class CustomSwitchTileSex extends StatelessWidget {
   final String title;
   final bool value;
   final Function(bool) onChanged;
-  final bool isSexSwitch;
+  final bool toggleSwitch;
 
   const CustomSwitchTileSex({
     required this.title,
     required this.value,
     required this.onChanged,
-    this.isSexSwitch = false,
+    this.toggleSwitch = false,
     super.key,
   });
 
@@ -24,16 +24,16 @@ class CustomSwitchTileSex extends StatelessWidget {
         children: [
           Text(value ? 'Female' : 'Male'),
           SizedBox(width: 10), // Add some space between text and switch
-          isSexSwitch
+          toggleSwitch
               ? ToggleSwitch(
                   minWidth: 90.0,
                   initialLabelIndex: value ? 1 : 0,
                   cornerRadius: 20.0,
-                  activeFgColor: Colors.white,
-                  inactiveBgColor: Colors.grey,
-                  inactiveFgColor: Colors.white,
+                  activeFgColor: Color(0xff9C0000),
+                  inactiveBgColor: Color.fromARGB(255, 246, 246, 246),
+                  inactiveFgColor: Color.fromARGB(255, 246, 246, 246),
                   totalSwitches: 2,
-                  labels: ['Female', 'Male'],
+                  labels: ['Male', 'Female'],
                   activeBgColors: const [
                     [Color(0xff9C0000)],
                     [Color(0xff9C0000)]
