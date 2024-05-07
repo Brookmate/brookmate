@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 String searchValue = "";
+
 List<QueryDocumentSnapshot<Map<String, dynamic>>> searchedList(
     List<QueryDocumentSnapshot<Map<String, dynamic>>> docs) {
   List<QueryDocumentSnapshot<Map<String, dynamic>>> results = [];
@@ -31,6 +32,7 @@ class Topbar extends StatefulWidget {
 
 class _TopbarState extends State<Topbar> {
   final List<String> friendsNames = [];
+  TextEditingController textController = TextEditingController();
 
   List<String> filteredList() {
     return friendsNames.where((name) => name.contains(searchValue)).toList();
@@ -56,15 +58,12 @@ class _TopbarState extends State<Topbar> {
               ),
             ),
             child: TextField(
+              controller: textController,
               onSubmitted: (value) {
-                setState(() {
-                  searchValue = value;
-                });
+                setState(() => searchValue = textController.text);
               },
               onChanged: (value) {
-                setState(() {
-                  searchValue = value;
-                });
+                setState(() => searchValue = textController.text);
               },
               decoration: const InputDecoration(
                 prefixIcon: Icon(Icons.search),

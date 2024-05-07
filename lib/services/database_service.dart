@@ -82,6 +82,17 @@ class DatabaseService {
     return snapshot;
   }
 
+  static Stream<QuerySnapshot<Map<String, dynamic>>>
+      getCollectionStreamWithSearch(Models model, String keyword) {
+    Query<Map<String, dynamic>> collection =
+        _db.collection(_models[model.index]);
+    if (keyword.isNotEmpty) {
+      collection =
+          collection.where('searchField', arrayContains: keyword.toLowerCase());
+    }
+    return collection.snapshots();
+  }
+
   // Update
   static void updateHouse(House houseData) async {
     await _db.collection("houses").doc(houseData.id).update(houseData.toMap());

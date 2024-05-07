@@ -24,6 +24,12 @@ class _HousemateState extends State<housemate> {
     'assets/images/1.png'
   ];
 
+  changeSearchValue(value) {
+    setState(() {
+      searchValue = value;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     DatabaseService.init();
@@ -49,7 +55,8 @@ class _HousemateState extends State<housemate> {
               height: 20,
             ),
             StreamBuilder(
-                stream: DatabaseService.getCollectionStream(Models.tenants),
+                stream: DatabaseService.getCollectionStreamWithSearch(
+                    Models.tenants, searchValue),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
                         snapshot) {
