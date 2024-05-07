@@ -193,7 +193,34 @@ class HouseSearch extends StatelessWidget {
                             ),
                           ),
                           ElevatedButton.icon(
-                            onPressed: () {},
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: const Text('Filter By'),
+                                    content: SingleChildScrollView(
+                                        child: ListBody(
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: const Text('Lowest'),
+                                        ),
+                                        const Divider(),
+                                        GestureDetector(
+                                          onTap: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: const Text('Highest'),
+                                        ),
+                                      ],
+                                    )),
+                                  );
+                                },
+                              );
+                            },
                             icon: const Icon(
                               Icons.tune,
                               color: Colors.black,
@@ -211,7 +238,9 @@ class HouseSearch extends StatelessWidget {
                             ),
                           ),
                           ElevatedButton.icon(
-                            onPressed: () {},
+                            onPressed: () {
+                              
+                            },
                             icon: const Icon(
                               Icons.map,
                               color: Colors.black,
