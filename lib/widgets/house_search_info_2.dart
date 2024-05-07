@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class HouseInfo2 extends StatelessWidget {
-  final String houseName, rating;
-  final double numRating;
+  final String houseName;
+  final double numRating, rating;
   final int numReviews, numBeds, numBath, rent, numKm;
   final bool isFreeElec;
 
@@ -70,7 +70,7 @@ class HouseInfo2 extends StatelessWidget {
                             const SizedBox(
                               width: 3,
                             ),
-                            Text(rating,
+                            Text("$rating",
                                 style:
                                     const TextStyle(fontSize: 10, height: 0.8)),
                             Text(' - $numReviews reviews',

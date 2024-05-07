@@ -19,8 +19,8 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: HouseSearch(),
+    return MaterialApp(
+      home: HouseMap(),
     );
   }
 }

@@ -1,17 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:brookmate/services/database_service.dart';
 import 'package:brookmate/widgets/house_search_info_2.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HouseMap extends StatelessWidget {
-  final houseList = [
-    "Kiwi",
-    "StrawBerry",
-    "Lemon",
-    "Apple",
-    "Watermelon",
-    "Mango",
-  ];
-
-  HouseMap({super.key});
+  const HouseMap({super.key});
   void onPressed() {}
 
   @override
@@ -48,22 +41,39 @@ class HouseMap extends StatelessWidget {
                       height: 50,
                     ),
                     Expanded(
-                      child: ListView.builder(
-                        padding: EdgeInsets.zero,
-                        shrinkWrap: true,
-                        itemCount: houseList.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return HouseInfo2(
-                            houseName: houseList[index],
-                            numRating: 9.9,
-                            rating: 'Excellent',
-                            numReviews: 1203,
-                            numKm: 10,
-                            numBeds: 2,
-                            numBath: 1,
-                            rent: 1025290,
-                            isFreeElec: true,
-                          );
+                      child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                        stream:
+                            DatabaseService.getCollectionStream(Models.houses),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                                snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          } else {
+                            final docs = snapshot.data!.docs;
+                            if (docs.isEmpty) return const Text('no data');
+                            return ListView.builder(
+                              padding: EdgeInsets.zero,
+                              shrinkWrap: true,
+                              itemCount: docs.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return HouseInfo2(
+                                  houseName: "${docs[index]['house_name']}\n",
+                                  numRating: docs[index]['rating_avg'],
+                                  rating: 0,
+                                  numReviews: 0,
+                                  numKm: 0,
+                                  numBeds: docs[index]['rooms_count'],
+                                  numBath: docs[index]['bathrooms_count'],
+                                  rent: docs[index]['rent_price'],
+                                  isFreeElec: false,
+                                );
+                              },
+                            );
+                          }
                         },
                       ),
                     ),
