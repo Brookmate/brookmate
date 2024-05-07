@@ -50,7 +50,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
     "stayingSchedule": {
       'key1': 'value1',
       'key2': 'value2'
-    }, //Map<String, String>
+    }, // Map<String, String>
     "sex": false,
     '_selectedSex': 'unselected',
     "budget": {'key1': 'value1', 'key2': 'value2'}, // Map<String, String>
