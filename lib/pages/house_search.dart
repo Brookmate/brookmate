@@ -304,9 +304,6 @@ class HouseSearch extends StatelessWidget {
                                       rent: docs[index]['rent_price'],
                                       isFreeElec: false,
                                     ),
-                                    const SizedBox(
-                                        height:
-                                            20), // Add space between HouseInfoListView widgets
                                   ],
                                 );
                               },
