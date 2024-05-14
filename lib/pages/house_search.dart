@@ -2,9 +2,9 @@ import 'package:brookmate/services/database_service.dart';
 import 'package:flutter/material.dart';
 import 'package:brookmate/widgets/house_search_info_listview.dart';
 import 'package:brookmate/pages/house_map.dart';
+import 'package:brookmate/pages/housemate.dart';
 import 'package:brookmate/services/models/house_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/widgets.dart';
 
 class HouseSearch extends StatelessWidget {
   const HouseSearch({super.key});
@@ -254,6 +254,31 @@ class HouseSearch extends StatelessWidget {
                             ),
                             label: const Text(
                               "Map",
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black,
+                              ),
+                            ),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white,
+                            ),
+                          ),
+                          ElevatedButton.icon(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const housemate()), //navigate to houseMap page
+                              );
+                            },
+                            icon: const Icon(
+                              Icons.face,
+                              color: Colors.black,
+                            ),
+                            label: const Text(
+                              "HouseMate",
                               style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w500,
