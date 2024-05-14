@@ -41,6 +41,7 @@ class _HouseInfoListViewState extends State<HouseInfoListView> {
             flex: 3,
             child: Container(
               height: 200,
+              margin: const EdgeInsets.only(bottom: 20),
               decoration: BoxDecoration(
                 color: Colors.grey[350],
                 borderRadius: BorderRadius.circular(15),
