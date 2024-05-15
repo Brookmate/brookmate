@@ -1,5 +1,7 @@
 import 'package:brookmate/services/database_service.dart';
 import 'package:flutter/material.dart';
+import 'package:brookmate/utils/utils.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:brookmate/widgets/house_search_info_listview.dart';
 import 'package:brookmate/pages/house_map.dart';
 import 'package:brookmate/pages/housemate.dart';
@@ -13,6 +15,8 @@ class HouseSearch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    RangeValues budget = const RangeValues(0, 10000); // Define _budget here
+
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.white,
@@ -200,25 +204,31 @@ class HouseSearch extends StatelessWidget {
                                 context: context,
                                 builder: (BuildContext context) {
                                   return AlertDialog(
-                                    title: const Text('Filter By'),
-                                    content: SingleChildScrollView(
-                                        child: ListBody(
+                                    title: const Text('Filter By Price'),
+                                    content: Column(
+                                      mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        GestureDetector(
-                                          onTap: () {
-                                            Navigator.pop(context);
+                                        RangeSlider(
+                                          values: budget,
+                                          min: 0,
+                                          max: 10000,
+                                          divisions: 100,
+                                          labels: RangeLabels(
+                                            '\$ ${budget.start.round()}',
+                                            '\$ ${budget.end.round()}',
+                                          ),
+                                          onChanged: (RangeValues values) {
+                                            budget = values;
                                           },
-                                          child: const Text('Lowest'),
                                         ),
-                                        const Divider(),
-                                        GestureDetector(
-                                          onTap: () {
+                                        ElevatedButton(
+                                          onPressed: () {
                                             Navigator.pop(context);
                                           },
-                                          child: const Text('Highest'),
+                                          child: const Text('Apply'),
                                         ),
                                       ],
-                                    )),
+                                    ),
                                   );
                                 },
                               );

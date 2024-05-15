@@ -5,6 +5,7 @@ class HouseInfoListView extends StatefulWidget {
   final double numRating, rating;
   final int numReviews, numBeds, numBath, rent, numKm;
   final bool isFreeElec;
+  final RangeValues _budget = const RangeValues(0, 10000);
 
   //houseInfo1
   const HouseInfoListView({
