@@ -83,6 +83,26 @@ class DatabaseService {
   }
 
   static Stream<QuerySnapshot<Map<String, dynamic>>>
+      getCollectionStreamWithSorting(Models model, String? sortBy) {
+    Query<Map<String, dynamic>> collection =
+        _db.collection(_models[model.index].toString());
+
+    // Add sorting based on rent_price if specified
+    if (model == Models.houses && sortBy != null) {
+      if (sortBy == 'Lowest') {
+        collection = collection.orderBy('rent_price', descending: false);
+      } else if (sortBy == 'Highest') {
+        collection = collection.orderBy('rent_price', descending: true);
+      } else if (sortBy == 'low_rating') {
+        collection = collection.orderBy('rating_avg', descending: false);
+      } else if (sortBy == 'high_rating') {
+        collection = collection.orderBy('rating_avg', descending: true);
+      }
+    }
+    return collection.snapshots();
+  }
+
+  static Stream<QuerySnapshot<Map<String, dynamic>>>
       getCollectionStreamWithSearch(Models model, String keyword) {
     Query<Map<String, dynamic>> collection =
         _db.collection(_models[model.index]);

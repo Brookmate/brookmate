@@ -1,17 +1,21 @@
 import 'package:brookmate/services/database_service.dart';
 import 'package:flutter/material.dart';
-import 'package:brookmate/utils/utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:brookmate/widgets/house_search_info_listview.dart';
 import 'package:brookmate/pages/house_map.dart';
 import 'package:brookmate/pages/housemate.dart';
 import 'package:brookmate/services/models/house_model.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
-class HouseSearch extends StatelessWidget {
+class HouseSearch extends StatefulWidget {
   const HouseSearch({super.key});
 
+  @override
+  State<HouseSearch> createState() => _HouseSearchState();
+}
+
+class _HouseSearchState extends State<HouseSearch> {
   void onTap() {}
+  String _sortOption = 'Lowest';
 
   @override
   Widget build(BuildContext context) {
@@ -165,6 +169,10 @@ class HouseSearch extends StatelessWidget {
                                           GestureDetector(
                                             onTap: () {
                                               Navigator.pop(context);
+                                              setState(() {
+                                                _sortOption =
+                                                    'Lowest'; // Set sort option to 'Lowest'
+                                              });
                                             },
                                             child: const Text('Lowest'),
                                           ),
@@ -172,8 +180,34 @@ class HouseSearch extends StatelessWidget {
                                           GestureDetector(
                                             onTap: () {
                                               Navigator.pop(context);
+                                              setState(() {
+                                                _sortOption =
+                                                    'Highest'; // Set sort option to 'Highest'
+                                              });
                                             },
                                             child: const Text('Highest'),
+                                          ),
+                                          const Divider(),
+                                          GestureDetector(
+                                            onTap: () {
+                                              Navigator.pop(context);
+                                              setState(() {
+                                                _sortOption =
+                                                    'low_rating'; // Set sort option to 'Lowest'
+                                              });
+                                            },
+                                            child: const Text('Low Rating'),
+                                          ),
+                                          const Divider(),
+                                          GestureDetector(
+                                            onTap: () {
+                                              Navigator.pop(context);
+                                              setState(() {
+                                                _sortOption =
+                                                    'high_rating'; // Set sort option to 'Lowest'
+                                              });
+                                            },
+                                            child: const Text('High Rating'),
                                           ),
                                         ],
                                       ),
@@ -307,8 +341,10 @@ class HouseSearch extends StatelessWidget {
                     ),
                     Expanded(
                       child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                        stream:
-                            DatabaseService.getCollectionStream(Models.houses),
+                        stream: DatabaseService.getCollectionStreamWithSorting(
+                          Models.houses,
+                          _sortOption,
+                        ),
                         builder: (BuildContext context,
                             AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
                                 snapshot) {
