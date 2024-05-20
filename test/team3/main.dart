@@ -1,5 +1,4 @@
 import 'package:brookmate/firebase_options.dart';
-import 'package:brookmate/pages/home.dart';
 import 'package:brookmate/pages/housemate.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

@@ -1,3 +1,4 @@
+import 'package:brookmate/widgets/toggle_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
@@ -12,8 +13,8 @@ class CustomSwitchTileSex extends StatelessWidget {
     required this.value,
     required this.onChanged,
     this.toggleSwitch = false,
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,21 +24,10 @@ class CustomSwitchTileSex extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           SizedBox(width: 10), // Add some space between text and switch
-          ToggleSwitch(
-            minWidth: 100.0,
-            minHeight: 50.0,
-            fontSize: 16.0,
-            cornerRadius: 20.0,
-            initialLabelIndex: 1,
-            activeBgColor: [Color(0xff9C0000)],
-            activeFgColor: Colors.white,
-            inactiveBgColor: Color.fromRGBO(246, 246, 246, 1),
-            inactiveFgColor: Colors.black,
-            totalSwitches: 2,
-            labels: ['Male', 'Female'],
-            onToggle: (index) {
-              print('switched to: $index');
-            },
+          ToggleSwitchWidget(
+            toggleSwitch: toggleSwitch,
+            value: value,
+            onChanged: onChanged,
           ),
         ],
       ),
