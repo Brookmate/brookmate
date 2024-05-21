@@ -87,8 +87,7 @@ class _HouseSearchState extends State<HouseSearch> {
                   children: [
                     const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                      ],
+                      children: [],
                     ),
                     // Sorting, Filtering, and Map buttons
                     Padding(
@@ -285,6 +284,7 @@ class _HouseSearchState extends State<HouseSearch> {
                         stream: DatabaseService.getCollectionStreamWithSorting(
                           Models.houses,
                           _sortOption,
+                          budget,
                         ),
                         builder: (BuildContext context,
                             AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>

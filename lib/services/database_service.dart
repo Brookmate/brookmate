@@ -5,6 +5,7 @@ import 'package:brookmate/services/models/persona_model.dart';
 import 'package:brookmate/services/models/review_model.dart';
 import 'package:brookmate/services/models/tenant_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
 enum Models { owners, tenants, persona, houses, reviews }
 
@@ -83,7 +84,8 @@ class DatabaseService {
   }
 
   static Stream<QuerySnapshot<Map<String, dynamic>>>
-      getCollectionStreamWithSorting(Models model, String? sortBy) {
+      getCollectionStreamWithSorting(
+          Models model, String? sortBy, RangeValues priceRange) {
     Query<Map<String, dynamic>> collection =
         _db.collection(_models[model.index].toString());
 
@@ -98,6 +100,12 @@ class DatabaseService {
       } else if (sortBy == 'high_rating') {
         collection = collection.orderBy('rating_avg', descending: true);
       }
+    }
+    // Add filtering based on price range
+    if (model == Models.houses) {
+      collection = collection
+          .where('rent_price', isGreaterThanOrEqualTo: priceRange.start)
+          .where('rent_price', isLessThanOrEqualTo: priceRange.end);
     }
     return collection.snapshots();
   }
