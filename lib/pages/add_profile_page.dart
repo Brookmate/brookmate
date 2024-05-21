@@ -54,20 +54,20 @@ class _AddProfilePageState extends State<AddProfilePage> {
       'fromDate': 'value1',
       'toDate': 'value2'
     }, // Map<String, String>
-    "sex": false,
-    '_selectedSex': 'unselected',
+    "sex": 'unselected',
     "budget": {'minimum': 'value1', 'maximum': 'value2'}, // Map<String, String>
-    "nationality": ""
+    "nationality": Utils.nationality[0],
   };
 
   RangeValues _sleepTime = const RangeValues(8, 24);
   DateTime? _fromDate;
   DateTime? _toDate;
-  bool _fromDateIsSelected = false;
-  bool _toDateIsSelected = false;
-  String _selectedSex = 'unselected';
+  //bool _fromDateIsSelected = false;
+  //bool _toDateIsSelected = false;
+  //bool _selectedSex = false;
   RangeValues _budget = const RangeValues(0, 10000);
-  final _nationality = Utils.nationality;
+  //final _nationality = Utils.nationality;
+  //bool _nationalityIsSelected = false;
 
   // Next Page
   // Function to check if all criteria are met
@@ -162,7 +162,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
                                   ? "${_sleepTime.end.round() - 12} PM"
                                   : "${_sleepTime.end.round() - 12} AM"),
                     ),
-                    activeColor: Color(0x8f1b11),
+                    activeColor: const Color.fromARGB(255, 120, 0, 0),
                     onChanged: (RangeValues values) {
                       setState(() {
                         _sleepTime = values;
@@ -299,7 +299,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
                                     ).then((selectedDate) {
                                       setState(() {
                                         _fromDate = selectedDate;
-                                        _fromDateIsSelected = true;
+                                        //_fromDateIsSelected = true;
                                         varMap["stayingSchedule"]['fromDate'] =
                                             _fromDate.toString();
                                       });
@@ -333,7 +333,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
                                     ).then((selectedDate) {
                                       setState(() {
                                         _toDate = selectedDate;
-                                        _toDateIsSelected = true;
+                                        //_toDateIsSelected = true;
                                         varMap["stayingSchedule"]['toDate'] =
                                             _toDate.toString();
                                       });
@@ -357,11 +357,11 @@ class _AddProfilePageState extends State<AddProfilePage> {
                   // sex
                   CustomSwitchTileSex(
                     title: 'Sex',
-                    value: varMap["sex"],
+                    value: false,
                     onChanged: (bool value) {
                       setState(() {
-                        varMap["sex"] = value;
-                        _selectedSex = varMap["sex"] ? 'Female' : 'Male';
+                        //varMap["sex"] = value;
+                        varMap["sex"] = value ? 'Female' : 'Male';
                       });
                     },
                   ),
@@ -385,7 +385,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
                       "\$ ${_budget.start.round()}",
                       "\$ ${_budget.end.round()}",
                     ),
-                    activeColor: Color(0x8f1b11),
+                    activeColor: const Color.fromARGB(255, 120, 0, 0),
                     onChanged: (RangeValues values) {
                       setState(() {
                         _budget = values;
@@ -412,7 +412,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
                     children: [
                       DropdownButton(
                         value: varMap["nationality"],
-                        items: _nationality
+                        items: Utils.nationality
                             .map((e) => DropdownMenuItem(
                                   value: e,
                                   child: Text(e),
@@ -422,7 +422,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
                           if (value != null) {
                             setState(() {
                               varMap["nationality"] = value;
-                              // _nationalityIsSelected = true;
+                              //_nationalityIsSelected = true;
                             });
                           }
                         },
@@ -451,7 +451,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
                                 sociability: varMap["sociability"],
                                 canDrive: varMap["canDrive"],
                                 stayingSchedule: varMap["stayingSchedule"],
-                                sex: _selectedSex,
+                                sex: varMap["sex"],
                                 budget: varMap["budget"],
                                 nationality: varMap["nationality"]);
                             DatabaseService.addPersona(newPersona);
