@@ -79,7 +79,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: const Color.fromARGB(255, 120, 0, 0),
+        backgroundColor: const Color(0xff9C0000),
         body: CustomScrollView(slivers: <Widget>[
           SliverList(
               delegate: SliverChildListDelegate([
@@ -88,7 +88,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
                 margin: EdgeInsets.only(top: 80.0),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+                    children: const [
                       Text(
                         '  Enter your persona',
                         style: TextStyle(
@@ -121,7 +121,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
                     min: 0,
                     max: 5,
                     divisions: 5,
-                    activeColor: const Color.fromARGB(255, 120, 0, 0),
+                    activeColor: Color(0xff9C0000),
                     value: varMap["cleaness"].toDouble(),
                     onChanged: (double value) {
                       setState(() {
@@ -200,7 +200,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
                     min: 0,
                     max: 5,
                     divisions: 5,
-                    activeColor: const Color.fromARGB(255, 120, 0, 0),
+                    activeColor: const Color(0xff9C0000),
                     value: varMap["drinkingRate"].toDouble(),
                     onChanged: (double value) {
                       setState(() {
@@ -223,7 +223,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
                     min: 0,
                     max: 5,
                     divisions: 5,
-                    activeColor: const Color.fromARGB(255, 120, 0, 0),
+                    activeColor: Color(0xff9C0000),
                     value: varMap["inviteGuests"].toDouble(),
                     onChanged: (double value) {
                       setState(() {
@@ -247,7 +247,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
                     min: 0,
                     max: 5,
                     divisions: 5,
-                    activeColor: const Color.fromARGB(255, 120, 0, 0),
+                    activeColor: Color(0xff9C0000),
                     value: varMap["sociability"].toDouble(),
                     onChanged: (double value) {
                       setState(() {
