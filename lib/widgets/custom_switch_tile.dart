@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:toggle_switch/toggle_switch.dart';
+import 'package:brookmate/widgets/toggle_switch_yes_no.dart';
 
 class CustomSwitchTile extends StatelessWidget {
   final String title;
@@ -12,8 +12,8 @@ class CustomSwitchTile extends StatelessWidget {
     required this.value,
     required this.onChanged,
     this.toggleSwitch = false, // default value for toggleSwitch
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,21 +23,10 @@ class CustomSwitchTile extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           SizedBox(width: 10), // Add some space between text and switch
-          ToggleSwitch(
-            minWidth: 100.0,
-            minHeight: 50.0,
-            fontSize: 16.0,
-            cornerRadius: 20.0,
-            initialLabelIndex: 1,
-            activeBgColor: [Color(0xff9C0000)],
-            activeFgColor: Colors.white,
-            inactiveBgColor: Color.fromARGB(255, 246, 246, 246),
-            inactiveFgColor: Colors.black,
-            totalSwitches: 2,
-            labels: ['Yes', 'No'],
-            onToggle: (index) {
-              print('switched to: $index');
-            },
+          CustomSwitchTileWidget(
+            toggleSwitch: toggleSwitch,
+            value: value,
+            onChanged: onChanged,
           ),
         ],
       ),
