@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
-class HouseInfo1 extends StatefulWidget {
-  final String houseName, rating;
-  final double numRating;
+class HouseInfoListView extends StatefulWidget {
+  final String houseName;
+  final double numRating, rating;
   final int numReviews, numBeds, numBath, rent, numKm;
   final bool isFreeElec;
 
-  const HouseInfo1({
+  //houseInfo1
+  const HouseInfoListView({
     super.key,
     required this.houseName,
     required this.numRating,
@@ -20,10 +21,10 @@ class HouseInfo1 extends StatefulWidget {
   });
 
   @override
-  _HouseInfo1State createState() => _HouseInfo1State();
+  _HouseInfoListViewState createState() => _HouseInfoListViewState();
 }
 
-class _HouseInfo1State extends State<HouseInfo1> {
+class _HouseInfoListViewState extends State<HouseInfoListView> {
   bool isFavorite = false;
 
   @override
@@ -32,6 +33,10 @@ class _HouseInfo1State extends State<HouseInfo1> {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         children: [
+          const SizedBox(
+            height: 20,
+            width: 20,
+          ),
           Flexible(
             flex: 3,
             child: Container(
@@ -97,7 +102,7 @@ class _HouseInfo1State extends State<HouseInfo1> {
                             const SizedBox(
                               width: 3,
                             ),
-                            Text(widget.rating,
+                            Text("$widget.rating",
                                 style:
                                     const TextStyle(fontSize: 10, height: 0.8)),
                             Text(' - ${widget.numReviews} reviews',

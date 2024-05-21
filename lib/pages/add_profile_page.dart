@@ -1,8 +1,12 @@
+import 'package:brookmate/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:brookmate/widgets/custom_switch_tile.dart';
-import 'package:brookmate/widgets/custom_switch_tile_food.dart';
 import 'package:brookmate/widgets/custom_switch_tile_sex.dart';
 import 'package:brookmate/pages/next_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:brookmate/services/database_service.dart';
+import 'package:brookmate/services/models/persona_model.dart';
+import 'package:brookmate/services/models/tenant_model.dart';
 
 class AddProfilePage extends StatefulWidget {
   const AddProfilePage({super.key});
@@ -13,615 +17,472 @@ class AddProfilePage extends StatefulWidget {
 
 class _AddProfilePageState extends State<AddProfilePage> {
   // 상태 관리 변수들
-  bool _drinksAlcohol = false;
-  bool _drivesCar = false;
-  double _sociability = 0;
-  bool _food = false;
-  bool _foodSharing = false;
-  double _cleaness = 0;
-  double _noiseLevel = 0;
-  bool _petOwnership = false;
+  late DocumentReference _user;
+  // email을 기준으로 사용자를 검색하여 _user에 할당하는 함수
+  // Future<void> getUserByEmail(String email) async {
+  //   try {
+  //     QuerySnapshot<Map<String, dynamic>> querySnapshot =
+  //         await FirebaseFirestore.instance
+  //             .collection('tenants')
+  //             .where('email', isEqualTo: email)
+  //             .get();
+
+  //     if (querySnapshot.docs.isNotEmpty) {
+  //       Tenant tenant = Tenant.fromDocumentSnapshot(querySnapshot.docs.first);
+
+  //       _user = FirebaseFirestore.instance.collection('users').doc(tenant.id);
+  //     } else {}
+  //   } catch (error) {
+  //     print('Error getting user by email: $error');
+  //   }
+  // }
+
+  Map<String, dynamic> varMap = {
+    "id": 0,
+    "user": null,
+    "cleaness": 0,
+    "sleepingTime": {
+      'sleepTimeStart': 'value1',
+      'sleepTimeEnd': 'value2'
+    }, // Map<String, String>
+    "isSmoker": false,
+    "drinkingRate": 0,
+    "inviteGuests": 0,
+    "sociability": 0,
+    "canDrive": false,
+    "stayingSchedule": {
+      'fromDate': 'value1',
+      'toDate': 'value2'
+    }, // Map<String, String>
+    "sex": 'unselected',
+    "budget": {'minimum': 'value1', 'maximum': 'value2'}, // Map<String, String>
+    "nationality": Utils.nationality[0],
+  };
+
+  RangeValues _sleepTime = const RangeValues(8, 24);
   DateTime? _fromDate;
   DateTime? _toDate;
-  bool _smokes = false;
-  RangeValues _sleepTime = const RangeValues(8, 24);
-  bool _guest = false;
-  final _nationality = [
-    'Afghanistan',
-    'Albania',
-    'Algeria',
-    'Andorra',
-    'Angola',
-    'Antigua and Barbuda',
-    'Argentina',
-    'Armenia',
-    'Australia',
-    'Austria',
-    'Azerbaijan',
-    'Bahamas',
-    'Bahrain',
-    'Bangladesh',
-    'Barbados',
-    'Belarus',
-    'Belgium',
-    'Belize',
-    'Benin',
-    'Bhutan',
-    'Bolivia',
-    'Bosnia and Herzegovina',
-    'Botswana',
-    'Brazil',
-    'Brunei',
-    'Bulgaria',
-    'Burkina Faso',
-    'Burundi',
-    'Cabo Verde',
-    'Cambodia',
-    'Cameroon',
-    'Canada',
-    'Central African Republic',
-    'Chad',
-    'Chile',
-    'China',
-    'Colombia',
-    'Comoros',
-    'Congo, Democratic Republic of the',
-    'Congo, Republic of the',
-    'Costa Rica',
-    "Cote d'Ivoire",
-    'Croatia',
-    'Cuba',
-    'Cyprus',
-    'Czech Republic',
-    'Denmark',
-    'Djibouti',
-    'Dominica',
-    'Dominican Republic',
-    'East Timor (Timor-Leste)',
-    'Ecuador',
-    'Egypt',
-    'El Salvador',
-    'Equatorial Guinea',
-    'Eritrea',
-    'Estonia',
-    'Eswatini',
-    'Ethiopia',
-    'Fiji',
-    'Finland',
-    'France',
-    'Gabon',
-    'Gambia',
-    'Georgia',
-    'Germany',
-    'Ghana',
-    'Greece',
-    'Grenada',
-    'Guatemala',
-    'Guinea',
-    'Guinea-Bissau',
-    'Guyana',
-    'Haiti',
-    'Honduras',
-    'Hungary',
-    'Iceland',
-    'India',
-    'Indonesia',
-    'Iran',
-    'Iraq',
-    'Ireland',
-    'Israel',
-    'Italy',
-    'Jamaica',
-    'Japan',
-    'Jordan',
-    'Kazakhstan',
-    'Kenya',
-    'Kiribati',
-    'Korea, North',
-    'Korea, South',
-    'Kosovo',
-    'Kuwait',
-    'Kyrgyzstan',
-    'Laos',
-    'Latvia',
-    'Lebanon',
-    'Lesotho',
-    'Liberia',
-    'Libya',
-    'Liechtenstein',
-    'Lithuania',
-    'Luxembourg',
-    'Madagascar',
-    'Malawi',
-    'Malaysia',
-    'Maldives',
-    'Mali',
-    'Malta',
-    'Marshall Islands',
-    'Mauritania',
-    'Mauritius',
-    'Mexico',
-    'Micronesia',
-    'Moldova',
-    'Monaco',
-    'Mongolia',
-    'Montenegro',
-    'Morocco',
-    'Mozambique',
-    'Myanmar (Burma)',
-    'Namibia',
-    'Nauru',
-    'Nepal',
-    'Netherlands',
-    'New Zealand',
-    'Nicaragua',
-    'Niger',
-    'Nigeria',
-    'North Macedonia (Macedonia)',
-    'Norway',
-    'Oman',
-    'Pakistan',
-    'Palau',
-    'Panama',
-    'Papua New Guinea',
-    'Paraguay',
-    'Peru',
-    'Philippines',
-    'Poland',
-    'Portugal',
-    'Qatar',
-    'Romania',
-    'Russia',
-    'Rwanda',
-    'Saint Kitts and Nevis',
-    'Saint Lucia',
-    'Saint Vincent and the Grenadines',
-    'Samoa',
-    'San Marino',
-    'Sao Tome and Principe',
-    'Saudi Arabia',
-    'Senegal',
-    'Serbia',
-    'Seychelles',
-    'Sierra Leone',
-    'Singapore',
-    'Slovakia',
-    'Slovenia',
-    'Solomon Islands',
-    'Somalia',
-    'South Africa',
-    'South Sudan',
-    'Spain',
-    'Sri Lanka',
-    'Sudan',
-    'Suriname',
-    'Sweden',
-    'Switzerland',
-    'Syria',
-    'Taiwan',
-    'Tajikistan',
-    'Tanzania',
-    'Thailand',
-    'Togo',
-    'Tonga',
-    'Trinidad and Tobago',
-    'Tunisia',
-    'Turkey',
-    'Turkmenistan',
-    'Tuvalu',
-    'Uganda',
-    'Ukraine',
-    'United Arab Emirates',
-    'United Kingdom',
-    'United States',
-    'Uruguay',
-    'Uzbekistan',
-    'Vanuatu',
-    'Vatican City',
-    'Venezuela',
-    'Vietnam',
-    'Yemen',
-    'Zambia',
-    'Zimbabwe'
-  ];
-  String? _selectedNationality;
+  //bool _fromDateIsSelected = false;
+  //bool _toDateIsSelected = false;
+  //bool _selectedSex = false;
   RangeValues _budget = const RangeValues(0, 10000);
-  bool _sex = false;
+  //final _nationality = Utils.nationality;
+  //bool _nationalityIsSelected = false;
 
   // Next Page
   // Function to check if all criteria are met
   bool isAllCriteriaMet() {
-    if ((_fromDate != null) &&
-        (_toDate != null) &&
-        (_selectedNationality != null)) return true;
-    return false;
+    // return (_fromDateIsSelected && _toDateIsSelected);
+    return (_fromDate != null && _toDate != null);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Enter your profile',
-          style: TextStyle(
-              color: Colors.white, fontSize: 40, fontWeight: FontWeight.bold),
-        ),
-        backgroundColor: Colors.red,
-      ),
-      body: ListView(
-        children: [
-          // Drink Alcohol
-          CustomSwitchTile(
-            title: 'Drink Alcohol',
-            value: _drinksAlcohol,
-            onChanged: (bool value) {
-              setState(() {
-                _drinksAlcohol = value;
-              });
-            },
-          ),
-
-          // Drive Car
-          CustomSwitchTile(
-            title: 'Drive Car',
-            value: _drivesCar,
-            onChanged: (bool value) {
-              setState(() {
-                _drivesCar = value;
-              });
-            },
-          ),
-
-          // Sociability
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Text('Sociability', style: TextStyle(fontSize: 21)),
+        backgroundColor: const Color.fromARGB(255, 120, 0, 0),
+        body: CustomScrollView(slivers: <Widget>[
+          SliverList(
+              delegate: SliverChildListDelegate([
+            Container(
+                height: 100,
+                margin: EdgeInsets.only(top: 80.0),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '  Enter your persona',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 38,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ])),
+            Container(
+              height: 700,
+              margin: EdgeInsets.only(top: 100.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(45),
               ),
-            ],
-          ),
-          Slider(
-            min: 0,
-            max: 100,
-            divisions: 10, // 10점 단위로 조절
-            activeColor: Colors.red,
-            value: _sociability,
-            onChanged: (double value) {
-              setState(() {
-                _sociability = value;
-              });
-            },
-          ),
+              child: ListView(
+                children: [
+                  // Cleaness
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(16.0),
+                        child: Text('Cleaness', style: TextStyle(fontSize: 21)),
+                      ),
+                    ],
+                  ),
+                  Slider(
+                    min: 0,
+                    max: 5,
+                    divisions: 5,
+                    activeColor: const Color.fromARGB(255, 120, 0, 0),
+                    value: varMap["cleaness"].toDouble(),
+                    onChanged: (double value) {
+                      setState(() {
+                        varMap["cleaness"] = value.toInt();
+                      });
+                    },
+                  ),
 
-          // Food
-          CustomSwitchTileFood(
-            title: 'Food',
-            value: _food,
-            onChanged: (bool value) {
-              setState(() {
-                _food = value;
-              });
-            },
-          ),
+                  // Sleeping Time
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(16.0),
+                        child: Text('Sleeping Time',
+                            style: TextStyle(fontSize: 21)),
+                      ),
+                    ],
+                  ),
+                  RangeSlider(
+                    values: _sleepTime,
+                    min: 0,
+                    max: 24,
+                    divisions: 24, // 슬라이더 간격
+                    labels: RangeLabels(
+                      (_sleepTime.start < 12
+                          ? "${_sleepTime.start.round().toString()} PM"
+                          : _sleepTime.start == 12
+                              ? "${_sleepTime.start.round().toString()} AM"
+                              : _sleepTime.start == 24
+                                  ? "${_sleepTime.start.round() - 12} PM"
+                                  : "${_sleepTime.start.round() - 12} AM"),
+                      (_sleepTime.end < 12
+                          ? "${_sleepTime.end.round().toString()} PM"
+                          : _sleepTime.end == 12
+                              ? "${_sleepTime.end.round().toString()} AM"
+                              : _sleepTime.end == 24
+                                  ? "${_sleepTime.end.round() - 12} PM"
+                                  : "${_sleepTime.end.round() - 12} AM"),
+                    ),
+                    activeColor: const Color.fromARGB(255, 120, 0, 0),
+                    onChanged: (RangeValues values) {
+                      setState(() {
+                        _sleepTime = values;
+                        varMap["sleepingTime"]['sleepTimeStart'] =
+                            _sleepTime.start.toString();
+                        varMap["sleepingTime"]['sleepTimeEnd'] =
+                            _sleepTime.end.toString();
+                      });
+                    },
+                  ),
 
-          // Food Sharing
-          CustomSwitchTile(
-            title: 'Food Sharing',
-            value: _foodSharing,
-            onChanged: (bool value) {
-              setState(() {
-                _foodSharing = value;
-              });
-            },
-          ),
+                  // Smoke
+                  CustomSwitchTile(
+                    title: 'Smoke',
+                    value: varMap["isSmoker"],
+                    onChanged: (bool value) {
+                      setState(() {
+                        varMap["isSmoker"] = value;
+                      });
+                    },
+                  ),
 
-          // Cleaness
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Text('Cleaness', style: TextStyle(fontSize: 21)),
-              ),
-            ],
-          ),
-          Slider(
-            min: 0,
-            max: 100,
-            divisions: 10,
-            activeColor: Colors.red,
-            value: _cleaness,
-            onChanged: (double value) {
-              setState(() {
-                _cleaness = value;
-              });
-            },
-          ),
+                  // Drink Alcohol
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(16.0),
+                        child: Text('Drink Alcohol',
+                            style: TextStyle(fontSize: 21)),
+                      ),
+                    ],
+                  ),
+                  Slider(
+                    min: 0,
+                    max: 5,
+                    divisions: 5,
+                    activeColor: const Color.fromARGB(255, 120, 0, 0),
+                    value: varMap["drinkingRate"].toDouble(),
+                    onChanged: (double value) {
+                      setState(() {
+                        varMap["drinkingRate"] = value.toInt();
+                      });
+                    },
+                  ),
 
-          // Noise Level
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Text('Noise Level', style: TextStyle(fontSize: 21)),
-              ),
-            ],
-          ),
-          Slider(
-            min: 0,
-            max: 100,
-            divisions: 10, // 10점 단위로 조절
-            activeColor: Colors.red,
-            value: _noiseLevel,
-            onChanged: (double value) {
-              setState(() {
-                _noiseLevel = value;
-              });
-            },
-          ),
+                  // Guest
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(16.0),
+                        child: Text('Guest', style: TextStyle(fontSize: 21)),
+                      ),
+                    ],
+                  ),
+                  Slider(
+                    min: 0,
+                    max: 5,
+                    divisions: 5,
+                    activeColor: const Color.fromARGB(255, 120, 0, 0),
+                    value: varMap["inviteGuests"].toDouble(),
+                    onChanged: (double value) {
+                      setState(() {
+                        varMap["inviteGuests"] = value.toInt();
+                      });
+                    },
+                  ),
 
-          // Pet Ownership
-          CustomSwitchTile(
-            title: 'Pet Ownership',
-            value: _petOwnership,
-            onChanged: (bool value) {
-              setState(() {
-                _petOwnership = value;
-              });
-            },
-          ),
+                  // Sociability
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(16.0),
+                        child:
+                            Text('Sociability', style: TextStyle(fontSize: 21)),
+                      ),
+                    ],
+                  ),
+                  Slider(
+                    min: 0,
+                    max: 5,
+                    divisions: 5,
+                    activeColor: const Color.fromARGB(255, 120, 0, 0),
+                    value: varMap["sociability"].toDouble(),
+                    onChanged: (double value) {
+                      setState(() {
+                        varMap["sociability"] = value.toInt();
+                      });
+                    },
+                  ),
 
-          // Staying Schedule
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text('Staying Schedule', style: TextStyle(fontSize: 21)),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
+                  // Drive Car
+                  CustomSwitchTile(
+                    title: 'Drive Car',
+                    value: varMap["canDrive"],
+                    onChanged: (bool value) {
+                      setState(() {
+                        varMap["canDrive"] = value;
+                      });
+                    },
+                  ),
+
+                  // Staying Schedule
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        const Text('From  ',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 21)),
-                        ElevatedButton(
-                          onPressed: () {
-                            showDatePicker(
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime.now(),
-                              lastDate: DateTime(2026),
-                            ).then((selectedDate) {
-                              setState(() {
-                                _fromDate = selectedDate;
-                              });
-                            });
-                          },
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.white),
-                          child: Text(
-                              _fromDate != null
-                                  ? _fromDate.toString().split(" ")[0]
-                                  : "unselected",
-                              style: const TextStyle(
-                                  color: Colors.black, fontSize: 15)),
+                        const Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text('Staying Schedule',
+                                style: TextStyle(fontSize: 21)),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                const Text('From  ',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 21)),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    showDatePicker(
+                                      context: context,
+                                      initialDate: DateTime.now(),
+                                      firstDate: DateTime.now(),
+                                      lastDate: DateTime(2026),
+                                    ).then((selectedDate) {
+                                      setState(() {
+                                        _fromDate = selectedDate;
+                                        //_fromDateIsSelected = true;
+                                        varMap["stayingSchedule"]['fromDate'] =
+                                            _fromDate.toString();
+                                      });
+                                    });
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.white),
+                                  child: Text(
+                                      _fromDate != null
+                                          ? _fromDate.toString().split(" ")[0]
+                                          : "unselected",
+                                      style: const TextStyle(
+                                          color: Colors.black, fontSize: 15)),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                const Text('To  ',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 21)),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    showDatePicker(
+                                      context: context,
+                                      initialDate: _fromDate,
+                                      firstDate: _fromDate ?? DateTime.now(),
+                                      lastDate: DateTime(2026),
+                                    ).then((selectedDate) {
+                                      setState(() {
+                                        _toDate = selectedDate;
+                                        //_toDateIsSelected = true;
+                                        varMap["stayingSchedule"]['toDate'] =
+                                            _toDate.toString();
+                                      });
+                                    });
+                                  },
+                                  child: Text(
+                                      _toDate != null
+                                          ? _toDate.toString().split(" ")[0]
+                                          : "unselected",
+                                      style: const TextStyle(
+                                          color: Colors.black, fontSize: 15)),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        const Text('To  ',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 21)),
-                        ElevatedButton(
-                          onPressed: () {
-                            showDatePicker(
-                              context: context,
-                              initialDate: _fromDate,
-                              firstDate: _fromDate ?? DateTime.now(),
-                              lastDate: DateTime(2026),
-                            ).then((selectedDate) {
-                              setState(() {
-                                _toDate = selectedDate;
-                              });
-                            });
-                          },
-                          child: Text(
-                              _toDate != null
-                                  ? _toDate.toString().split(" ")[0]
-                                  : "unselected",
-                              style: const TextStyle(
-                                  color: Colors.black, fontSize: 15)),
-                        ),
-                      ],
+                  ),
+
+                  // sex
+                  CustomSwitchTileSex(
+                    title: 'Sex',
+                    value: false,
+                    onChanged: (bool value) {
+                      setState(() {
+                        //varMap["sex"] = value;
+                        varMap["sex"] = value ? 'Female' : 'Male';
+                      });
+                    },
+                  ),
+
+                  // Budget
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(16.0),
+                        child: Text('Budget', style: TextStyle(fontSize: 21)),
+                      ),
+                    ],
+                  ),
+                  RangeSlider(
+                    values: _budget,
+                    min: 0,
+                    max: 10000,
+                    divisions: 100, // 슬라이더 간격
+                    labels: RangeLabels(
+                      "\$ ${_budget.start.round()}",
+                      "\$ ${_budget.end.round()}",
                     ),
-                  ],
-                ),
-              ],
-            ),
-          ),
+                    activeColor: const Color.fromARGB(255, 120, 0, 0),
+                    onChanged: (RangeValues values) {
+                      setState(() {
+                        _budget = values;
+                        varMap["budget"]['minimum'] = _budget.start.toString();
+                        varMap["budget"]['maximum'] = _budget.end.toString();
+                      });
+                    },
+                  ),
 
-          // Smoke
-          CustomSwitchTile(
-            title: 'Smoke',
-            value: _smokes,
-            onChanged: (bool value) {
-              setState(() {
-                _smokes = value;
-              });
-            },
-          ),
+                  // Nationality
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(16.0),
+                        child:
+                            Text('Nationality', style: TextStyle(fontSize: 21)),
+                      ),
+                    ],
+                  ),
 
-          // Sleeping Time
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Text('Sleeping Time', style: TextStyle(fontSize: 21)),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      DropdownButton(
+                        value: varMap["nationality"],
+                        items: Utils.nationality
+                            .map((e) => DropdownMenuItem(
+                                  value: e,
+                                  child: Text(e),
+                                ))
+                            .toList(),
+                        onChanged: (value) {
+                          if (value != null) {
+                            setState(() {
+                              varMap["nationality"] = value;
+                              //_nationalityIsSelected = true;
+                            });
+                          }
+                        },
+                      ),
+                    ],
+                  ),
+
+                  // Next Button
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          // Navigate to the next page if all criteria are met
+                          if (isAllCriteriaMet()) {
+                            // DocumentSnapshot userSnapshot = Tenant.fromDocumentSnapshot(FirebaseFirestore.instance.collection(Models.tenants).doc("email").get());
+                            // if (userSnapshot.exists) {
+                            // }
+                            Persona newPersona = Persona(
+                                cleaness: varMap["cleaness"],
+                                sleepingTime: varMap["sleepingTime"],
+                                isSmoker: varMap["isSmoker"],
+                                drinkingRate: varMap["drinkingRate"],
+                                inviteGuests: varMap["inviteGuests"],
+                                sociability: varMap["sociability"],
+                                canDrive: varMap["canDrive"],
+                                stayingSchedule: varMap["stayingSchedule"],
+                                sex: varMap["sex"],
+                                budget: varMap["budget"],
+                                nationality: varMap["nationality"]);
+                            DatabaseService.addPersona(newPersona);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const NextPage()),
+                            );
+                          }
+                        },
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.resolveWith<Color>(
+                                  (states) {
+                            // Change button color to red if all criteria are met, otherwise keep it grey
+                            return isAllCriteriaMet()
+                                ? const Color.fromARGB(255, 120, 0, 0)
+                                : Colors.grey;
+                          }),
+                        ),
+                        child: const Text(
+                          'Next',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
-          RangeSlider(
-            values: _sleepTime,
-            min: 8,
-            max: 24,
-            divisions: 16, // 슬라이더 간격
-            labels: RangeLabels(
-              (_sleepTime.start < 12
-                  ? "${_sleepTime.start.round().toString()} PM"
-                  : _sleepTime.start == 12
-                      ? "${_sleepTime.start.round().toString()} AM"
-                      : _sleepTime.start == 24
-                          ? "${_sleepTime.start.round() - 12} PM"
-                          : "${_sleepTime.start.round() - 12} AM"),
-              (_sleepTime.end < 12
-                  ? "${_sleepTime.end.round().toString()} PM"
-                  : _sleepTime.end == 12
-                      ? "${_sleepTime.end.round().toString()} AM"
-                      : _sleepTime.end == 24
-                          ? "${_sleepTime.end.round() - 12} PM"
-                          : "${_sleepTime.end.round() - 12} AM"),
-            ),
-            activeColor: Colors.red,
-            onChanged: (RangeValues values) {
-              setState(() {
-                _sleepTime = values;
-              });
-            },
-          ),
-
-          // Guest
-          CustomSwitchTile(
-            title: 'Guest',
-            value: _guest,
-            onChanged: (bool value) {
-              setState(() {
-                _guest = value;
-              });
-            },
-          ),
-
-          // Nationality
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Text('Nationality', style: TextStyle(fontSize: 21)),
-              ),
-            ],
-          ),
-
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              DropdownButton(
-                value: _selectedNationality,
-                items: _nationality
-                    .map((e) => DropdownMenuItem(
-                          value: e,
-                          child: Text(e),
-                        ))
-                    .toList(),
-                onChanged: (value) {
-                  setState(() {
-                    _selectedNationality = value!;
-                  });
-                },
-              ),
-            ],
-          ),
-
-          // Budget
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Text('Budget', style: TextStyle(fontSize: 21)),
-              ),
-            ],
-          ),
-          RangeSlider(
-            values: _budget,
-            min: 0,
-            max: 10000,
-            divisions: 100, // 슬라이더 간격
-            labels: RangeLabels(
-              "\$ ${_budget.start.round()}",
-              "\$ ${_budget.end.round()}",
-            ),
-            activeColor: Colors.red,
-            onChanged: (RangeValues values) {
-              setState(() {
-                _budget = values;
-              });
-            },
-          ),
-
-          // Sex
-          CustomSwitchTileSex(
-            title: 'Sex',
-            value: _sex,
-            onChanged: (bool value) {
-              setState(() {
-                _sex = value;
-              });
-            },
-          ),
-
-          const Row(
-            children: [
-              Padding(
-                padding: EdgeInsets.all(45.0),
-                child: Text('', style: TextStyle(fontSize: 21)),
-              ),
-            ],
-          ),
-
-          // Next Button
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  // Navigate to the next page if all criteria are met
-                  if (isAllCriteriaMet()) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const NextPage()),
-                    );
-                  }
-                },
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.resolveWith<Color>((states) {
-                    // Change button color to red if all criteria are met, otherwise keep it grey
-                    return isAllCriteriaMet() ? Colors.red : Colors.grey;
-                  }),
-                ),
-                child: const Text(
-                  'Next',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
+            )
+          ]))
+        ]));
   }
 }

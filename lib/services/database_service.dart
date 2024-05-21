@@ -27,30 +27,30 @@ class DatabaseService {
   ];
 
   // Create
-  static void addHouse(House houseData) async {
-    await _db.collection("houses").add(houseData.toMap());
+  static Future<DocumentReference> addHouse(House houseData) async {
+    return await _db.collection("houses").add(houseData.toMap());
   }
 
-  static void addOwner(Owner ownerData) async {
-    await _db.collection("owners").add(ownerData.toMap());
+  static Future<DocumentReference> addOwner(Owner ownerData) async {
+    return await _db.collection("owners").add(ownerData.toMap());
   }
 
-  static void addTenant(Tenant tenantData) async {
-    await _db.collection("tenants").add(tenantData.toMap());
+  static Future<DocumentReference> addTenant(Tenant tenantData) async {
+    return await _db.collection("tenants").add(tenantData.toMap());
   }
 
-  static void addPersona(Persona personaData) async {
-    await _db.collection("persona").add(personaData.toMap());
+  static Future<DocumentReference> addPersona(Persona personaData) async {
+    return await _db.collection("persona").add(personaData.toMap());
   }
 
-  static void addReview(Review reviewData) async {
-    await _db.collection("reviews").add(reviewData.toMap());
+  static Future<DocumentReference> addReview(Review reviewData) async {
+    return await _db.collection("reviews").add(reviewData.toMap());
   }
 
   // Read (Single)
-  static Future<Model> getDocument(Models model, DocumentReference ref) async {
+  static Future<Model> getDocument(Models model, String documentId) async {
     DocumentSnapshot<Map<String, dynamic>> snapshot =
-        await _db.collection(_models[model.index]).doc(ref.id).get();
+        await _db.collection(_models[model.index]).doc(documentId).get();
     switch (model) {
       case Models.houses:
         return House.fromDocumentSnapshot(snapshot);
@@ -68,9 +68,9 @@ class DatabaseService {
   }
 
   static Stream<DocumentSnapshot<Map<String, dynamic>>> getDocumentStream(
-      Models model, DocumentReference ref) {
+      Models model, String documentId) {
     Stream<DocumentSnapshot<Map<String, dynamic>>> snapshot =
-        _db.collection(_models[model.index]).doc(ref.id).snapshots();
+        _db.collection(_models[model.index]).doc(documentId).snapshots();
     return snapshot;
   }
 
@@ -80,6 +80,17 @@ class DatabaseService {
     Stream<QuerySnapshot<Map<String, dynamic>>> snapshot =
         _db.collection(_models[model.index]).snapshots();
     return snapshot;
+  }
+
+  static Stream<QuerySnapshot<Map<String, dynamic>>>
+      getCollectionStreamWithSearch(Models model, String keyword) {
+    Query<Map<String, dynamic>> collection =
+        _db.collection(_models[model.index]);
+    if (keyword.isNotEmpty) {
+      collection =
+          collection.where('searchField', arrayContains: keyword.toLowerCase());
+    }
+    return collection.snapshots();
   }
 
   // Update

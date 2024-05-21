@@ -2,8 +2,8 @@ import 'package:brookmate/services/models/model_interface.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class House implements Model {
-  final String? id;
-  final DocumentReference owner;
+  String? id;
+  final DocumentReference? owner;
   String houseName;
   double ratingAvg;
   final List<DocumentReference> houseReviews;

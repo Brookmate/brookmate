@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
 class CustomSwitchTileSex extends StatelessWidget {
   final String title;
   final bool value;
   final Function(bool) onChanged;
+  final bool toggleSwitch;
 
   const CustomSwitchTileSex({
     required this.title,
     required this.value,
     required this.onChanged,
+    this.toggleSwitch = false,
     super.key,
   });
 
@@ -19,11 +22,22 @@ class CustomSwitchTileSex extends StatelessWidget {
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(value ? 'Female' : 'Male'),
-          Switch.adaptive(
-            value: value,
-            activeColor: Colors.red,
-            onChanged: onChanged,
+          SizedBox(width: 10), // Add some space between text and switch
+          ToggleSwitch(
+            minWidth: 100.0,
+            minHeight: 50.0,
+            fontSize: 16.0,
+            cornerRadius: 20.0,
+            initialLabelIndex: 1,
+            activeBgColor: [Color(0xff9C0000)],
+            activeFgColor: Colors.white,
+            inactiveBgColor: Color.fromRGBO(246, 246, 246, 1),
+            inactiveFgColor: Colors.black,
+            totalSwitches: 2,
+            labels: ['Male', 'Female'],
+            onToggle: (index) {
+              print('switched to: $index');
+            },
           ),
         ],
       ),

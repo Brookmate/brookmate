@@ -1,11 +1,14 @@
+import 'package:brookmate/services/database_service.dart';
 import 'package:flutter/material.dart';
 import 'package:brookmate/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:brookmate/pages/add_profile_page.dart';
 
 Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await DatabaseService.init();
   runApp(const MainApp());
 }
 
@@ -19,6 +22,7 @@ class MainApp extends StatelessWidget {
     );
   }
 }
+<<<<<<< HEAD
 
 class AddProfilePage extends StatefulWidget {
   const AddProfilePage({super.key});
@@ -724,3 +728,5 @@ class NextPage extends StatelessWidget {
     );
   }
 }
+=======
+>>>>>>> 6028a4ee15112eb85d11d3cee464aec1dd318a0e
