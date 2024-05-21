@@ -19,7 +19,7 @@ class _HouseSearchState extends State<HouseSearch> {
 
   @override
   Widget build(BuildContext context) {
-    RangeValues budget = const RangeValues(0, 10000); // Define _budget here
+    RangeValues budget = const RangeValues(0, 10000); // Define budget here
 
     return MaterialApp(
       home: Scaffold(
@@ -88,65 +88,6 @@ class _HouseSearchState extends State<HouseSearch> {
                     const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        // Row(
-                        //   children: [
-                        //     const SizedBox(width: 15),
-                        //     GestureDetector(
-                        //       onTap: onTap,
-                        //       child: const ButtonBar(
-                        //         children: [
-                        //           Icon(Icons.swap_vert),
-                        //           Text(
-                        //             "Sort",
-                        //             style: TextStyle(
-                        //               fontSize: 22,
-                        //               fontWeight: FontWeight.w500,
-                        //             ),
-                        //           ),
-                        //         ],
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
-                        // Row(
-                        //   children: [
-                        //     GestureDetector(
-                        //       onTap: onTap,
-                        //       child: const ButtonBar(
-                        //         children: [
-                        //           Icon(Icons.tune),
-                        //           Text(
-                        //             "Filter",
-                        //             style: TextStyle(
-                        //               fontSize: 22,
-                        //               fontWeight: FontWeight.w500,
-                        //             ),
-                        //           ),
-                        //         ],
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
-                        // Row(
-                        //   children: [
-                        //     GestureDetector(
-                        //       onTap: onTap,
-                        //       child: const ButtonBar(
-                        //         children: [
-                        //           Icon(Icons.map),
-                        //           Text(
-                        //             "Map",
-                        //             style: TextStyle(
-                        //               fontSize: 22,
-                        //               fontWeight: FontWeight.w500,
-                        //             ),
-                        //           ),
-                        //         ],
-                        //       ),
-                        //     ),
-                        //     const SizedBox(width: 15),
-                        //   ],
-                        // ),
                       ],
                     ),
                     // Sorting, Filtering, and Map buttons
