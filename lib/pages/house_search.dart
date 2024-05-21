@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:brookmate/widgets/house_search_info_listview.dart';
 import 'package:brookmate/pages/house_map.dart';
 import 'package:brookmate/pages/housemate.dart';
-import 'package:brookmate/services/models/house_model.dart';
 
 class HouseSearch extends StatefulWidget {
   const HouseSearch({super.key});
@@ -14,13 +13,11 @@ class HouseSearch extends StatefulWidget {
 }
 
 class _HouseSearchState extends State<HouseSearch> {
-  void onTap() {}
   String _sortOption = 'Lowest';
+  RangeValues _budget = const RangeValues(0, 10000); // Define budget here
 
   @override
   Widget build(BuildContext context) {
-    RangeValues budget = const RangeValues(0, 10000); // Define budget here
-
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.white,
@@ -78,7 +75,6 @@ class _HouseSearchState extends State<HouseSearch> {
                 padding: const EdgeInsets.only(top: 40.0),
                 decoration: const BoxDecoration(
                   color: Color.fromARGB(77, 209, 196, 196),
-                  // borderRadius: BorderRadius.circular(45),
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(45),
                       topRight: Radius.circular(45)),
@@ -133,7 +129,7 @@ class _HouseSearchState extends State<HouseSearch> {
                                               Navigator.pop(context);
                                               setState(() {
                                                 _sortOption =
-                                                    'low_rating'; // Set sort option to 'Lowest'
+                                                    'low_rating'; // Set sort option to 'Low Rating'
                                               });
                                             },
                                             child: const Text('Low Rating'),
@@ -144,7 +140,7 @@ class _HouseSearchState extends State<HouseSearch> {
                                               Navigator.pop(context);
                                               setState(() {
                                                 _sortOption =
-                                                    'high_rating'; // Set sort option to 'Lowest'
+                                                    'high_rating'; // Set sort option to 'High Rating'
                                               });
                                             },
                                             child: const Text('High Rating'),
@@ -183,16 +179,18 @@ class _HouseSearchState extends State<HouseSearch> {
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         RangeSlider(
-                                          values: budget,
+                                          values: _budget,
                                           min: 0,
                                           max: 10000,
                                           divisions: 100,
                                           labels: RangeLabels(
-                                            '\$ ${budget.start.round()}',
-                                            '\$ ${budget.end.round()}',
+                                            '\$ ${_budget.start.round()}',
+                                            '\$ ${_budget.end.round()}',
                                           ),
                                           onChanged: (RangeValues values) {
-                                            budget = values;
+                                            setState(() {
+                                              _budget = values;
+                                            });
                                           },
                                         ),
                                         ElevatedButton(
@@ -284,7 +282,7 @@ class _HouseSearchState extends State<HouseSearch> {
                         stream: DatabaseService.getCollectionStreamWithSorting(
                           Models.houses,
                           _sortOption,
-                          budget,
+                          _budget,
                         ),
                         builder: (BuildContext context,
                             AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
