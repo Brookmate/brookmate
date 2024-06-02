@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:brookmate/services/database_service.dart';
 import 'package:brookmate/services/models/persona_model.dart';
 import 'package:brookmate/services/models/tenant_model.dart';
+import 'package:brookmate/pages/house_search.dart';
 
 class AddProfilePage extends StatefulWidget {
   const AddProfilePage({super.key});
@@ -85,8 +86,8 @@ class _AddProfilePageState extends State<AddProfilePage> {
               delegate: SliverChildListDelegate([
             Container(
                 height: 100,
-                margin: EdgeInsets.only(top: 80.0),
-                child: Column(
+                margin: const EdgeInsets.only(top: 80.0),
+                child: const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
@@ -100,7 +101,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
                     ])),
             Container(
               height: 700,
-              margin: EdgeInsets.only(top: 100.0),
+              margin: const EdgeInsets.only(top: 100.0),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(45),
@@ -163,7 +164,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
                                   : "${_sleepTime.end.round() - 12} AM"),
                     ),
                     activeColor: const Color.fromARGB(255, 120, 0, 0),
-                    onChanged: (RangeValues values) {
+ onChanged: (RangeValues values) {
                       setState(() {
                         _sleepTime = values;
                         varMap["sleepingTime"]['sleepTimeStart'] =
@@ -458,7 +459,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const NextPage()),
+                                  builder: (context) => const HouseSearch()),
                             );
                           }
                         },

@@ -5,6 +5,7 @@ class HouseInfoListView extends StatefulWidget {
   final double numRating, rating;
   final int numReviews, numBeds, numBath, rent, numKm;
   final bool isFreeElec;
+  final RangeValues _budget = const RangeValues(0, 10000);
 
   //houseInfo1
   const HouseInfoListView({
@@ -41,6 +42,7 @@ class _HouseInfoListViewState extends State<HouseInfoListView> {
             flex: 3,
             child: Container(
               height: 200,
+              margin: const EdgeInsets.only(bottom: 20),
               decoration: BoxDecoration(
                 color: Colors.grey[350],
                 borderRadius: BorderRadius.circular(15),

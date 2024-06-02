@@ -1,15 +1,20 @@
 import 'package:brookmate/services/database_service.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:brookmate/widgets/house_search_info_listview.dart';
 import 'package:brookmate/pages/house_map.dart';
-import 'package:brookmate/services/models/house_model.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/widgets.dart';
+import 'package:brookmate/pages/housemate.dart';
 
-class HouseSearch extends StatelessWidget {
+class HouseSearch extends StatefulWidget {
   const HouseSearch({super.key});
 
-  void onTap() {}
+  @override
+  State<HouseSearch> createState() => _HouseSearchState();
+}
+
+class _HouseSearchState extends State<HouseSearch> {
+  String _sortOption = 'Lowest';
+  RangeValues _budget = const RangeValues(0, 10000); // Define budget here
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +75,6 @@ class HouseSearch extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 40.0),
                 decoration: const BoxDecoration(
                   color: Color.fromARGB(77, 209, 196, 196),
-                  // borderRadius: BorderRadius.circular(45),
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(45),
                       topRight: Radius.circular(45)),
@@ -79,67 +83,7 @@ class HouseSearch extends StatelessWidget {
                   children: [
                     const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        // Row(
-                        //   children: [
-                        //     const SizedBox(width: 15),
-                        //     GestureDetector(
-                        //       onTap: onTap,
-                        //       child: const ButtonBar(
-                        //         children: [
-                        //           Icon(Icons.swap_vert),
-                        //           Text(
-                        //             "Sort",
-                        //             style: TextStyle(
-                        //               fontSize: 22,
-                        //               fontWeight: FontWeight.w500,
-                        //             ),
-                        //           ),
-                        //         ],
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
-                        // Row(
-                        //   children: [
-                        //     GestureDetector(
-                        //       onTap: onTap,
-                        //       child: const ButtonBar(
-                        //         children: [
-                        //           Icon(Icons.tune),
-                        //           Text(
-                        //             "Filter",
-                        //             style: TextStyle(
-                        //               fontSize: 22,
-                        //               fontWeight: FontWeight.w500,
-                        //             ),
-                        //           ),
-                        //         ],
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
-                        // Row(
-                        //   children: [
-                        //     GestureDetector(
-                        //       onTap: onTap,
-                        //       child: const ButtonBar(
-                        //         children: [
-                        //           Icon(Icons.map),
-                        //           Text(
-                        //             "Map",
-                        //             style: TextStyle(
-                        //               fontSize: 22,
-                        //               fontWeight: FontWeight.w500,
-                        //             ),
-                        //           ),
-                        //         ],
-                        //       ),
-                        //     ),
-                        //     const SizedBox(width: 15),
-                        //   ],
-                        // ),
-                      ],
+                      children: [],
                     ),
                     // Sorting, Filtering, and Map buttons
                     Padding(
@@ -161,6 +105,10 @@ class HouseSearch extends StatelessWidget {
                                           GestureDetector(
                                             onTap: () {
                                               Navigator.pop(context);
+                                              setState(() {
+                                                _sortOption =
+                                                    'Lowest'; // Set sort option to 'Lowest'
+                                              });
                                             },
                                             child: const Text('Lowest'),
                                           ),
@@ -168,8 +116,34 @@ class HouseSearch extends StatelessWidget {
                                           GestureDetector(
                                             onTap: () {
                                               Navigator.pop(context);
+                                              setState(() {
+                                                _sortOption =
+                                                    'Highest'; // Set sort option to 'Highest'
+                                              });
                                             },
                                             child: const Text('Highest'),
+                                          ),
+                                          const Divider(),
+                                          GestureDetector(
+                                            onTap: () {
+                                              Navigator.pop(context);
+                                              setState(() {
+                                                _sortOption =
+                                                    'low_rating'; // Set sort option to 'Low Rating'
+                                              });
+                                            },
+                                            child: const Text('Low Rating'),
+                                          ),
+                                          const Divider(),
+                                          GestureDetector(
+                                            onTap: () {
+                                              Navigator.pop(context);
+                                              setState(() {
+                                                _sortOption =
+                                                    'high_rating'; // Set sort option to 'High Rating'
+                                              });
+                                            },
+                                            child: const Text('High Rating'),
                                           ),
                                         ],
                                       ),
@@ -200,25 +174,33 @@ class HouseSearch extends StatelessWidget {
                                 context: context,
                                 builder: (BuildContext context) {
                                   return AlertDialog(
-                                    title: const Text('Filter By'),
-                                    content: SingleChildScrollView(
-                                        child: ListBody(
+                                    title: const Text('Filter By Price'),
+                                    content: Column(
+                                      mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        GestureDetector(
-                                          onTap: () {
-                                            Navigator.pop(context);
+                                        RangeSlider(
+                                          values: _budget,
+                                          min: 0,
+                                          max: 10000,
+                                          divisions: 100,
+                                          labels: RangeLabels(
+                                            '\$ ${_budget.start.round()}',
+                                            '\$ ${_budget.end.round()}',
+                                          ),
+                                          onChanged: (RangeValues values) {
+                                            setState(() {
+                                              _budget = values;
+                                            });
                                           },
-                                          child: const Text('Lowest'),
                                         ),
-                                        const Divider(),
-                                        GestureDetector(
-                                          onTap: () {
+                                        ElevatedButton(
+                                          onPressed: () {
                                             Navigator.pop(context);
                                           },
-                                          child: const Text('Highest'),
+                                          child: const Text('Apply'),
                                         ),
                                       ],
-                                    )),
+                                    ),
                                   );
                                 },
                               );
@@ -264,6 +246,31 @@ class HouseSearch extends StatelessWidget {
                               backgroundColor: Colors.white,
                             ),
                           ),
+                          ElevatedButton.icon(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const housemate()), //navigate to houseMap page
+                              );
+                            },
+                            icon: const Icon(
+                              Icons.face,
+                              color: Colors.black,
+                            ),
+                            label: const Text(
+                              "HouseMate",
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black,
+                              ),
+                            ),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white,
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -272,8 +279,11 @@ class HouseSearch extends StatelessWidget {
                     ),
                     Expanded(
                       child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                        stream:
-                            DatabaseService.getCollectionStream(Models.houses),
+                        stream: DatabaseService.getCollectionStreamWithSorting(
+                          Models.houses,
+                          _sortOption,
+                          _budget,
+                        ),
                         builder: (BuildContext context,
                             AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
                                 snapshot) {
@@ -304,9 +314,6 @@ class HouseSearch extends StatelessWidget {
                                       rent: docs[index]['rent_price'],
                                       isFreeElec: false,
                                     ),
-                                    const SizedBox(
-                                        height:
-                                            20), // Add space between HouseInfoListView widgets
                                   ],
                                 );
                               },
