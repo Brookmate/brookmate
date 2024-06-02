@@ -42,43 +42,33 @@ class _AddProfilePageState extends State<AddProfilePage> {
     "id": 0,
     "user": null,
     "cleaness": 0,
-    "sleepingTime": {'key1': 'value1', 'key2': 'value2'}, // Map<String, String>
+    "sleepingTime": {
+      'sleepTimeStart': 'value1',
+      'sleepTimeEnd': 'value2'
+    }, // Map<String, String>
     "isSmoker": false,
     "drinkingRate": 0,
     "inviteGuests": 0,
     "sociability": 0,
     "canDrive": false,
     "stayingSchedule": {
-      'key1': 'value1',
-      'key2': 'value2'
-    }, //Map<String, String>
-    "sex": false,
-    '_selectedSex': 'unselected',
-    "budget": {'key1': 'value1', 'key2': 'value2'}, // Map<String, String>
-    "nationality": ""
+      'fromDate': 'value1',
+      'toDate': 'value2'
+    }, // Map<String, String>
+    "sex": 'unselected',
+    "budget": {'minimum': 'value1', 'maximum': 'value2'}, // Map<String, String>
+    "nationality": Utils.nationality[0],
   };
 
-  int _cleaness = 0;
   RangeValues _sleepTime = const RangeValues(8, 24);
-  final Map<String, String> _sleepTimeMap = {};
-  bool _smokes = false;
-  int _drinksAlcohol = 0;
-  int _guest = 0;
-  int _sociability = 0;
-  bool _drivesCar = false;
   DateTime? _fromDate;
   DateTime? _toDate;
-  bool _fromDateIsSelected = false;
-  bool _toDateIsSelected = false;
-  final Map<String, String> _scheduleMap = {};
-  bool _sex = false;
-  String _selectedSex = 'unselected';
+  //bool _fromDateIsSelected = false;
+  //bool _toDateIsSelected = false;
+  //bool _selectedSex = false;
   RangeValues _budget = const RangeValues(0, 10000);
-  final Map<String, String> _budgetMap = {};
-  final _nationality = Utils.nationality;
-  String _selectedNationality = 'Afghanistan';
-  // bool _nationalityIsSelected = false;
-  // final DatabaseService _dbService = DatabaseService();
+  //final _nationality = Utils.nationality;
+  //bool _nationalityIsSelected = false;
 
   // Next Page
   // Function to check if all criteria are met
@@ -133,10 +123,10 @@ class _AddProfilePageState extends State<AddProfilePage> {
                     max: 5,
                     divisions: 5,
                     activeColor: const Color.fromARGB(255, 120, 0, 0),
-                    value: _cleaness.toDouble(),
+                    value: varMap["cleaness"].toDouble(),
                     onChanged: (double value) {
                       setState(() {
-                        _cleaness = value.toInt();
+                        varMap["cleaness"] = value.toInt();
                       });
                     },
                   ),
@@ -173,12 +163,14 @@ class _AddProfilePageState extends State<AddProfilePage> {
                                   ? "${_sleepTime.end.round() - 12} PM"
                                   : "${_sleepTime.end.round() - 12} AM"),
                     ),
-                    activeColor: const Color(0x008f1b11),
-                    onChanged: (RangeValues values) {
+                    activeColor: const Color.fromARGB(255, 120, 0, 0),
+ onChanged: (RangeValues values) {
                       setState(() {
                         _sleepTime = values;
-                        _sleepTimeMap["from"] = _sleepTime.start.toString();
-                        _sleepTimeMap["to"] = _sleepTime.end.toString();
+                        varMap["sleepingTime"]['sleepTimeStart'] =
+                            _sleepTime.start.toString();
+                        varMap["sleepingTime"]['sleepTimeEnd'] =
+                            _sleepTime.end.toString();
                       });
                     },
                   ),
@@ -186,10 +178,10 @@ class _AddProfilePageState extends State<AddProfilePage> {
                   // Smoke
                   CustomSwitchTile(
                     title: 'Smoke',
-                    value: _smokes,
+                    value: varMap["isSmoker"],
                     onChanged: (bool value) {
                       setState(() {
-                        _smokes = value;
+                        varMap["isSmoker"] = value;
                       });
                     },
                   ),
@@ -210,10 +202,10 @@ class _AddProfilePageState extends State<AddProfilePage> {
                     max: 5,
                     divisions: 5,
                     activeColor: const Color.fromARGB(255, 120, 0, 0),
-                    value: _drinksAlcohol.toDouble(),
+                    value: varMap["drinkingRate"].toDouble(),
                     onChanged: (double value) {
                       setState(() {
-                        _drinksAlcohol = value.toInt();
+                        varMap["drinkingRate"] = value.toInt();
                       });
                     },
                   ),
@@ -233,10 +225,10 @@ class _AddProfilePageState extends State<AddProfilePage> {
                     max: 5,
                     divisions: 5,
                     activeColor: const Color.fromARGB(255, 120, 0, 0),
-                    value: _guest.toDouble(),
+                    value: varMap["inviteGuests"].toDouble(),
                     onChanged: (double value) {
                       setState(() {
-                        _guest = value.toInt();
+                        varMap["inviteGuests"] = value.toInt();
                       });
                     },
                   ),
@@ -257,10 +249,10 @@ class _AddProfilePageState extends State<AddProfilePage> {
                     max: 5,
                     divisions: 5,
                     activeColor: const Color.fromARGB(255, 120, 0, 0),
-                    value: _sociability.toDouble(),
+                    value: varMap["sociability"].toDouble(),
                     onChanged: (double value) {
                       setState(() {
-                        _sociability = value.toInt();
+                        varMap["sociability"] = value.toInt();
                       });
                     },
                   ),
@@ -268,10 +260,10 @@ class _AddProfilePageState extends State<AddProfilePage> {
                   // Drive Car
                   CustomSwitchTile(
                     title: 'Drive Car',
-                    value: _drivesCar,
+                    value: varMap["canDrive"],
                     onChanged: (bool value) {
                       setState(() {
-                        _drivesCar = value;
+                        varMap["canDrive"] = value;
                       });
                     },
                   ),
@@ -308,8 +300,8 @@ class _AddProfilePageState extends State<AddProfilePage> {
                                     ).then((selectedDate) {
                                       setState(() {
                                         _fromDate = selectedDate;
-                                        _fromDateIsSelected = true;
-                                        _scheduleMap["from"] =
+                                        //_fromDateIsSelected = true;
+                                        varMap["stayingSchedule"]['fromDate'] =
                                             _fromDate.toString();
                                       });
                                     });
@@ -342,8 +334,9 @@ class _AddProfilePageState extends State<AddProfilePage> {
                                     ).then((selectedDate) {
                                       setState(() {
                                         _toDate = selectedDate;
-                                        _toDateIsSelected = true;
-                                        _scheduleMap["to"] = _toDate.toString();
+                                        //_toDateIsSelected = true;
+                                        varMap["stayingSchedule"]['toDate'] =
+                                            _toDate.toString();
                                       });
                                     });
                                   },
@@ -365,11 +358,11 @@ class _AddProfilePageState extends State<AddProfilePage> {
                   // sex
                   CustomSwitchTileSex(
                     title: 'Sex',
-                    value: _sex,
+                    value: false,
                     onChanged: (bool value) {
                       setState(() {
-                        _sex = value;
-                        _selectedSex = _sex ? 'Female' : 'Male';
+                        //varMap["sex"] = value;
+                        varMap["sex"] = value ? 'Female' : 'Male';
                       });
                     },
                   ),
@@ -393,12 +386,12 @@ class _AddProfilePageState extends State<AddProfilePage> {
                       "\$ ${_budget.start.round()}",
                       "\$ ${_budget.end.round()}",
                     ),
-                    activeColor: const Color(0x008f1b11),
+                    activeColor: const Color.fromARGB(255, 120, 0, 0),
                     onChanged: (RangeValues values) {
                       setState(() {
                         _budget = values;
-                        _budgetMap["from"] = _budget.start.toString();
-                        _budgetMap["to"] = _budget.end.toString();
+                        varMap["budget"]['minimum'] = _budget.start.toString();
+                        varMap["budget"]['maximum'] = _budget.end.toString();
                       });
                     },
                   ),
@@ -419,8 +412,8 @@ class _AddProfilePageState extends State<AddProfilePage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       DropdownButton(
-                        value: _selectedNationality,
-                        items: _nationality
+                        value: varMap["nationality"],
+                        items: Utils.nationality
                             .map((e) => DropdownMenuItem(
                                   value: e,
                                   child: Text(e),
@@ -429,8 +422,8 @@ class _AddProfilePageState extends State<AddProfilePage> {
                         onChanged: (value) {
                           if (value != null) {
                             setState(() {
-                              _selectedNationality = value;
-                              // _nationalityIsSelected = true;
+                              varMap["nationality"] = value;
+                              //_nationalityIsSelected = true;
                             });
                           }
                         },
@@ -451,17 +444,17 @@ class _AddProfilePageState extends State<AddProfilePage> {
                             // if (userSnapshot.exists) {
                             // }
                             Persona newPersona = Persona(
-                                cleaness: _cleaness,
-                                sleepingTime: _sleepTimeMap,
-                                isSmoker: _smokes,
-                                drinkingRate: _drinksAlcohol,
-                                inviteGuests: _guest,
-                                sociability: _sociability,
-                                canDrive: _drivesCar,
-                                stayingSchedule: _scheduleMap,
-                                sex: _selectedSex,
-                                budget: _budgetMap,
-                                nationality: _selectedNationality);
+                                cleaness: varMap["cleaness"],
+                                sleepingTime: varMap["sleepingTime"],
+                                isSmoker: varMap["isSmoker"],
+                                drinkingRate: varMap["drinkingRate"],
+                                inviteGuests: varMap["inviteGuests"],
+                                sociability: varMap["sociability"],
+                                canDrive: varMap["canDrive"],
+                                stayingSchedule: varMap["stayingSchedule"],
+                                sex: varMap["sex"],
+                                budget: varMap["budget"],
+                                nationality: varMap["nationality"]);
                             DatabaseService.addPersona(newPersona);
                             Navigator.push(
                               context,
