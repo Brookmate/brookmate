@@ -30,14 +30,14 @@ class _LogInPageState extends State<LogInPage> {
           Utils.showAlertDialog(context, "Log In failed", "Please try again.");
           return;
         }
+        Users userType = Users.tenant; // temporary default
         if (!context.mounted) return;
-        Users userType = AuthService.getCurrentUserType();
         switch (userType) {
-          case Users.tenant:
+          case Users.owner:
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const AddProfilePage(),
+                builder: (context) => const OwnerPage(),
               ),
             );
             break;
@@ -45,7 +45,7 @@ class _LogInPageState extends State<LogInPage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const OwnerPage(),
+                builder: (context) => const AddProfilePage(),
               ),
             );
         }

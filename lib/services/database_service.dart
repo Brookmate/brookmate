@@ -43,8 +43,8 @@ class DatabaseService {
   static Future<DocumentReference> addTenant(Tenant tenantData) async {
     String docId = Utils.hashify(tenantData.email);
     tenantData.id = docId;
-    await _db.collection("owners").doc(docId).set(tenantData.toMap());
-    return _db.collection("owners").doc(docId);
+    await _db.collection("tenants").doc(docId).set(tenantData.toMap());
+    return _db.collection("tenants").doc(docId);
   }
 
   static Future<DocumentReference> addPersona(Persona personaData) async {
@@ -57,34 +57,39 @@ class DatabaseService {
 
   // Read (Single)
   static Future<Model> getDocument(Models model, String documentId) async {
-    DocumentSnapshot<Map<String, dynamic>> snapshot =
-        await _db.collection(_models[model.index]).doc(documentId).get();
-    if (!snapshot.exists) {
+    try {
+      DocumentSnapshot<Map<String, dynamic>> snapshot =
+          await _db.collection(_models[model.index]).doc(documentId).get();
+      if (!snapshot.exists) {
+        throw Exception("Document does not exist");
+      }
+      switch (model) {
+        case Models.houses:
+          return House.fromDocumentSnapshot(snapshot);
+        case Models.owners:
+          return Owner.fromDocumentSnapshot(snapshot);
+        case Models.tenants:
+          return Tenant.fromDocumentSnapshot(snapshot);
+        case Models.persona:
+          return Persona.fromDocumentSnapshot(snapshot);
+        case Models.reviews:
+          return Review.fromDocumentSnapshot(snapshot);
+        default:
+          throw Exception("Invalid type entered");
+      }
+    } catch (e) {
       throw Exception("Document does not exist");
-    }
-    switch (model) {
-      case Models.houses:
-        return House.fromDocumentSnapshot(snapshot);
-      case Models.owners:
-        return Owner.fromDocumentSnapshot(snapshot);
-      case Models.tenants:
-        return Tenant.fromDocumentSnapshot(snapshot);
-      case Models.persona:
-        return Persona.fromDocumentSnapshot(snapshot);
-      case Models.reviews:
-        return Review.fromDocumentSnapshot(snapshot);
-      default:
-        throw Exception("Invalid type entered");
     }
   }
 
   static Future<DocumentReference> getDocumentReference(
       Models model, String documentId) async {
-    var snapshot =
-        await _db.collection(_models[model.index]).doc(documentId).get();
-    if (!snapshot.exists) {
-      throw Exception("Document does not exist");
+    try {
+      await _db.collection(_models[model.index]).doc(documentId).get();
+    } catch (e) {
+      throw Exception("Document Does not exist");
     }
+
     return _db.collection(_models[model.index]).doc(documentId);
   }
 

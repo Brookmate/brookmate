@@ -27,17 +27,23 @@ class AuthService {
     User user = getCurrentUser();
     String docId = Utils.hashify(user.email!);
     try {
-      return DatabaseService.getDocumentReference(Models.owners, docId);
+      DocumentReference ref =
+          await DatabaseService.getDocumentReference(Models.owners, docId);
+      return ref;
     } catch (e) {
-      return DatabaseService.getDocumentReference(Models.tenants, docId);
+      DocumentReference ref =
+          await DatabaseService.getDocumentReference(Models.tenants, docId);
+      return ref;
     }
   }
 
-  static Users getCurrentUserType() {
+  static Future<Users> getCurrentUserType() async {
     User user = getCurrentUser();
     String docId = Utils.hashify(user.email!);
     try {
-      DatabaseService.getDocumentReference(Models.owners, docId);
+      DocumentReference docref =
+          await DatabaseService.getDocumentReference(Models.owners, docId);
+      DatabaseService.getDocument(Models.owners, docref.id);
       return Users.owner;
     } catch (e) {
       return Users.tenant;
