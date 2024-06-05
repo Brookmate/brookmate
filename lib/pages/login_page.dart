@@ -1,7 +1,8 @@
 import 'package:brookmate/pages/add_profile_page.dart';
+import 'package:brookmate/pages/owner_page.dart';
 import 'package:brookmate/services/auth_service.dart';
-import 'package:brookmate/widgets/common/custom_button.dart';
-import 'package:brookmate/widgets/common/custom_input.dart';
+import 'package:brookmate/theme/theme.dart';
+import 'package:brookmate/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 class LogInPage extends StatefulWidget {
@@ -16,50 +17,79 @@ class _LogInPageState extends State<LogInPage> {
   Widget build(BuildContext context) {
     TextEditingController emailController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
-    return Scaffold(
-      body: Column(
-        children: [
-          const Text("Welcome to\nBrookmate"),
-          Container(
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(40)),
-            child: Column(
-              children: [
-                CustomInput(
-                  inputType: InputType.email,
-                  label: "Email",
-                  controller: emailController,
-                ),
-                CustomInput(
-                  inputType: InputType.password,
-                  label: "Password",
-                  controller: passwordController,
-                ),
-                CustomButton(
-                  onPressed: () async {
-                    RegExp filter =
-                        RegExp(r"^[a-z]+\.[a-z]+[1-9]*\@(stonybrook\.edu)");
-                    String email = emailController.text.toLowerCase();
-                    String password = passwordController.text;
-                    if (filter.hasMatch(email)) {
-                      await AuthService.logInByEmail(email, password);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const AddProfilePage(),
-                        ),
-                      );
-                    } else {
-                      print("Invalid email address");
-                    }
-                    // AuthService.logInByEmail(email, password);
-                  },
-                  size: 300,
-                  text: "Submit",
-                ),
-              ],
-            ),
-          )
-        ],
+
+    void onSubmit() async {
+      RegExp filter = RegExp(r"^[a-z]+\.[a-z]+[1-9]*\@(stonybrook\.edu)");
+      String email = emailController.text.toLowerCase();
+      String password = passwordController.text;
+      if (filter.hasMatch(email)) {
+        try {
+          await AuthService.logInByEmail(email, password);
+        } catch (e) {
+          if (!context.mounted) return;
+          Utils.showAlertDialog(context, "Log In failed", "Please try again.");
+          return;
+        }
+        if (!context.mounted) return;
+        Users userType = AuthService.getCurrentUserType();
+        switch (userType) {
+          case Users.tenant:
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const AddProfilePage(),
+              ),
+            );
+            break;
+          default:
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const OwnerPage(),
+              ),
+            );
+        }
+      } else {
+        Utils.showAlertDialog(context, "Invalid Email",
+            "Please enter a valid SBU email address.");
+      }
+    }
+
+    return MaterialApp(
+      theme: AppTheme.lightTheme,
+      home: Scaffold(
+        body: Column(
+          children: [
+            const Text("Welcome to\nBrookmate"),
+            Container(
+              decoration:
+                  BoxDecoration(borderRadius: BorderRadius.circular(40)),
+              child: Column(
+                children: [
+                  TextField(
+                    cursorColor: AppTheme.primaryColor,
+                    controller: emailController,
+                    decoration: const InputDecoration(
+                      labelText: "Email",
+                    ),
+                  ),
+                  TextField(
+                    cursorColor: AppTheme.primaryColor,
+                    controller: passwordController,
+                    obscureText: true,
+                    decoration: const InputDecoration(
+                      labelText: "Password",
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: onSubmit,
+                    child: const Text("Log In"),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

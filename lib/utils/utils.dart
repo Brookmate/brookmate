@@ -1,3 +1,8 @@
+import 'dart:convert';
+import 'package:brookmate/theme/theme.dart';
+import 'package:crypto/crypto.dart';
+import 'package:flutter/material.dart';
+
 class Utils {
   static final nationality = [
     'Afghanistan',
@@ -197,4 +202,37 @@ class Utils {
     'Zambia',
     'Zimbabwe'
   ];
+
+  static void showAlertDialog(
+      BuildContext context, String title, String content) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(title),
+            content: Text(content),
+            actions: [
+              TextButton(
+                style: TextButton.styleFrom(
+                  foregroundColor: AppTheme.primaryColor,
+                  textStyle: TextStyle(
+                    fontWeight: FontWeight.normal,
+                    color: AppTheme.primaryColor,
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text("OK"),
+              ),
+            ],
+          );
+        });
+  }
+
+  static String hashify(String text) {
+    var bytes = utf8.encode(text);
+    var hash = sha256.convert(bytes);
+    return hash.toString();
+  }
 }

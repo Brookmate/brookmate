@@ -4,6 +4,7 @@ import 'package:brookmate/services/models/owner_model.dart';
 import 'package:brookmate/services/models/persona_model.dart';
 import 'package:brookmate/services/models/review_model.dart';
 import 'package:brookmate/services/models/tenant_model.dart';
+import 'package:brookmate/utils/utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -33,11 +34,17 @@ class DatabaseService {
   }
 
   static Future<DocumentReference> addOwner(Owner ownerData) async {
-    return await _db.collection("owners").add(ownerData.toMap());
+    String docId = Utils.hashify(ownerData.email);
+    ownerData.id = docId;
+    await _db.collection("owners").doc(docId).set(ownerData.toMap());
+    return _db.collection("owners").doc(docId);
   }
 
   static Future<DocumentReference> addTenant(Tenant tenantData) async {
-    return await _db.collection("tenants").add(tenantData.toMap());
+    String docId = Utils.hashify(tenantData.email);
+    tenantData.id = docId;
+    await _db.collection("owners").doc(docId).set(tenantData.toMap());
+    return _db.collection("owners").doc(docId);
   }
 
   static Future<DocumentReference> addPersona(Persona personaData) async {
@@ -52,6 +59,9 @@ class DatabaseService {
   static Future<Model> getDocument(Models model, String documentId) async {
     DocumentSnapshot<Map<String, dynamic>> snapshot =
         await _db.collection(_models[model.index]).doc(documentId).get();
+    if (!snapshot.exists) {
+      throw Exception("Document does not exist");
+    }
     switch (model) {
       case Models.houses:
         return House.fromDocumentSnapshot(snapshot);
@@ -66,6 +76,16 @@ class DatabaseService {
       default:
         throw Exception("Invalid type entered");
     }
+  }
+
+  static Future<DocumentReference> getDocumentReference(
+      Models model, String documentId) async {
+    var snapshot =
+        await _db.collection(_models[model.index]).doc(documentId).get();
+    if (!snapshot.exists) {
+      throw Exception("Document does not exist");
+    }
+    return _db.collection(_models[model.index]).doc(documentId);
   }
 
   static Stream<DocumentSnapshot<Map<String, dynamic>>> getDocumentStream(

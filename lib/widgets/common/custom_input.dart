@@ -21,9 +21,24 @@ class _CustomInputState extends State<CustomInput> {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      cursorColor: const Color(0xff9C0000),
       controller: widget.controller,
       obscureText: widget.inputType == InputType.password ? true : false,
       decoration: InputDecoration(
+        labelStyle: const TextStyle(
+          color: Color(0xff9C0000),
+        ),
+        focusedBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(
+            width: 2.0,
+            color: Color(0xff9C0000),
+          ),
+        ),
+        enabledBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(
+            color: Color(0xff9C0000),
+          ),
+        ),
         border: const UnderlineInputBorder(
           borderSide: BorderSide(
             color: Color(0xff9C0000),

@@ -2,11 +2,9 @@ import 'package:brookmate/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:brookmate/widgets/custom_switch_tile.dart';
 import 'package:brookmate/widgets/custom_switch_tile_sex.dart';
-import 'package:brookmate/pages/next_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:brookmate/services/database_service.dart';
 import 'package:brookmate/services/models/persona_model.dart';
-import 'package:brookmate/services/models/tenant_model.dart';
 import 'package:brookmate/pages/house_search.dart';
 
 class AddProfilePage extends StatefulWidget {
@@ -17,34 +15,15 @@ class AddProfilePage extends StatefulWidget {
 }
 
 class _AddProfilePageState extends State<AddProfilePage> {
-  // 상태 관리 변수들
   late DocumentReference _user;
-  // email을 기준으로 사용자를 검색하여 _user에 할당하는 함수
-  // Future<void> getUserByEmail(String email) async {
-  //   try {
-  //     QuerySnapshot<Map<String, dynamic>> querySnapshot =
-  //         await FirebaseFirestore.instance
-  //             .collection('tenants')
-  //             .where('email', isEqualTo: email)
-  //             .get();
 
-  //     if (querySnapshot.docs.isNotEmpty) {
-  //       Tenant tenant = Tenant.fromDocumentSnapshot(querySnapshot.docs.first);
-
-  //       _user = FirebaseFirestore.instance.collection('users').doc(tenant.id);
-  //     } else {}
-  //   } catch (error) {
-  //     print('Error getting user by email: $error');
-  //   }
-  // }
-
-  Map<String, dynamic> varMap = {
+  Map<String, dynamic> personaMap = {
     "id": 0,
     "user": null,
     "cleaness": 0,
     "sleepingTime": {
-      'sleepTimeStart': 'value1',
-      'sleepTimeEnd': 'value2'
+      "from": "",
+      "to": "",
     }, // Map<String, String>
     "isSmoker": false,
     "drinkingRate": 0,
@@ -52,28 +31,22 @@ class _AddProfilePageState extends State<AddProfilePage> {
     "sociability": 0,
     "canDrive": false,
     "stayingSchedule": {
-      'fromDate': 'value1',
-      'toDate': 'value2'
+      "from": "",
+      "to": "",
     }, // Map<String, String>
-    "sex": 'unselected',
-    "budget": {'minimum': 'value1', 'maximum': 'value2'}, // Map<String, String>
+    "sex": "unselected",
+    "budget": {
+      "from": "",
+      "to": "",
+    }, // Map<String, String>
     "nationality": Utils.nationality[0],
   };
 
   RangeValues _sleepTime = const RangeValues(8, 24);
   DateTime? _fromDate;
   DateTime? _toDate;
-  //bool _fromDateIsSelected = false;
-  //bool _toDateIsSelected = false;
-  //bool _selectedSex = false;
   RangeValues _budget = const RangeValues(0, 10000);
-  //final _nationality = Utils.nationality;
-  //bool _nationalityIsSelected = false;
-
-  // Next Page
-  // Function to check if all criteria are met
   bool isAllCriteriaMet() {
-    // return (_fromDateIsSelected && _toDateIsSelected);
     return (_fromDate != null && _toDate != null);
   }
 
@@ -123,10 +96,10 @@ class _AddProfilePageState extends State<AddProfilePage> {
                     max: 5,
                     divisions: 5,
                     activeColor: const Color.fromARGB(255, 120, 0, 0),
-                    value: varMap["cleaness"].toDouble(),
+                    value: personaMap["cleaness"].toDouble(),
                     onChanged: (double value) {
                       setState(() {
-                        varMap["cleaness"] = value.toInt();
+                        personaMap["cleaness"] = value.toInt();
                       });
                     },
                   ),
@@ -164,12 +137,12 @@ class _AddProfilePageState extends State<AddProfilePage> {
                                   : "${_sleepTime.end.round() - 12} AM"),
                     ),
                     activeColor: const Color.fromARGB(255, 120, 0, 0),
- onChanged: (RangeValues values) {
+                    onChanged: (RangeValues values) {
                       setState(() {
                         _sleepTime = values;
-                        varMap["sleepingTime"]['sleepTimeStart'] =
+                        personaMap["sleepingTime"]['sleepTimeStart'] =
                             _sleepTime.start.toString();
-                        varMap["sleepingTime"]['sleepTimeEnd'] =
+                        personaMap["sleepingTime"]['sleepTimeEnd'] =
                             _sleepTime.end.toString();
                       });
                     },
@@ -178,10 +151,10 @@ class _AddProfilePageState extends State<AddProfilePage> {
                   // Smoke
                   CustomSwitchTile(
                     title: 'Smoke',
-                    value: varMap["isSmoker"],
+                    value: personaMap["isSmoker"],
                     onChanged: (bool value) {
                       setState(() {
-                        varMap["isSmoker"] = value;
+                        personaMap["isSmoker"] = value;
                       });
                     },
                   ),
@@ -202,10 +175,10 @@ class _AddProfilePageState extends State<AddProfilePage> {
                     max: 5,
                     divisions: 5,
                     activeColor: const Color.fromARGB(255, 120, 0, 0),
-                    value: varMap["drinkingRate"].toDouble(),
+                    value: personaMap["drinkingRate"].toDouble(),
                     onChanged: (double value) {
                       setState(() {
-                        varMap["drinkingRate"] = value.toInt();
+                        personaMap["drinkingRate"] = value.toInt();
                       });
                     },
                   ),
@@ -225,10 +198,10 @@ class _AddProfilePageState extends State<AddProfilePage> {
                     max: 5,
                     divisions: 5,
                     activeColor: const Color.fromARGB(255, 120, 0, 0),
-                    value: varMap["inviteGuests"].toDouble(),
+                    value: personaMap["inviteGuests"].toDouble(),
                     onChanged: (double value) {
                       setState(() {
-                        varMap["inviteGuests"] = value.toInt();
+                        personaMap["inviteGuests"] = value.toInt();
                       });
                     },
                   ),
@@ -249,10 +222,10 @@ class _AddProfilePageState extends State<AddProfilePage> {
                     max: 5,
                     divisions: 5,
                     activeColor: const Color.fromARGB(255, 120, 0, 0),
-                    value: varMap["sociability"].toDouble(),
+                    value: personaMap["sociability"].toDouble(),
                     onChanged: (double value) {
                       setState(() {
-                        varMap["sociability"] = value.toInt();
+                        personaMap["sociability"] = value.toInt();
                       });
                     },
                   ),
@@ -260,10 +233,10 @@ class _AddProfilePageState extends State<AddProfilePage> {
                   // Drive Car
                   CustomSwitchTile(
                     title: 'Drive Car',
-                    value: varMap["canDrive"],
+                    value: personaMap["canDrive"],
                     onChanged: (bool value) {
                       setState(() {
-                        varMap["canDrive"] = value;
+                        personaMap["canDrive"] = value;
                       });
                     },
                   ),
@@ -301,8 +274,8 @@ class _AddProfilePageState extends State<AddProfilePage> {
                                       setState(() {
                                         _fromDate = selectedDate;
                                         //_fromDateIsSelected = true;
-                                        varMap["stayingSchedule"]['fromDate'] =
-                                            _fromDate.toString();
+                                        personaMap["stayingSchedule"]
+                                            ['fromDate'] = _fromDate.toString();
                                       });
                                     });
                                   },
@@ -335,8 +308,8 @@ class _AddProfilePageState extends State<AddProfilePage> {
                                       setState(() {
                                         _toDate = selectedDate;
                                         //_toDateIsSelected = true;
-                                        varMap["stayingSchedule"]['toDate'] =
-                                            _toDate.toString();
+                                        personaMap["stayingSchedule"]
+                                            ['toDate'] = _toDate.toString();
                                       });
                                     });
                                   },
@@ -361,8 +334,8 @@ class _AddProfilePageState extends State<AddProfilePage> {
                     value: false,
                     onChanged: (bool value) {
                       setState(() {
-                        //varMap["sex"] = value;
-                        varMap["sex"] = value ? 'Female' : 'Male';
+                        //personaMap["sex"] = value;
+                        personaMap["sex"] = value ? 'Female' : 'Male';
                       });
                     },
                   ),
@@ -390,8 +363,10 @@ class _AddProfilePageState extends State<AddProfilePage> {
                     onChanged: (RangeValues values) {
                       setState(() {
                         _budget = values;
-                        varMap["budget"]['minimum'] = _budget.start.toString();
-                        varMap["budget"]['maximum'] = _budget.end.toString();
+                        personaMap["budget"]['minimum'] =
+                            _budget.start.toString();
+                        personaMap["budget"]['maximum'] =
+                            _budget.end.toString();
                       });
                     },
                   ),
@@ -412,7 +387,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       DropdownButton(
-                        value: varMap["nationality"],
+                        value: personaMap["nationality"],
                         items: Utils.nationality
                             .map((e) => DropdownMenuItem(
                                   value: e,
@@ -422,7 +397,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
                         onChanged: (value) {
                           if (value != null) {
                             setState(() {
-                              varMap["nationality"] = value;
+                              personaMap["nationality"] = value;
                               //_nationalityIsSelected = true;
                             });
                           }
@@ -444,17 +419,17 @@ class _AddProfilePageState extends State<AddProfilePage> {
                             // if (userSnapshot.exists) {
                             // }
                             Persona newPersona = Persona(
-                                cleaness: varMap["cleaness"],
-                                sleepingTime: varMap["sleepingTime"],
-                                isSmoker: varMap["isSmoker"],
-                                drinkingRate: varMap["drinkingRate"],
-                                inviteGuests: varMap["inviteGuests"],
-                                sociability: varMap["sociability"],
-                                canDrive: varMap["canDrive"],
-                                stayingSchedule: varMap["stayingSchedule"],
-                                sex: varMap["sex"],
-                                budget: varMap["budget"],
-                                nationality: varMap["nationality"]);
+                                cleaness: personaMap["cleaness"],
+                                sleepingTime: personaMap["sleepingTime"],
+                                isSmoker: personaMap["isSmoker"],
+                                drinkingRate: personaMap["drinkingRate"],
+                                inviteGuests: personaMap["inviteGuests"],
+                                sociability: personaMap["sociability"],
+                                canDrive: personaMap["canDrive"],
+                                stayingSchedule: personaMap["stayingSchedule"],
+                                sex: personaMap["sex"],
+                                budget: personaMap["budget"],
+                                nationality: personaMap["nationality"]);
                             DatabaseService.addPersona(newPersona);
                             Navigator.push(
                               context,

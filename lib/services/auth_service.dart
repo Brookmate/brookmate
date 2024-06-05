@@ -1,8 +1,9 @@
 import "package:brookmate/services/database_service.dart";
 import "package:brookmate/services/models/owner_model.dart";
 import "package:brookmate/services/models/tenant_model.dart";
+import "package:brookmate/utils/utils.dart";
+import "package:cloud_firestore/cloud_firestore.dart";
 import "package:firebase_auth/firebase_auth.dart";
-import "package:flutter/material.dart";
 
 enum Users { tenant, owner }
 
@@ -22,10 +23,35 @@ class AuthService {
     return user;
   }
 
+  static Future<DocumentReference> getCurrentUserRef() async {
+    User user = getCurrentUser();
+    String docId = Utils.hashify(user.email!);
+    try {
+      return DatabaseService.getDocumentReference(Models.owners, docId);
+    } catch (e) {
+      return DatabaseService.getDocumentReference(Models.tenants, docId);
+    }
+  }
+
+  static Users getCurrentUserType() {
+    User user = getCurrentUser();
+    String docId = Utils.hashify(user.email!);
+    try {
+      DatabaseService.getDocumentReference(Models.owners, docId);
+      return Users.owner;
+    } catch (e) {
+      return Users.tenant;
+    }
+  }
+
   static Future<bool> signUpByEmail(
       Users user, String name, String email, String password) async {
-    await _auth.createUserWithEmailAndPassword(
-        email: email, password: password);
+    try {
+      await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+    } catch (e) {
+      return Future.value(false);
+    }
     switch (user) {
       case Users.owner:
         Owner owner = Owner(email: email, name: name, houses: []);
